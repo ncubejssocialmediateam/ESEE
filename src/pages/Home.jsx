@@ -12,9 +12,14 @@ import InnovationShowcase from '../components/home/Innovation';
 import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
+import {useEffect} from "react";
 
 const Home = ({ isLoaded, setIsLoaded }) => {
   const { isDark, toggleTheme } = useTheme();
+
+  useEffect(() => {
+      setIsLoaded(false);
+  }, [])
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
@@ -28,7 +33,7 @@ const Home = ({ isLoaded, setIsLoaded }) => {
       >
         {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
       </button>
-      
+
       <Navigation isDark={isDark} />
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
       <Newspaper isDark={isDark} />
