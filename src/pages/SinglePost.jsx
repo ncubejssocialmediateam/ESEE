@@ -41,11 +41,15 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     );
   }, []);
 
+  useEffect(() => {
+    console.log(12345, post);
+  }, []);
+
   return (
     <div className={`relative min-h-screen ${isDark ? 'bg-gradient-to-b from-blue-950 to-indigo-950 text-white' : 'bg-gradient-to-b from-blue-50 to-indigo-50 text-gray-900'} overflow-hidden transition-colors duration-300`}>
       <CustomCursor />
       {isDark && <ParticleBackground color="#ffffff" count={100} />}
-      
+
       <button
         onClick={toggleTheme}
         className={`fixed top-6 right-6 p-3 rounded-full ${
@@ -56,17 +60,17 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
       >
         {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
       </button>
-      
+
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="post-content space-y-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <span className={`${isDark ? 'text-blue-400' : 'text-blue-600'} text-sm font-medium`}>
-                  {post.category}
+                  {post?.category}
                 </span>
                 <span className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>
-                  {post.date}
+                  {post?.date}
                 </span>
               </div>
               <h1 className={`text-5xl font-bold leading-tight ${
@@ -74,7 +78,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                   ? 'bg-gradient-to-r from-blue-400 to-indigo-400' 
                   : 'bg-gradient-to-r from-blue-600 to-indigo-600'
               } bg-clip-text text-transparent`}>
-                {post.title}
+                {post?.title}
               </h1>
             </div>
 
@@ -95,7 +99,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               <p className={`text-xl leading-relaxed ${isDark ? 'text-blue-100' : 'text-blue-900'}`}>
                 As we step into 2025, the landscape of Greek commerce continues to evolve at an unprecedented pace. Digital transformation, sustainable practices, and innovative business models are reshaping how businesses operate and interact with consumers.
               </p>
-              
+
               <div className={`my-8 p-6 ${
                 isDark 
                   ? 'bg-gradient-to-r from-blue-900/20 to-indigo-900/20' 
@@ -113,7 +117,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               }`}>
                 Key Insights
               </h2>
-              
+
               <ul className="space-y-4">
                 <li className="flex items-start space-x-3">
                   <span className={isDark ? 'text-blue-400' : 'text-blue-600'}>•</span>
