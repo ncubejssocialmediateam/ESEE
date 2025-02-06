@@ -1,0 +1,46 @@
+import PropTypes from 'prop-types';
+import Navigation from '../components/layout/Navigation';
+import Hero from '../components/home/Hero';
+import News from '../components/home/News';
+import Opinions from '../components/home/Opinions';
+import Competitions from '../components/home/Competitions';
+import Events from '../components/home/Events';
+import Features from '../components/home/Features';
+import Footer from '../components/layout/Footer';
+import { useTheme } from '../context/ThemeContext';
+import { FiSun, FiMoon } from 'react-icons/fi';
+
+const Home = ({ isLoaded, setIsLoaded }) => {
+  const { isDark, toggleTheme } = useTheme();
+
+  return (
+    <main className={`min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-50 to-white text-gray-900'} transition-colors duration-300`}>
+      <button
+        onClick={toggleTheme}
+        className={`fixed top-6 right-6 p-3 rounded-full ${
+          isDark 
+            ? 'bg-white/10 hover:bg-white/20 text-white' 
+            : 'bg-gray-900/10 hover:bg-gray-900/20 text-gray-900'
+        } backdrop-blur-sm transition-all duration-300 z-50`}
+      >
+        {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
+      </button>
+      
+      <Navigation isDark={isDark} />
+      <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
+      <News isDark={isDark} />
+      <Opinions isDark={isDark} />
+      <Competitions isDark={isDark} />
+      <Events isDark={isDark} />
+      <Features isDark={isDark} />
+      <Footer isDark={isDark} />
+    </main>
+  );
+};
+
+Home.propTypes = {
+  isLoaded: PropTypes.bool.isRequired,
+  setIsLoaded: PropTypes.func.isRequired
+};
+
+export default Home;

@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Accessibility Styles */
+.high-contrast {
+  filter: contrast(150%);
+}
+
+.reduce-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.screen-reader-optimize {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.1em;
+}
+
+.screen-reader-optimize :is(button, a) {
+  text-decoration: underline;
+}
+
+.screen-reader-optimize img {
+  border: 2px solid currentColor;
+}
+
+.screen-reader-optimize :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom cursor */
+* {
+  cursor: none !important;
+}
+
+/* Interactive elements */
+a, button, [role="button"] {
+  @apply outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Transitions */
+.custom-transition {
+  transition: all 300ms ease-in-out;
+}
+
+/* Custom selection */
+::selection {
+  @apply bg-blue-500 text-white;
+}
