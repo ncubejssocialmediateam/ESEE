@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
+import {useNavigate} from "react-router-dom";
 
 const News = ({ isDark }) => {
+  const navigate = useNavigate();
   const newsItems = [
     {
       id: 1,
@@ -34,16 +36,16 @@ const News = ({ isDark }) => {
         <h2 className={`text-4xl md:text-5xl font-bold mb-12 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
           ΝΕΑ
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {newsItems.map(item => (
-            <article 
+          {newsItems?.map(item => (
+            <article
               key={item.id}
               className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl overflow-hidden shadow-lg transform-gpu transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
             >
               <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={item.image} 
+                <img
+                  src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
                 />
@@ -53,7 +55,7 @@ const News = ({ isDark }) => {
                   </span>
                 </div>
               </div>
-              
+
               <div className="p-6">
                 <time className="text-sm text-gray-500 mb-2 block">
                   {item.date}
@@ -64,10 +66,10 @@ const News = ({ isDark }) => {
                 <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3`}>
                   {item.excerpt}
                 </p>
-                <button 
+                <button
                   className="text-blue-600 font-medium hover:text-blue-700 transition-colors"
                   data-cursor="pointer"
-                >
+                  onClick={() => {navigate(`/post/${item.id}`)}}>
                   Περισσότερα →
                 </button>
               </div>
