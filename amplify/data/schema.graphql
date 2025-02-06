@@ -1,0 +1,6 @@
+type User @model {
+  id: ID! @primaryKey
+  email: String! @unique
+  name: String
+  createdAt: AWSDateTime!
+}

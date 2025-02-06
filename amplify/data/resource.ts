@@ -1,12 +1,16 @@
 import { defineData } from '@aws-amplify/backend';
-import { schema } from './schema';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+const schema = readFileSync(join(__dirname, 'schema.graphql'), 'utf8');
 
 export const data = defineData({
+  name: 'esee-data',
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'API_KEY',
+    defaultAuthorizationMode: 'apiKey',
     apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
-  },
+      expiresInDays: 30
+    }
+  }
 });
