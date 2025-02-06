@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ParticleBackground from '../components/shared/ParticleBackground';
 import CustomCursor from '../components/shared/CustomCursor';
@@ -10,7 +10,6 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const { id } = useParams();
   const { isDark, toggleTheme } = useTheme();
-  const navigate = useNavigate();
   const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
@@ -58,10 +57,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
         {isDark && <ParticleBackground color="#ffffff" count={100} />}
 
         <button
-            onClick={() => {
-              toggleTheme(true);
-              navigate('/');
-            }}
+            onClick={toggleTheme}
             className={`fixed top-6 right-6 p-3 rounded-full ${
                 isDark
                     ? 'bg-white/10 hover:bg-white/20 text-white'
