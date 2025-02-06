@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-amplify/backend": "^1.14.0",
     "@tailwindcss/typography": "^0.5.16",
+    "axios": "^1.7.9",
     "framer-motion": "^12.0.6",
     "gsap": "^3.12.7",
     "lucide-react": "^0.474.0",
