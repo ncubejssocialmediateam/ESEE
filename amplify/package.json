@@ -7,6 +7,11 @@
     "@aws-amplify/backend-cli": "^0.9.7",
     "@aws-amplify/backend-data": "^0.9.0",
     "@aws-sdk/client-rds": "^3.511.0",
+    "@types/pg": "^8.11.11",
+    "pg": "^8.13.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
   }
 }
