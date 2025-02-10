@@ -12,34 +12,61 @@ const s3Client = new S3Client({
 const BUCKET_NAME = import.meta.env.VITE_AWS_BUCKET_NAME || 'esee-bucket';
 
 /**
- * Upload a file to S3
- * @param {Buffer|Blob|string} fileContent - The file content to upload
+ * Get a pre-signed URL for uploading a file to S3
  * @param {string} key - The key (path) where the file will be stored in S3
  * @param {string} contentType - The content type of the file
- * @returns {Promise<string>} - The URL of the uploaded file
+ * @returns {Promise<{uploadUrl: string, downloadUrl: string}>} - URLs for uploading and downloading
  */
-export const uploadFile = async (fileContent, key, contentType) => {
+export const getPresignedUrls = async (key, contentType) => {
   try {
-    // Upload the file
-    const command = new PutObjectCommand({
+    // Get pre-signed URL for upload
+    const putCommand = new PutObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key,
-      Body: fileContent,
       ContentType: contentType
     });
+    const uploadUrl = await getSignedUrl(s3Client, putCommand, { expiresIn: 3600 }); // 1 hour
 
-    await s3Client.send(command);
-
-    // Generate a signed URL for the uploaded file
+    // Get pre-signed URL for download
     const getCommand = new GetObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key
     });
+    const downloadUrl = await getSignedUrl(s3Client, getCommand, { expiresIn: 3600 * 24 * 7 }); // 7 days
 
-    const url = await getSignedUrl(s3Client, getCommand, { expiresIn: 3600 * 24 * 7 }); // URL valid for 7 days
-    return url;
+    return { uploadUrl, downloadUrl };
+  } catch (error) {
+    console.error('Error generating pre-signed URLs:', error);
+    throw new Error('Failed to generate upload/download URLs');
+  }
+};
+
+/**
+ * Upload a file to S3 using pre-signed URL
+ * @param {File} file - The file to upload
+ * @param {string} key - The key (path) where the file will be stored in S3
+ * @returns {Promise<string>} - The URL for downloading the file
+ */
+export const uploadFile = async (file, key) => {
+  try {
+    const { uploadUrl, downloadUrl } = await getPresignedUrls(key, file.type);
+
+    // Upload using pre-signed URL
+    const response = await fetch(uploadUrl, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.statusText}`);
+    }
+
+    return downloadUrl;
   } catch (error) {
     console.error('Error in uploadFile:', error);
-    throw error;
+    throw new Error('Failed to upload file. Please try again.');
   }
 };

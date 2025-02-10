@@ -187,7 +187,7 @@ const ArticleEditor = ({ article, onSave }) => {
         ) : (
           <div className="mt-2">
             <ImageUpload
-              onImageUploaded={(key) => setFormData(prev => ({ ...prev, image: key }))}
+              onImageUploaded={(url) => setFormData(prev => ({ ...prev, image: url, image_url: url }))}
             />
           </div>
         )}
@@ -215,7 +215,9 @@ ArticleEditor.propTypes = {
     category: PropTypes.oneOf(['NEWS', 'OPINION', 'RESEARCH', 'INNOVATION', 'COMPETITION', 'EVENT', 'FEATURE']),
     tags: PropTypes.arrayOf(PropTypes.string),
     seoTitle: PropTypes.string,
-    seoDescription: PropTypes.string
+    seoDescription: PropTypes.string,
+    image: PropTypes.string,
+    image_url: PropTypes.string
   }),
   onSave: PropTypes.func.isRequired
 };

@@ -5,6 +5,7 @@ import { uploadFile } from '../../utils/s3-storage.js';
 const ImageUpload = ({ onImageUploaded }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -17,15 +18,28 @@ const ImageUpload = ({ onImageUploaded }) => {
     };
     reader.readAsDataURL(file);
 
+    // Validate file size
+    if (file.size > 10 * 1024 * 1024) {
+      setError('File size must be less than 10MB');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError('Only image files are allowed');
+      return;
+    }
+
     // Upload to S3
     try {
       setIsUploading(true);
+      setError(null);
       const key = `articles/${Date.now()}-${file.name}`;
-      await uploadFile(file, key, file.type);
-      onImageUploaded(key);
+      const url = await uploadFile(file, key, file.type);
+      onImageUploaded(url);
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Failed to upload image. Please try again.');
+      setError(error.message || 'Failed to upload image. Please try again.');
     } finally {
       setIsUploading(false);
     }
@@ -81,6 +95,11 @@ const ImageUpload = ({ onImageUploaded }) => {
       {isUploading && (
         <div className="text-center text-sm text-gray-500">
           Uploading image...
+        </div>
+      )}
+      {error && (
+        <div className="text-center text-sm text-red-500">
+          {error}
         </div>
       )}
     </div>
