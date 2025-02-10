@@ -1,47 +1,56 @@
 import { useState, useEffect } from 'react';
 import ArticleList from '../../components/admin/ArticleList';
 import ArticleEditor from '../../components/admin/ArticleEditor';
+import { createArticle, updateArticle, deleteArticle, getArticles } from '../../examples/article-operations';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [editingArticle, setEditingArticle] = useState(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Load articles from localStorage initially
-    const savedArticles = localStorage.getItem('articles');
-    if (savedArticles) {
-      setArticles(JSON.parse(savedArticles));
-    }
+    loadArticles();
   }, []);
 
-  const handleSave = (articleData) => {
-    const now = new Date().toISOString();
-    
-    if (editingArticle) {
-      // Update existing article
-      const updatedArticles = articles.map(article =>
-        article.id === editingArticle.id
-          ? { ...articleData, id: article.id, updatedAt: now }
-          : article
-      );
-      setArticles(updatedArticles);
-    } else {
-      // Create new article
-      const newArticle = {
-        ...articleData,
-        id: crypto.randomUUID(),
-        createdAt: now,
-        updatedAt: now
-      };
-      setArticles([...articles, newArticle]);
+  const loadArticles = async () => {
+    try {
+      setIsLoading(true);
+      const fetchedArticles = await getArticles();
+      setArticles(fetchedArticles);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to load articles:', err);
+      setError('Failed to load articles. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    setIsEditorOpen(false);
-    setEditingArticle(null);
-    
-    // Save to localStorage
-    localStorage.setItem('articles', JSON.stringify(articles));
+  const handleSave = async (articleData) => {
+    try {
+      setIsLoading(true);
+      if (editingArticle) {
+        // Update existing article
+        await updateArticle(editingArticle.id, articleData);
+      } else {
+        // Create new article
+        await createArticle(articleData);
+      }
+
+      // Refresh the articles list
+      await loadArticles();
+      
+      setIsEditorOpen(false);
+      setEditingArticle(null);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to save article:', err);
+      setError('Failed to save article. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEdit = (article) => {
@@ -49,11 +58,19 @@ const Articles = () => {
     setIsEditorOpen(true);
   };
 
-  const handleDelete = (articleId) => {
+  const handleDelete = async (articleId) => {
     if (window.confirm('Are you sure you want to delete this article?')) {
-      const updatedArticles = articles.filter(article => article.id !== articleId);
-      setArticles(updatedArticles);
-      localStorage.setItem('articles', JSON.stringify(updatedArticles));
+      try {
+        setIsLoading(true);
+        await deleteArticle(articleId);
+        await loadArticles();
+        setError(null);
+      } catch (err) {
+        console.error('Failed to delete article:', err);
+        setError('Failed to delete article. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -75,9 +92,15 @@ const Articles = () => {
             Cancel
           </button>
         </div>
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
         <ArticleEditor
           article={editingArticle}
           onSave={handleSave}
+          disabled={isLoading}
         />
       </div>
     );
@@ -90,16 +113,28 @@ const Articles = () => {
         <button
           type="button"
           onClick={() => setIsEditorOpen(true)}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          disabled={isLoading}
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
         >
           New Article
         </button>
       </div>
-      <ArticleList
-        articles={articles}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+      {isLoading ? (
+        <div className="flex justify-center items-center h-32">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        </div>
+      ) : (
+        <ArticleList
+          articles={articles}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      )}
     </div>
   );
 };

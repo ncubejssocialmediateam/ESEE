@@ -13,7 +13,7 @@ const ArticleList = ({ articles, onEdit, onDelete }) => {
     const matchesCategory = filter.category === 'ALL' || article.category === filter.category;
     const matchesSearch = article.title.toLowerCase().includes(filter.search.toLowerCase()) ||
       article.content.toLowerCase().includes(filter.search.toLowerCase());
-    
+
     return matchesStatus && matchesCategory && matchesSearch;
   });
 
@@ -99,6 +99,18 @@ const ArticleList = ({ articles, onEdit, onDelete }) => {
                     <p className="mt-1 text-sm text-gray-500">
                       {article.excerpt || article.content.substring(0, 150)}...
                     </p>
+                    {article.tags && article.tags.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {article.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="ml-4 flex-shrink-0 flex space-x-4">
                     <button
@@ -128,7 +140,7 @@ const ArticleList = ({ articles, onEdit, onDelete }) => {
                   </div>
                   <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                     <p>
-                      Updated {new Date(article.updatedAt).toLocaleDateString()}
+                      Updated {new Date(article.updated_at).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
@@ -144,13 +156,17 @@ const ArticleList = ({ articles, onEdit, onDelete }) => {
 ArticleList.propTypes = {
   articles: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       excerpt: PropTypes.string,
       status: PropTypes.oneOf(['DRAFT', 'PUBLISHED', 'ARCHIVED']).isRequired,
       category: PropTypes.oneOf(['NEWS', 'OPINION', 'RESEARCH', 'INNOVATION', 'COMPETITION', 'EVENT', 'FEATURE']).isRequired,
-      updatedAt: PropTypes.string.isRequired
+      tags: PropTypes.arrayOf(PropTypes.string),
+      seo_title: PropTypes.string,
+      seo_description: PropTypes.string,
+      image_url: PropTypes.string,
+      updated_at: PropTypes.string.isRequired
     })
   ).isRequired,
   onEdit: PropTypes.func.isRequired,

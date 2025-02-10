@@ -1,13 +1,22 @@
 import { saveToTable, updateInTable, deleteFromTable, getFromTable } from '../utils/db-operations.js';
 
-// Example of saving a new article
+// Create a new article
 export const createArticle = async (articleData) => {
   try {
     const article = await saveToTable('articles', {
       title: articleData.title,
+      slug: articleData.slug,
       content: articleData.content,
-      author: articleData.author,
-      created_at: new Date().toISOString()
+      excerpt: articleData.excerpt,
+      status: articleData.status,
+      category: articleData.category,
+      tags: articleData.tags,
+      seo_title: articleData.seoTitle,
+      seo_description: articleData.seoDescription,
+      image_url: articleData.image,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      published_at: articleData.status === 'PUBLISHED' ? new Date().toISOString() : null
     });
     console.log('Article created:', article);
     return article;
@@ -17,14 +26,32 @@ export const createArticle = async (articleData) => {
   }
 };
 
-// Example of updating an article
+// Update an existing article
 export const updateArticle = async (id, articleData) => {
   try {
-    const article = await updateInTable('articles', id, {
+    const updateData = {
       title: articleData.title,
+      slug: articleData.slug,
       content: articleData.content,
+      excerpt: articleData.excerpt,
+      status: articleData.status,
+      category: articleData.category,
+      tags: articleData.tags,
+      seo_title: articleData.seoTitle,
+      seo_description: articleData.seoDescription,
+      image_url: articleData.image,
       updated_at: new Date().toISOString()
-    });
+    };
+
+    // Only update published_at if status is changing to PUBLISHED
+    if (articleData.status === 'PUBLISHED') {
+      const currentArticle = await getFromTable('articles', id);
+      if (currentArticle.status !== 'PUBLISHED') {
+        updateData.published_at = new Date().toISOString();
+      }
+    }
+
+    const article = await updateInTable('articles', id, updateData);
     console.log('Article updated:', article);
     return article;
   } catch (error) {
@@ -33,48 +60,76 @@ export const updateArticle = async (id, articleData) => {
   }
 };
 
-// Example of deleting an article
+// Delete an article
 export const deleteArticle = async (id) => {
   try {
-    const article = await deleteFromTable('articles', id);
-    console.log('Article deleted:', article);
-    return article;
+    await deleteFromTable('articles', id);
+    console.log('Article deleted:', id);
   } catch (error) {
     console.error('Failed to delete article:', error);
     throw error;
   }
 };
 
-// Example of fetching articles
-export const getArticles = async (conditions = {}) => {
+// Get a single article by ID
+export const getArticle = async (id) => {
   try {
-    const articles = await getFromTable('articles', conditions);
-    console.log('Articles fetched:', articles);
-    return articles;
+    const article = await getFromTable('articles', id);
+    return article;
   } catch (error) {
-    console.error('Failed to fetch articles:', error);
+    console.error('Failed to get article:', error);
     throw error;
   }
 };
 
-// Example usage:
-/*
-// Create a new article
-const newArticle = await createArticle({
-  title: 'My First Article',
-  content: 'This is the content of my first article',
-  author: 'John Doe'
-});
+// Get a single article by slug
+export const getArticleBySlug = async (slug) => {
+  try {
+    const result = await getFromTable('articles', null, {
+      condition: 'slug = $1',
+      values: [slug]
+    });
+    return result[0];
+  } catch (error) {
+    console.error('Failed to get article by slug:', error);
+    throw error;
+  }
+};
 
-// Update the article
-await updateArticle(newArticle.id, {
-  title: 'Updated Title',
-  content: 'Updated content'
-});
+// Get all articles with optional filters
+export const getArticles = async (filters = {}) => {
+  try {
+    let conditions = [];
+    let values = [];
+    let paramCount = 1;
 
-// Get all articles by an author
-const authorArticles = await getArticles({ author: 'John Doe' });
+    if (filters.status) {
+      conditions.push(`status = $${paramCount}`);
+      values.push(filters.status);
+      paramCount++;
+    }
 
-// Delete an article
-await deleteArticle(newArticle.id);
-*/
+    if (filters.category) {
+      conditions.push(`category = $${paramCount}`);
+      values.push(filters.category);
+      paramCount++;
+    }
+
+    if (filters.tag) {
+      conditions.push(`$${paramCount} = ANY(tags)`);
+      values.push(filters.tag);
+      paramCount++;
+    }
+
+    const result = await getFromTable('articles', null, {
+      condition: conditions.length ? conditions.join(' AND ') : null,
+      values: values.length ? values : null,
+      orderBy: 'created_at DESC',
+      limit: filters.limit
+    });
+    return result;
+  } catch (error) {
+    console.error('Failed to get articles:', error);
+    throw error;
+  }
+};
