@@ -8,6 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+test-db.mjs
+test-s3.mjs
+.env
 dist
 dist-ssr
 *.local
