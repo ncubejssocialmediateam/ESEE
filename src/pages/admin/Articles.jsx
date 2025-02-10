@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ArticleList from '../../components/admin/ArticleList';
 import ArticleEditor from '../../components/admin/ArticleEditor';
-import { createArticle, updateArticle, deleteArticle, getArticles } from '../../examples/article-operations';
+import { createArticle, updateArticle, deleteArticle, fetchArticles } from '../../apiGenericCalls/apiClient';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -17,7 +17,7 @@ const Articles = () => {
   const loadArticles = async () => {
     try {
       setIsLoading(true);
-      const fetchedArticles = await getArticles();
+      const fetchedArticles = await fetchArticles();
       setArticles(fetchedArticles);
       setError(null);
     } catch (err) {

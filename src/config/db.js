@@ -1,7 +1,13 @@
 import { Pool } from 'pg';
 
+const databaseUrl = import.meta.env.VITE_DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error('Database connection string not found in environment variables');
+}
+
 const pool = new Pool({
-  connectionString: 'postgresql://Junkie:7bLWw3yJcnb0IMyQg2NV@esee-data.czigmm0iurad.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=no-verify'
+  connectionString: databaseUrl
 });
 
 // Test the connection

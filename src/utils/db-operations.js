@@ -79,22 +79,42 @@ export const deleteFromTable = async (tableName, id) => {
  * @param {Object} conditions - Optional WHERE conditions
  * @returns {Promise} - Resolves with the matching rows
  */
-export const getFromTable = async (tableName, conditions = {}) => {
-  const whereClause = Object.keys(conditions).length
-    ? 'WHERE ' + Object.keys(conditions).map((key, index) => `${key} = $${index + 1}`).join(' AND ')
-    : '';
-  const values = Object.values(conditions);
-
-  const query = `
-    SELECT * FROM ${tableName}
-    ${whereClause}
-  `;
-
+export const getFromTable = async (tableName, id = null, options = {}) => {
   try {
+    let query = `SELECT * FROM ${tableName}`;
+    const values = [];
+    let paramCount = 1;
+
+    // Handle specific ID
+    if (id !== null) {
+      query += ` WHERE id = $${paramCount}`;
+      values.push(id);
+      paramCount++;
+    }
+    // Handle custom conditions
+    else if (options.condition) {
+      query += ` WHERE ${options.condition}`;
+      if (options.values) {
+        values.push(...options.values);
+      }
+    }
+
+    // Add ORDER BY if specified
+    if (options.orderBy) {
+      query += ` ORDER BY ${options.orderBy}`;
+    }
+
+    // Add LIMIT if specified
+    if (options.limit) {
+      query += ` LIMIT $${paramCount}`;
+      values.push(options.limit);
+    }
+
+    console.log('Executing query:', query, 'with values:', values);
     const result = await pool.query(query, values);
-    return result.rows;
+    return id === null ? result.rows : result.rows[0];
   } catch (error) {
     console.error('Error fetching from database:', error);
-    throw error;
+    throw new Error(`Database error: ${error.message}`);
   }
 };

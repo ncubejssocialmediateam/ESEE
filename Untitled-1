@@ -1,0 +1,1 @@
+VITE_DATABASE_URL=postgresql://Junkie:7bLWw3yJcnb0IMyQg2NV@esee-data.czigmm0iurad.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=no-verify

@@ -1,71 +1,87 @@
-// api.js
-import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
-// Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000/api';
+export const fetchArticles = async (filters = {}) => {
+  try {
+    const queryParams = new URLSearchParams();
+    if (filters.status) queryParams.append('status', filters.status);
+    if (filters.category) queryParams.append('category', filters.category);
+    if (filters.tag) queryParams.append('tag', filters.tag);
+    if (filters.limit) queryParams.append('limit', filters.limit);
 
-// Create an Axios instance with default configuration
-const apiClient = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    timeout: 10000, // 10 seconds timeout (adjust as needed)
-});
-
-// Optional: Add a request interceptor to attach authentication tokens or other headers
-apiClient.interceptors.request.use(
-    (config) => {
-        // For example, attach a token from localStorage if it exists
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
-
-// Optional: Add a response interceptor for global error handling
-apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Handle errors globally here (e.g., redirect to login on 401)
-        if (error.response && error.response.status === 401) {
-            console.error('Unauthorized! Redirecting to login...');
-            // Optionally, perform actions like clearing tokens or redirecting the user
-        }
-        return Promise.reject(error);
+    const response = await fetch(`${API_BASE_URL}/articles?${queryParams}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-);
-
-/**
- * Generic API call functions
- */
-
-// GET request
-export const getData = (endpoint, config = {}) => {
-    return apiClient.get(endpoint, config);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    throw new Error('Failed to fetch articles. Please try again later.');
+  }
 };
 
-// POST request
-export const postData = (endpoint, data, config = {}) => {
-    return apiClient.post(endpoint, data, config);
+export const createArticle = async (articleData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(articleData),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating article:', error);
+    throw new Error('Failed to create article. Please try again later.');
+  }
 };
 
-// PUT request
-export const putData = (endpoint, data, config = {}) => {
-    return apiClient.put(endpoint, data, config);
+export const updateArticle = async (id, articleData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(articleData),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating article:', error);
+    throw new Error('Failed to update article. Please try again later.');
+  }
 };
 
-// PATCH request
-export const patchData = (endpoint, data, config = {}) => {
-    return apiClient.patch(endpoint, data, config);
+export const deleteArticle = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting article:', error);
+    throw new Error('Failed to delete article. Please try again later.');
+  }
 };
 
-// DELETE request
-export const deleteData = (endpoint, config = {}) => {
-    return apiClient.delete(endpoint, config);
+export const getArticle = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching article:', error);
+    throw new Error('Failed to fetch article. Please try again later.');
+  }
 };
-
-export default apiClient;

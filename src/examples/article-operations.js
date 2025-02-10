@@ -99,8 +99,8 @@ export const getArticleBySlug = async (slug) => {
 // Get all articles with optional filters
 export const getArticles = async (filters = {}) => {
   try {
-    let conditions = [];
-    let values = [];
+    const conditions = [];
+    const values = [];
     let paramCount = 1;
 
     if (filters.status) {
@@ -121,15 +121,22 @@ export const getArticles = async (filters = {}) => {
       paramCount++;
     }
 
-    const result = await getFromTable('articles', null, {
+    const options = {
       condition: conditions.length ? conditions.join(' AND ') : null,
       values: values.length ? values : null,
-      orderBy: 'created_at DESC',
-      limit: filters.limit
-    });
+      orderBy: 'updated_at DESC'
+    };
+
+    if (filters.limit) {
+      options.limit = filters.limit;
+    }
+
+    console.log('Fetching articles with options:', options);
+    const result = await getFromTable('articles', null, options);
+    console.log('Fetched articles:', result);
     return result;
   } catch (error) {
     console.error('Failed to get articles:', error);
-    throw error;
+    throw new Error(`Failed to fetch articles: ${error.message}`);
   }
 };
