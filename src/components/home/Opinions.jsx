@@ -17,6 +17,15 @@ const Opinions = () => {
       excerpt: 'Ο ψηφιακός μετασχηματισμός αποτελεί μονόδρομο για τις σύγχρονες επιχειρήσεις. Πώς μπορούν να προσαρμοστούν στη νέα ψηφιακή εποχή;',
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500',
       readTime: '4 λεπτά'
+    },
+    {
+      id: 3,
+      author: 'Νίκος Παπαδόπουλος',
+      position: 'Σύμβουλος Επιχειρήσεων',
+      title: 'Το μέλλον του λιανικού εμπορίου',
+      excerpt: 'Οι νέες τεχνολογίες και οι αλλαγές στην καταναλωτική συμπεριφορά διαμορφώνουν το μέλλον του λιανικού εμπορίου. Ποιες είναι οι τάσεις που θα επικρατήσουν;',
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=500',
+      readTime: '6 λεπτά'
     }
   ];
 
@@ -27,13 +36,13 @@ const Opinions = () => {
           ΑΠΟΨΕΙΣ
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {opinions.map(opinion => (
             <article 
               key={opinion.id}
-              className="group relative"
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group h-[600px] flex flex-col"
             >
-              <div className="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
+              <div className="h-[250px] overflow-hidden">
                 <img 
                   src={opinion.image} 
                   alt={opinion.author}
@@ -41,45 +50,42 @@ const Opinions = () => {
                 />
               </div>
 
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">{opinion.author}</h3>
-                  <p className="text-sm text-gray-500">{opinion.position}</p>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-medium text-gray-900">{opinion.author}</h3>
+                    <p className="text-sm text-gray-500">{opinion.position}</p>
+                  </div>
+                  <span className="text-sm text-gray-400">{opinion.readTime}</span>
                 </div>
-                <span className="text-sm text-gray-400">{opinion.readTime}</span>
-              </div>
 
-              <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                {opinion.title}
-              </h4>
+                <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                  {opinion.title}
+                </h4>
 
-              <p className="text-gray-600 mb-4 line-clamp-3">
-                {opinion.excerpt}
-              </p>
+                <p className="text-gray-600 mb-4 flex-1">
+                  {opinion.excerpt}
+                </p>
 
-              <button 
-                className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors"
-                data-cursor="pointer"
-              >
-                <span>Διαβάστε περισσότερα</span>
-                <svg 
-                  className="ml-2 w-4 h-4 transform transition-transform group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+                <button 
+                  className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors mt-auto"
+                  data-cursor="pointer"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </button>
-
-              <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl" />
-              <div className="relative z-10">
-                <div className="h-px w-full bg-gradient-to-r from-zinc-200/0 via-zinc-200 to-zinc-200/0" />
+                  <span>Διαβάστε περισσότερα</span>
+                  <svg 
+                    className="ml-2 w-4 h-4 transform transition-transform group-hover:translate-x-1" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </button>
               </div>
             </article>
           ))}

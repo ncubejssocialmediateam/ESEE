@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, X, ArrowDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
 
 // Mock navigation structure based on ESEE.gr sitemap
@@ -64,14 +65,24 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
               {Object.entries(subItems).map(([subTitle, items]) => (
                   <div key={subTitle} className="p-4">
                     <div className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
-                      {subTitle}
+                      {subTitle === 'Νέα - Ανακοινώσεις' ? (
+                        <Link 
+                          to="/archive"
+                          className={`${isDark ? 'text-gray-200 hover:text-blue-400' : 'text-gray-800 hover:text-blue-600'} transition-colors`}
+                          data-cursor="pointer"
+                        >
+                          {subTitle}
+                        </Link>
+                      ) : (
+                        subTitle
+                      )}
                     </div>
                     {items.length > 0 && (
                         <ul className="space-y-2">
                           {items.map((item) => (
                               <li key={item}>
                                 <a
-                                    href="#"
+                                    href={item === 'Αρχείο Άρθρων' ? '/archive' : '#'}
                                     className={`${
                                         isDark
                                             ? 'text-gray-400 hover:text-blue-400'
