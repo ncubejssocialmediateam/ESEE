@@ -7,9 +7,6 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.cjs'
   },
-  define: {
-    __API_BASE_URL__: JSON.stringify(process.env.VITE_API_BASE_URL || 'http://localhost:3000/api')
-  },
   server: {
     host: true,
     port: 5173,

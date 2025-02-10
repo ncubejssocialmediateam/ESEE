@@ -1,4 +1,4 @@
-const API_BASE_URL = __API_BASE_URL__;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 export const fetchArticles = async (filters = {}) => {
   try {
