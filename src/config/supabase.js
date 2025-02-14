@@ -1,23 +1,28 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = 'https://ohilbvmoozeygfregggy.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaWxidm1vb3pleWdmcmVnZ2d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDUwODMsImV4cCI6MjA1NTEyMTA4M30.WCrR9u7Jylri7taYD8gI8CmUxtB7_ZsJvQu_M7b2gUA'
+const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaWxidm1vb3pleWdmcmVnZ2d5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTU0NTA4MywiZXhwIjoyMDU1MTIxMDgzfQ.GcKrDcMStuPm-wDWxn8T7_QpmRKUmbAij_BH0exXN6Q'
 
-const missingVars = []
-if (!supabaseUrl) missingVars.push('VITE_SUPABASE_URL')
-if (!supabaseAnonKey) missingVars.push('VITE_SUPABASE_ANON_KEY')
-
-if (missingVars.length > 0) {
-  throw new Error(`Missing Supabase environment variables: ${missingVars.join(', ')}`)
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create Supabase client
+export const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    }
+  }
+)
 
 // Helper function to get service role client (for admin operations)
 export const getServiceRoleClient = () => {
-  const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!serviceRoleKey) {
-    throw new Error('Missing environment variable: SUPABASE_SERVICE_ROLE_KEY')
-  }
-  return createClient(supabaseUrl, serviceRoleKey)
+  return createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
 }
