@@ -1,8 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://ohilbvmoozeygfregggy.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaWxidm1vb3pleWdmcmVnZ2d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDUwODMsImV4cCI6MjA1NTEyMTA4M30.WCrR9u7Jylri7taYD8gI8CmUxtB7_ZsJvQu_M7b2gUA'
-const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaWxidm1vb3pleWdmcmVnZ2d5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTU0NTA4MywiZXhwIjoyMDU1MTIxMDgzfQ.GcKrDcMStuPm-wDWxn8T7_QpmRKUmbAij_BH0exXN6Q'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables')
+}
 
 // Create Supabase client
 export const supabase = createClient(
@@ -19,7 +22,11 @@ export const supabase = createClient(
 
 // Helper function to get service role client (for admin operations)
 export const getServiceRoleClient = () => {
-  return createClient(supabaseUrl, supabaseServiceKey, {
+  const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!serviceRoleKey) {
+    throw new Error('Missing environment variable: SUPABASE_SERVICE_ROLE_KEY')
+  }
+  return createClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false

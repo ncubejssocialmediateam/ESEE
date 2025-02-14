@@ -1,13 +1,20 @@
 import { createClient } from '@supabase/supabase-js'
+import { config } from 'dotenv'
 
-const SUPABASE_URL = 'https://ohilbvmoozeygfregggy.supabase.co'
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaWxidm1vb3pleWdmcmVnZ2d5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTU0NTA4MywiZXhwIjoyMDU1MTIxMDgzfQ.GcKrDcMStuPm-wDWxn8T7_QpmRKUmbAij_BH0exXN6Q'
+config()
+
+const supabaseUrl = process.env.VITE_SUPABASE_URL
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing required environment variables. Please check your .env file.')
+}
 
 console.log('Starting database test...')
-console.log('URL:', SUPABASE_URL)
+console.log('URL:', supabaseUrl)
 console.log('Using service role key for admin access')
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 async function testDatabase() {
   try {
