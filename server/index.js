@@ -19,7 +19,7 @@ const pool = new Pool({
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://192.168.1.23:5173'],
+  origin: ['http://localhost:5173', 'https://localhost:5173', 'http://192.168.1.23:5173', 'https://192.168.1.23:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { API_URLS } from '../../config/api';
 
 const News = ({ isDark }) => {
   const [articles, setArticles] = useState([]);
@@ -9,7 +10,7 @@ const News = ({ isDark }) => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch('http://192.168.1.23:3000/api/articles?status=PUBLISHED&limit=3');
+        const response = await fetch(`${API_URLS.articles}?status=PUBLISHED&limit=3`);
         if (!response.ok) {
           throw new Error('Failed to fetch articles');
         }
