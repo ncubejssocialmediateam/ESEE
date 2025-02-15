@@ -9,9 +9,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+
 // Database connection
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.CONNECTION_STRING,
   ssl: {
     rejectUnauthorized: false
   }
@@ -27,42 +28,12 @@ app.use(express.json());
 
 // API Routes
 app.get('/api/articles', async (req, res) => {
+  console.log("Received GET /api/articles");
   try {
-    const { status, category, tag, limit } = req.query;
-    const conditions = [];
-    const values = [];
-    let paramCount = 1;
-
-    if (status) {
-      conditions.push(`status = $${paramCount}`);
-      values.push(status);
-      paramCount++;
-    }
-
-    if (category) {
-      conditions.push(`category = $${paramCount}`);
-      values.push(category);
-      paramCount++;
-    }
-
-    if (tag) {
-      conditions.push(`$${paramCount} = ANY(tags)`);
-      values.push(tag);
-      paramCount++;
-    }
-
-    let query = 'SELECT * FROM articles';
-    if (conditions.length) {
-      query += ` WHERE ${conditions.join(' AND ')}`;
-    }
-    query += ' ORDER BY updated_at DESC';
-    
-    if (limit) {
-      query += ` LIMIT $${paramCount}`;
-      values.push(parseInt(limit));
-    }
-
-    const result = await pool.query(query, values);
+    let query = 'SELECT * FROM articles ORDER BY updated_at DESC';
+    console.log("Executing query:", query);
+    const result = await pool.query(query);
+    console.log("Query succeeded:", result.rows);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching articles:', error);
@@ -74,11 +45,11 @@ app.get('/api/articles/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('SELECT * FROM articles WHERE id = $1', [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Article not found' });
     }
-    
+
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error fetching article:', error);
@@ -190,11 +161,11 @@ app.delete('/api/articles/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('DELETE FROM articles WHERE id = $1 RETURNING *', [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Article not found' });
     }
-    
+
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error deleting article:', error);
@@ -203,6 +174,6 @@ app.delete('/api/articles/:id', async (req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
 });
