@@ -96,9 +96,9 @@ const News = ({ isDark }) => {
             ΝΕΑ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stateArticles?.map((article) => (
-                <ArticleCard key={article.id} article={article} isDark={isDark} />
-            ))}
+              {Array.isArray(stateArticles) && stateArticles.map((article) => (
+                  <ArticleCard key={article.id} article={article} isDark={isDark} />
+              ))}
           </div>
         </div>
       </section>
