@@ -6,26 +6,14 @@ import SinglePost from './pages/SinglePost';
 import Articles from './pages/admin/Articles';
 import AdminLayout from './components/layout/AdminLayout';
 import './App.css';
+import RouterNavigator from "./router/RouterNavigator.jsx";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <ThemeProvider>
-      <Router>
-        <div className="app">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-            <Route path="/post/:id" element={<SinglePost isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="articles" element={<Articles />} />
-            </Route>
-          </Routes>
-        </div>
-      </Router>
+      <RouterNavigator isLoaded={isLoaded} setIsLoaded={setIsLoaded} />
     </ThemeProvider>
   );
 }

@@ -53,7 +53,6 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
   return (
       <div className={`relative min-h-screen ${isDark ? 'bg-gradient-to-b from-blue-950 to-indigo-950 text-white' : 'bg-gradient-to-b from-blue-50 to-indigo-50 text-gray-900'} overflow-hidden transition-colors duration-300`}>
-        <CustomCursor />
         {isDark && <ParticleBackground color="#ffffff" count={100} />}
 
         <button

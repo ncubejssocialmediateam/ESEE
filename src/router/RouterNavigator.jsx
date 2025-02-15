@@ -8,7 +8,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
         <Router>
             <Routes>
                 <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-                <Route path="/post/:id" element={<SinglePost isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+                <Route path="/post/:slug" element={<SinglePost isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
             </Routes>
         </Router>
     );

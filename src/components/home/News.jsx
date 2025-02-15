@@ -1,6 +1,7 @@
 import  { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getData } from '../../api/apiClient.jsx';
+import { Link } from 'react-router-dom';
 
 // Category translations can be reused and are defined outside the component
 const categoryTranslations = {
@@ -70,13 +71,13 @@ const ArticleCard = ({ article, isDark }) => {
           >
             {excerpt}
           </p>
-          <a
-              href={`/articles/${slug}`}
+          <Link
+              to={`/post/${id}`}
               className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block"
               data-cursor="pointer"
           >
             Περισσότερα →
-          </a>
+          </Link>
         </div>
       </article>
   );
