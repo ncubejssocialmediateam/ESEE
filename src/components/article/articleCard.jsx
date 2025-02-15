@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import CustomCursor from "../shared/CustomCursor.jsx";
 
 
 // Category translations reused across the component
@@ -34,6 +35,7 @@ const ArticleCard = ({ article, isDark }) => {
                 isDark ? 'bg-gray-800' : 'bg-white'
             } rounded-xl overflow-hidden shadow-lg transform-gpu transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
         >
+            <CustomCursor />
             <div className="relative h-48 overflow-hidden">
                 <img
                     src={image_url || 'https://via.placeholder.com/400x300?text=No+Image'}
