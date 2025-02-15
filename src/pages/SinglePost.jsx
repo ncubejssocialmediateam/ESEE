@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
-  const { id } = useParams();
+  const params = useParams();
   const { isDark, toggleTheme } = useTheme();
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -18,7 +18,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
   // Simulated post data (in a real application, fetch data based on the id)
   const post = {
-    title: `Article #${id}: The Future of Greek Commerce in 2025`,
+    title: `Article #${params.slug}: The Future of Greek Commerce in 2025`,
     date: 'January 28, 2025',
     category: 'News',
   };

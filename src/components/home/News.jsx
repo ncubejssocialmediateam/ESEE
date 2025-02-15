@@ -2,27 +2,35 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getData } from '../../api/apiClient.jsx';
 import ArticleCard from "../article/articleCard.jsx";
+import {setArticles} from '../../redux/Reducer';
+import {useSelector, useDispatch } from 'react-redux';
+
 
 const News = ({ isDark }) => {
-  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const res = await getData('/api/articles');
-        setArticles(res.data);
-      } catch (err) {
-        console.error('Error fetching articles:', err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const dispatch = useDispatch();
 
-    fetchArticles();
-  }, []);
+
+    const stateArticles = useSelector(state => state.articles);
+
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const res = await getData('/api/articles');
+                dispatch(setArticles(res.data));
+            } catch (err) {
+                console.error('Error fetching articles:', err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchArticles();
+    }, [dispatch]);
 
   if (loading) {
     return (
@@ -88,7 +96,7 @@ const News = ({ isDark }) => {
             ΝΕΑ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {articles.map((article) => (
+            {stateArticles?.map((article) => (
                 <ArticleCard key={article.id} article={article} isDark={isDark} />
             ))}
           </div>
