@@ -1,7 +1,7 @@
 // api.js
 import axios from 'axios';
 // Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = 'http://ec2-54-247-199-181.eu-west-1.compute.amazonaws.com:8080';
+const API_BASE_URL = 'https://ec2-54-247-199-181.eu-west-1.compute.amazonaws.com:8080';
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
