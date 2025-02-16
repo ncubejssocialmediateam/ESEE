@@ -5,16 +5,24 @@ import ParticleBackground from '../components/shared/ParticleBackground';
 import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
+import {useSelector} from "react-redux";
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
   const { isDark, toggleTheme } = useTheme();
   const [imgLoaded, setImgLoaded] = useState(false);
 
+
+  const stateArticles = useSelector(state => state.articles);
+
   // Set the page as loaded if not already set
   useEffect(() => {
     if (!isLoaded) setIsLoaded(true);
   }, [isLoaded, setIsLoaded]);
+
+  useEffect(() => {
+    console.log(stateArticles)
+  }, [stateArticles]);
 
   // Simulated post data (in a real application, fetch data based on the id)
   const post = {
