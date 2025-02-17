@@ -36,14 +36,14 @@ const Home = ({ isLoaded, setIsLoaded }) => {
 
       <Navigation isDark={isDark} />
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
-      <Newspaper isDark={isDark} />
+      {/*<Newspaper isDark={isDark} />*/}
       <News isDark={isDark} />
-      <ResearchHub isDark={isDark} />
-      <InnovationShowcase isDark={isDark} />
+      {/*<ResearchHub isDark={isDark} />*/}
+      {/*<InnovationShowcase isDark={isDark} />*/}
       <Opinions isDark={isDark} />
       <Competitions isDark={isDark} />
       <Events isDark={isDark} />
-      <Features isDark={isDark} />
+      {/*<Features isDark={isDark} />*/}
       <Footer isDark={isDark} />
     </main>
   );

@@ -3,12 +3,12 @@ import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 import RouterNavigator from "./router/RouterNavigator.jsx";
 
-const App = () => {
+function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <ThemeProvider>
-      <RouterNavigator isLoaded={isLoaded} setIsLoaded={setIsLoaded} />
+        <RouterNavigator isLoaded={isLoaded} setIsLoaded={setIsLoaded} />
     </ThemeProvider>
   );
 }

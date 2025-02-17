@@ -1,71 +1,84 @@
-// api.js
-import axios from 'axios';
+import { supabase } from '../config/supabase'
 
-// Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000/api';
+export const fetchArticles = async (filters = {}) => {
+  try {
+    let query = supabase.from('articles').select('*')
 
-// Create an Axios instance with default configuration
-const apiClient = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    timeout: 10000, // 10 seconds timeout (adjust as needed)
-});
+    if (filters.status) query = query.eq('status', filters.status)
+    if (filters.category) query = query.eq('category', filters.category)
+    if (filters.tag) query = query.contains('tags', [filters.tag])
+    if (filters.limit) query = query.limit(filters.limit)
 
-// Optional: Add a request interceptor to attach authentication tokens or other headers
-apiClient.interceptors.request.use(
-    (config) => {
-        // For example, attach a token from localStorage if it exists
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
+    const { data, error } = await query
 
-// Optional: Add a response interceptor for global error handling
-apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Handle errors globally here (e.g., redirect to login on 401)
-        if (error.response && error.response.status === 401) {
-            console.error('Unauthorized! Redirecting to login...');
-            // Optionally, perform actions like clearing tokens or redirecting the user
-        }
-        return Promise.reject(error);
-    }
-);
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    throw new Error('Failed to fetch articles. Please try again later.')
+  }
+}
 
-/**
- * Generic API call functions
- */
+export const createArticle = async (articleData) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .insert([articleData])
+      .select()
+      .single()
 
-// GET request
-export const getData = (endpoint, config = {}) => {
-    return apiClient.get(endpoint, config);
-};
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Error creating article:', error)
+    throw new Error('Failed to create article. Please try again later.')
+  }
+}
 
-// POST request
-export const postData = (endpoint, data, config = {}) => {
-    return apiClient.post(endpoint, data, config);
-};
+export const updateArticle = async (id, articleData) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .update(articleData)
+      .eq('id', id)
+      .select()
+      .single()
 
-// PUT request
-export const putData = (endpoint, data, config = {}) => {
-    return apiClient.put(endpoint, data, config);
-};
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Error updating article:', error)
+    throw new Error('Failed to update article. Please try again later.')
+  }
+}
 
-// PATCH request
-export const patchData = (endpoint, data, config = {}) => {
-    return apiClient.patch(endpoint, data, config);
-};
+export const deleteArticle = async (id) => {
+  try {
+    const { error } = await supabase
+      .from('articles')
+      .delete()
+      .eq('id', id)
 
-// DELETE request
-export const deleteData = (endpoint, config = {}) => {
-    return apiClient.delete(endpoint, config);
-};
+    if (error) throw error
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting article:', error)
+    throw new Error('Failed to delete article. Please try again later.')
+  }
+}
 
-export default apiClient;
+export const getArticle = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Error fetching article:', error)
+    throw new Error('Failed to fetch article. Please try again later.')
+  }
+}

@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
@@ -23,5 +24,31 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environment files
+# Environment variables
 .env
+.env.*
+!.env.example
+
+# Local development files
+*.local
+.local
+
+# Test files
+test-*.mjs
+test-*.js
+
+# Build output
+/dist
+/build
+
+# Cache
+.cache
+.mf
+.rollup.cache
+tsconfig.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
