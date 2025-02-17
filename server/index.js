@@ -26,6 +26,11 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Test route to check if server is running
+app.get('/test', (req, res) => {
+    res.status(200).json({ message: 'Server is running' });
+});
+
 // API Routes
 app.get('/api/articles', async (req, res) => {
   console.log("Received GET /api/articles");
