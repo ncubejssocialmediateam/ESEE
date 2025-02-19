@@ -1,7 +1,7 @@
 // api.js
 import axios from 'axios';
 // Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = 'https://api.socialmediateam.gr';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
