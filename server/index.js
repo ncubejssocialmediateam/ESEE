@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 
 // Database connection
@@ -25,6 +25,11 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
+
+// Test route to check if server is running
+app.get('/test', (req, res) => {
+    res.status(200).json({ message: 'Server is running' });
+});
 
 // API Routes
 app.get('/api/articles', async (req, res) => {
