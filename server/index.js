@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 // Test route to check if server is running
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).json({ message: 'Server is running' });
 });
 
@@ -48,7 +48,7 @@ app.get('/api/articles', async (req, res) => {
         console.log("Executing query:", query);
         const result = await pool.query(query);
         console.log("Query succeeded:", result.rows);
-        res.json(result.rows);
+        res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching articles:', error);
         res.status(500).json({ error: 'Failed to fetch articles' });
