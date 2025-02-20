@@ -1,19 +1,21 @@
-// api.js
 import axios from 'axios';
+
 // Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const API_BASE_URL = 'http://ec2-108-129-90-252.eu-west-1.compute.amazonaws.com:8080';
+const API_KEY = 'ad4a0daec06454dcdc51492275b048d3f1d5f84d5da3033db0123fd8739fa5d5'; // Should be stored securely, preferably in env variables
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+        'x-api-key': API_KEY,  // Attach the API key to every request
     },
-    timeout: 10000, // 10 seconds timeout (adjust as needed)
+    timeout: 10000, // 10 seconds timeout
 });
-// Optional: Add a request interceptor to attach authentication tokens or other headers
+
+// Optional: Add a request interceptor
 apiClient.interceptors.request.use(
     (config) => {
-        // For example, attach a token from localStorage if it exists
         const token = localStorage.getItem('authToken');
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
@@ -22,39 +24,12 @@ apiClient.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-// Optional: Add a response interceptor for global error handling
-apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Handle errors globally here (e.g., redirect to login on 401)
-        if (error.response && error.response.status === 401) {
-            console.error('Unauthorized! Redirecting to login...');
-            // Optionally, perform actions like clearing tokens or redirecting the user
-        }
-        return Promise.reject(error);
-    }
-);
-/**
- * Generic API call functions
- */
-// GET request
-export const getData = (endpoint, config = {}) => {
-    return apiClient.get(endpoint, config);
-};
-// POST request
-export const postData = (endpoint, data, config = {}) => {
-    return apiClient.post(endpoint, data, config);
-};
-// PUT request
-export const putData = (endpoint, data, config = {}) => {
-    return apiClient.put(endpoint, data, config);
-};
-// PATCH request
-export const patchData = (endpoint, data, config = {}) => {
-    return apiClient.patch(endpoint, data, config);
-};
-// DELETE request
-export const deleteData = (endpoint, config = {}) => {
-    return apiClient.delete(endpoint, config);
-};
+
+// API call functions
+export const getData = (endpoint, config = {}) => apiClient.get(endpoint, config);
+export const postData = (endpoint, data, config = {}) => apiClient.post(endpoint, data, config);
+export const putData = (endpoint, data, config = {}) => apiClient.put(endpoint, data, config);
+export const patchData = (endpoint, data, config = {}) => apiClient.patch(endpoint, data, config);
+export const deleteData = (endpoint, config = {}) => apiClient.delete(endpoint, config);
+
 export default apiClient;
