@@ -21,6 +21,8 @@ const getCategoryTranslation = (category) =>
 const ArticleCard = ({ article, isDark }) => {
     const { id, title, slug, excerpt, category, image_url, published_at } = article;
 
+    console.log('article  =>  ', article);
+
     const formattedDate = published_at
         ? new Date(published_at).toLocaleDateString('el-GR', {
             year: 'numeric',
@@ -35,7 +37,6 @@ const ArticleCard = ({ article, isDark }) => {
                 isDark ? 'bg-gray-800' : 'bg-white'
             } rounded-xl overflow-hidden shadow-lg transform-gpu transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
         >
-            <CustomCursor />
             <div className="relative h-48 overflow-hidden">
                 <img
                     src={image_url || 'https://via.placeholder.com/400x300?text=No+Image'}
@@ -66,13 +67,10 @@ const ArticleCard = ({ article, isDark }) => {
                 >
                     {excerpt}
                 </p>
-                <Link
-                    to={`/post/${id}`}
-                    className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block"
-                    data-cursor="pointer"
-                >
+                <Link to={`/post/${slug}`} className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block">
                     Περισσότερα →
                 </Link>
+
             </div>
         </article>
     );

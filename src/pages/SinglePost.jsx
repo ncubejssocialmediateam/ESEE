@@ -5,171 +5,78 @@ import ParticleBackground from '../components/shared/ParticleBackground';
 import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import articles from '../mockup/mockup.jsx';
+import fallbackImage from '../assets/20150811_151613.jpg';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
   const { isDark, toggleTheme } = useTheme();
   const [imgLoaded, setImgLoaded] = useState(false);
 
-
   const stateArticles = useSelector(state => state.articles);
 
-  // Set the page as loaded if not already set
   useEffect(() => {
     if (!isLoaded) setIsLoaded(true);
   }, [isLoaded, setIsLoaded]);
 
   useEffect(() => {
-    console.log(stateArticles)
+    console.log(stateArticles);
   }, [stateArticles]);
 
-  // Simulated post data (in a real application, fetch data based on the id)
-  const post = {
-    title: `Article #${params.slug}: The Future of Greek Commerce in 2025`,
-    date: 'January 28, 2025',
-    category: 'News',
-  };
+  const post = articles.find(article => article.slug === params.slug);
 
-  // Trigger GSAP animations after the image loads
   useEffect(() => {
     if (imgLoaded) {
       const timer = setTimeout(() => {
         const tl = gsap.timeline();
-        tl.fromTo(
-            '.post-content',
-            { opacity: 0, y: 100 },
-            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
-        );
-        tl.fromTo(
-            '.post-image',
-            { scale: 1.2, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1, ease: 'power3.out' },
-            '-=0.5'
-        );
+        tl.fromTo('.post-content', { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+        tl.fromTo('.post-image', { scale: 1.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out' }, '-=0.5');
       }, 200);
       return () => clearTimeout(timer);
     }
   }, [imgLoaded]);
 
+  if (!post) {
+    return (
+        <div className="min-h-screen flex items-center justify-center text-center text-gray-700 dark:text-gray-300">
+          <h1>Το άρθρο δεν βρέθηκε.</h1>
+        </div>
+    );
+  }
+
   return (
-      <div
-          className={`relative min-h-screen ${
-              isDark
-                  ? 'bg-gradient-to-b from-blue-950 to-indigo-950 text-white'
-                  : 'bg-gradient-to-b from-blue-50 to-indigo-50 text-gray-900'
-          } overflow-hidden transition-colors duration-300`}
-      >
+      <div className={`relative min-h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} overflow-hidden transition-colors duration-300`}>
         {isDark && <ParticleBackground color="#ffffff" count={100} />}
-        <button
-            onClick={toggleTheme}
-            className={`fixed top-6 right-6 p-3 rounded-full ${
-                isDark
-                    ? 'bg-white/10 hover:bg-white/20 text-white'
-                    : 'bg-blue-900/10 hover:bg-blue-900/20 text-blue-900'
-            } backdrop-blur-sm transition-all duration-300 z-50`}
-        >
+        <button onClick={toggleTheme} className="fixed top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 z-50">
           {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
         </button>
 
-        <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">
             <div className="post-content space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                <span className={`${isDark ? 'text-blue-400' : 'text-blue-600'} text-sm font-medium`}>
-                  {post.category}
-                </span>
-                  <span className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>
-                  {post.date}
-                </span>
+                  <span className="text-blue-600 text-sm font-medium">{post.category}</span>
+                  <span className="text-gray-500 text-sm">{new Date(post.published_at).toLocaleDateString()}</span>
                 </div>
-                <h1
-                    className={`text-5xl font-bold leading-tight ${
-                        isDark
-                            ? 'bg-gradient-to-r from-blue-400 to-indigo-400'
-                            : 'bg-gradient-to-r from-blue-600 to-indigo-600'
-                    } bg-clip-text text-transparent`}
-                >
-                  {post.title}
-                </h1>
+                <h1 className="text-5xl font-bold leading-tight">{post.title}</h1>
               </div>
 
-              <div className="post-image relative h-[400px] rounded-2xl overflow-hidden">
-                <div
-                    className={`absolute inset-0 ${
-                        isDark
-                            ? 'bg-gradient-to-r from-blue-400/20 to-indigo-400/20'
-                            : 'bg-gradient-to-r from-blue-600/20 to-indigo-600/20'
-                    } mix-blend-overlay`}
-                ></div>
+              <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8"
-                    alt="Post header"
+                    src={post.id !== 2 ? post.image_url : fallbackImage}
+                    alt={post.title}
                     className="w-full h-full object-cover"
                     onLoad={() => setImgLoaded(true)}
                 />
               </div>
 
-              <div className={`prose ${isDark ? 'prose-invert' : ''} max-w-none`}>
-                <p className={`text-xl leading-relaxed ${isDark ? 'text-blue-100' : 'text-blue-900'}`}>
-                  As we step into 2025, the landscape of Greek commerce continues to evolve at an unprecedented pace. Digital transformation, sustainable practices, and innovative business models are reshaping how businesses operate and interact with consumers.
-                </p>
 
-                <div
-                    className={`my-8 p-6 ${
-                        isDark
-                            ? 'bg-gradient-to-r from-blue-900/20 to-indigo-900/20'
-                            : 'bg-gradient-to-r from-blue-50 to-indigo-50'
-                    } rounded-xl backdrop-blur-sm`}
-                >
-                  <blockquote
-                      className={`text-2xl font-light italic ${
-                          isDark ? 'text-blue-400' : 'text-blue-600'
-                      }`}
-                  >
-                    &ldquo;The future of commerce lies in the seamless integration of digital and physical experiences, creating value through innovation and sustainability.&rdquo;
-                  </blockquote>
-                </div>
-
-                <h2
-                    className={`text-2xl font-bold mt-8 mb-4 ${
-                        isDark ? 'text-blue-400' : 'text-blue-600'
-                    }`}
-                >
-                  Key Insights
-                </h2>
-
-                <ul className="space-y-4">
-                  <li className="flex items-start space-x-3">
-                    <span className={isDark ? 'text-blue-400' : 'text-blue-600'}>•</span>
-                    <span>Digital transformation acceleration across all sectors</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className={isDark ? 'text-blue-400' : 'text-blue-600'}>•</span>
-                    <span>Sustainable business practices becoming the norm</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className={isDark ? 'text-blue-400' : 'text-blue-600'}>•</span>
-                    <span>Enhanced focus on customer experience and personalization</span>
-                  </li>
-                </ul>
-
-                <p className="mt-8">
-                  The integration of artificial intelligence and machine learning continues to drive innovation in the retail sector, while blockchain technology is revolutionizing supply chain management and transparency in business transactions.
-                </p>
-              </div>
+              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
 
               <div className="flex justify-center mt-12">
-                <button
-                    className={`px-8 py-3 rounded-full font-medium text-lg transform-gpu custom-transition hover:shadow-2xl hover:scale-105 ${
-                        isDark
-                            ? 'bg-gradient-to-r from-blue-400 to-indigo-400 text-blue-950 hover:shadow-blue-500/25'
-                            : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-blue-600/25'
-                    }`}
-                >
-                  Share Article
-                </button>
+                <button className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg">Κοινοποίηση</button>
               </div>
             </div>
           </div>
