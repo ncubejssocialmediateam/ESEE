@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import CustomCursor from "../shared/CustomCursor.jsx";
 
 
 // Category translations reused across the component
@@ -19,7 +18,7 @@ const getCategoryTranslation = (category) =>
 
 
 const ArticleCard = ({ article, isDark }) => {
-    const { id, title, slug, excerpt, category, image_url, published_at } = article;
+    const { title, slug, excerpt, category, image_url, published_at } = article;
 
     console.log('article  =>  ', article);
 

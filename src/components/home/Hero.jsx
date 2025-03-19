@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { gsap } from '../../utils/gsap';
 import ParticleBackground from '../shared/ParticleBackground';
-import CustomCursor from '../shared/CustomCursor';
 
 const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -132,8 +131,6 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
 
   return (
     <section className="relative min-h-[80vh] overflow-hidden">
-      <CustomCursor />
-      
       {/* Loading Screen */}
       {!isLoaded && (
         <div className={`fixed inset-0 ${
