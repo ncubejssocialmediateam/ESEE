@@ -19,11 +19,12 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     if (!isLoaded) setIsLoaded(true);
   }, [isLoaded, setIsLoaded]);
 
-  useEffect(() => {
-    console.log('stateArticles  =>  ', stateArticles);
-  }, [stateArticles]);
-
   const post = stateArticles.find(article => article.slug === params.slug);
+
+
+  useEffect(() => {
+    console.log('stateArticles  =>  ', post);
+  }, [post]);
 
   useEffect(() => {
     if (imgLoaded) {
@@ -64,8 +65,10 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
               <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
-                    src={post.id !== 2 ? post.image_url : fallbackImage}
-                    alt={post.title}
+                    src={post?.media?.filename
+                        ? `https://cms.socialmediateam.gr/api/media/file/${post?.media?.filename}`
+                        : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    alt={post?.media?.alt || 'Default Image'}
                     className="w-full h-full object-cover"
                     onLoad={() => setImgLoaded(true)}
                 />
