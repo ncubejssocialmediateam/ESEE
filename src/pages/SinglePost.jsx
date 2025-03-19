@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import articles from '../mockup/mockup.jsx';
 import fallbackImage from '../assets/20150811_151613.jpg';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
@@ -24,7 +23,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     console.log(stateArticles);
   }, [stateArticles]);
 
-  const post = articles.find(article => article.slug === params.slug);
+  const post = stateArticles.find(article => article.slug === params.slug);
 
   useEffect(() => {
     if (imgLoaded) {

@@ -4,7 +4,6 @@ import { getData } from '../../api/apiClient.jsx';
 import ArticleCard from "../article/articleCard.jsx";
 import {setArticles} from '../../redux/Reducer';
 import {useSelector, useDispatch } from 'react-redux';
-import articles from '../../mockup/mockup.jsx'
 
 
 const News = ({ isDark }) => {
@@ -98,7 +97,7 @@ const News = ({ isDark }) => {
             ΝΕΑ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {articles.map((article) => (
+              {stateArticles && stateArticles.map((article) => (
                   <ArticleCard key={article.id} article={article} isDark={isDark} />
               ))}
           </div>
