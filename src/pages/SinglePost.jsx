@@ -21,11 +21,6 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
   const post = stateArticles.find(article => article.slug === params.slug);
 
-
-  useEffect(() => {
-    console.log('stateArticles  =>  ', post);
-  }, [post]);
-
   useEffect(() => {
     if (imgLoaded) {
       const timer = setTimeout(() => {
