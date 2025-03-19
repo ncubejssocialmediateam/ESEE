@@ -18,7 +18,7 @@ const getCategoryTranslation = (category) =>
 
 
 const ArticleCard = ({ article, isDark }) => {
-    const { title, slug, excerpt, category, image_url, published_at } = article;
+    const { title, slug, excerpt, category, image_url, published_at, media } = article;
 
     console.log('article  =>  ', article);
 
@@ -38,10 +38,13 @@ const ArticleCard = ({ article, isDark }) => {
         >
             <div className="relative h-48 overflow-hidden">
                 <img
-                    src={image_url || 'https://via.placeholder.com/400x300?text=No+Image'}
-                    alt={title}
+                    src={media?.filename
+                        ? `https://cms.socialmediateam.gr/api/media/file/${media.filename}`
+                        : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    alt={media?.alt || 'Default Image'}
                     className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
                 />
+
                 <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">
             {getCategoryTranslation(category)}

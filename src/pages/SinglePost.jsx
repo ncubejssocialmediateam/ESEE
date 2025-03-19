@@ -20,7 +20,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
   }, [isLoaded, setIsLoaded]);
 
   useEffect(() => {
-    console.log(stateArticles);
+    console.log('stateArticles  =>  ', stateArticles);
   }, [stateArticles]);
 
   const post = stateArticles.find(article => article.slug === params.slug);
