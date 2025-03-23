@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, X, ArrowDown } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
 
 // Mock navigation structure based on ESEE.gr sitemap
 export const navigation = {
+  'ΟΙ ΘΕΣΕΙΣ ΜΑΣ': {
+    'ΑΝΑΠΤΥΞΗ': [],
+    'ΑΣΦΑΛΙΣΤΙΚΑ - ΕΡΓΑΣΙΑΚΑ/ΑΠΑΣΧΟΛΗΣΗ': [],
+    'ΦΟΡΟΛΟΓΙΚΑ': [],
+    'ΚΟΣΤΟΣ ΛΕΙΤΟΥΡΓΙΑΣ': [],
+    'ΕΜΠΟΡΙΚΑ ΘΕΜΑΤΑ': []
+  },
   'Η ΕΣΕΕ': {
     'Ταυτότητα': ['Ιστορικό', 'Καταστατικό', 'Διοίκηση', 'Οργανόγραμμα'],
     'Μέλη': ['Ομοσπονδίες', 'Εμπορικοί Σύλλογοι'],
@@ -38,10 +46,21 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
     setActiveNavItem(isOpen ? null : title);
   };
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ') {
+      navigate('/positions');
+      setActiveNavItem(null);
+    } else {
+      handleToggle();
+    }
+  };
+
   return (
       <div className="relative group">
         <button
-            onClick={handleToggle}
+            onClick={handleClick}
             className={`flex items-center justify-between w-full px-4 py-2 text-lg font-medium ${
                 isDark
                     ? 'text-gray-200 hover:text-blue-400'
@@ -63,9 +82,13 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
             } border rounded-lg shadow-lg z-50`}>
               {Object.entries(subItems).map(([subTitle, items]) => (
                   <div key={subTitle} className="p-4">
-                    <div className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
+                    <Link 
+                      to={title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ' ? '/positions' : '#'} 
+                      className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2 hover:text-blue-600 transition-colors`}
+                      onClick={() => setActiveNavItem(null)}
+                    >
                       {subTitle}
-                    </div>
+                    </Link>
                     {items.length > 0 && (
                         <ul className="space-y-2">
                           {items.map((item) => (
