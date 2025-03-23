@@ -26,14 +26,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// API Key Middleware
-app.use((req, res, next) => {
-    const apiKey = req.headers['x-api-key'];
-    if (!apiKey || apiKey !== API_KEY) {
-        return res.status(403).json({ error: 'Forbidden: Invalid API Key' });
-    }
-    next();
-});
+// //API Key Middleware
+//app.use((req, res, next) => {
+  //  const apiKey = req.headers['x-api-key'];
+    //if (!apiKey || apiKey !== API_KEY) {
+      //  return res.status(403).json({ error: 'Forbidden: Invalid API Key' });
+    //}
+    //next();
+//});
 
 // Test route to check if server is running
 app.get('/', (req, res) => {
@@ -41,17 +41,17 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
-app.get('/api/articles', async (req, res) => {
-    console.log("Received GET /api/articles");
+app.get('/api/posts', async (req, res) => {
+    console.log("Received GET /api/posts");
     try {
-        let query = 'SELECT * FROM articles ORDER BY updated_at DESC';
+        let query = 'SELECT * FROM posts ORDER BY updated_at DESC';
         console.log("Executing query:", query);
         const result = await pool.query(query);
         console.log("Query succeeded:", result.rows);
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error('Error fetching articles:', error);
-        res.status(500).json({ error: 'Failed to fetch articles' });
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Failed to fetch posts' });
     }
 });
 

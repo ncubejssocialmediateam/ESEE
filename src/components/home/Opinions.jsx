@@ -31,54 +31,55 @@ const Opinions = () => {
           {opinions.map(opinion => (
             <article 
               key={opinion.id}
-              className="group relative"
+              className="group relative cursor-pointer"
             >
-              <div className="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
-                <img 
-                  src={opinion.image} 
-                  alt={opinion.author}
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">{opinion.author}</h3>
-                  <p className="text-sm text-gray-500">{opinion.position}</p>
-                </div>
-                <span className="text-sm text-gray-400">{opinion.readTime}</span>
-              </div>
-
-              <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                {opinion.title}
-              </h4>
-
-              <p className="text-gray-600 mb-4 line-clamp-3">
-                {opinion.excerpt}
-              </p>
-
-              <button 
-                className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors"
-                data-cursor="pointer"
-              >
-                <span>Διαβάστε περισσότερα</span>
-                <svg 
-                  className="ml-2 w-4 h-4 transform transition-transform group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+              <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-100 group-hover:opacity-100 group-hover:shadow-lg sm:-inset-x-6 sm:rounded-2xl" />
+              
+              <div className="relative z-10 p-2">
+                <div className="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
+                  <img 
+                    src={opinion.image} 
+                    alt={opinion.author}
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                   />
-                </svg>
-              </button>
+                </div>
 
-              <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl" />
-              <div className="relative z-10">
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-medium text-gray-900">{opinion.author}</h3>
+                    <p className="text-sm text-gray-500">{opinion.position}</p>
+                  </div>
+                  <span className="text-sm text-gray-400">{opinion.readTime}</span>
+                </div>
+
+                <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                  {opinion.title}
+                </h4>
+
+                <p className="text-gray-600 mb-4 line-clamp-3">
+                  {opinion.excerpt}
+                </p>
+
+                <button 
+                  className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors"
+                  data-cursor="pointer"
+                >
+                  <span>Διαβάστε περισσότερα</span>
+                  <svg 
+                    className="ml-2 w-4 h-4 transform transition-transform group-hover:translate-x-1" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </button>
+
                 <div className="h-px w-full bg-gradient-to-r from-zinc-200/0 via-zinc-200 to-zinc-200/0" />
               </div>
             </article>
