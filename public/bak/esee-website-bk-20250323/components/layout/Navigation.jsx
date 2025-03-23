@@ -17,8 +17,7 @@ export const navigation = {
     'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ': [],
     'Ταυτότητα': ['Ιστορικό', 'Καταστατικό', 'Διοίκηση', 'Οργανόγραμμα'],
     'Μέλη': ['Ομοσπονδίες', 'Εμπορικοί Σύλλογοι'],
-    'Επιτροπές': ['Φορολογική', 'Ασφαλιστική', 'Εργασιακή'],
-    'Νομικές Πληροφορίες': []
+    'Επιτροπές': ['Φορολογική', 'Ασφαλιστική', 'Εργασιακή']
   },
   'Δράσεις': {
     'Έρευνες': ['Ετήσιες', 'ΙΝΕΜΥ', 'Κλαδικές'],
@@ -62,9 +61,6 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
   const handleSubItemClick = (subTitle) => {
     if (subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ') {
       navigate('/about');
-      setActiveNavItem(null);
-    } else if (subTitle === 'Νομικές Πληροφορίες') {
-      navigate('/legal');
       setActiveNavItem(null);
     }
   };
