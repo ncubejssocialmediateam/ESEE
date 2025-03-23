@@ -22,7 +22,7 @@ export const navigation = {
   },
   'Δράσεις': {
     'Έρευνες': ['Ετήσιες', 'ΙΝΕΜΥ', 'Κλαδικές'],
-    'Προγράμματα': ['Τρέχοντα', 'Ολοκληρωμένα'],
+    'Προγράμματα': ['Συγχρηματοδοτούμενα Έργα', 'Τρέχοντα', 'Ολοκληρωμένα'],
     'Εκδηλώσεις': ['Συνέδρια', 'Ημερίδες']
   },
   'Ενημέρωση': {
@@ -69,6 +69,9 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
       } else if (item === 'Πολιτική Απορρήτου') {
         navigate('/privacy');
       }
+      setActiveNavItem(null);
+    } else if (subTitle === 'Προγράμματα' && item === 'Συγχρηματοδοτούμενα Έργα') {
+      navigate('/projects');
       setActiveNavItem(null);
     }
   };

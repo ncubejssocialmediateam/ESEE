@@ -5,6 +5,7 @@ import Positions from "../pages/Positions.jsx";
 import About from "../pages/About.jsx";
 import Legal from "../pages/Legal.jsx";
 import Privacy from "../pages/Privacy.jsx";
+import Projects from "../pages/Projects.jsx";
 
 // eslint-disable-next-line react/prop-types
 const RouterNavigator = ({isLoaded, setIsLoaded}) => {
@@ -16,6 +17,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             <Route path="/about" element={<About />} />
             <Route path="/legal" element={<Legal />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/projects" element={<Projects />} />
         </Routes>
     );
 };
