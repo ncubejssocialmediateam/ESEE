@@ -14,6 +14,7 @@ export const navigation = {
     'ΕΜΠΟΡΙΚΑ ΘΕΜΑΤΑ': []
   },
   'Η ΕΣΕΕ': {
+    'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ': [],
     'Ταυτότητα': ['Ιστορικό', 'Καταστατικό', 'Διοίκηση', 'Οργανόγραμμα'],
     'Μέλη': ['Ομοσπονδίες', 'Εμπορικοί Σύλλογοι'],
     'Επιτροπές': ['Φορολογική', 'Ασφαλιστική', 'Εργασιακή']
@@ -57,6 +58,13 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
     }
   };
 
+  const handleSubItemClick = (subTitle) => {
+    if (subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ') {
+      navigate('/about');
+      setActiveNavItem(null);
+    }
+  };
+
   return (
       <div className="relative group">
         <button
@@ -83,9 +91,12 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
               {Object.entries(subItems).map(([subTitle, items]) => (
                   <div key={subTitle} className="p-4">
                     <Link 
-                      to={title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ' ? '/positions' : '#'} 
+                      to={title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ' ? '/positions' : subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ' ? '/about' : '#'} 
                       className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2 hover:text-blue-600 transition-colors`}
-                      onClick={() => setActiveNavItem(null)}
+                      onClick={() => {
+                        handleSubItemClick(subTitle);
+                        setActiveNavItem(null);
+                      }}
                     >
                       {subTitle}
                     </Link>
