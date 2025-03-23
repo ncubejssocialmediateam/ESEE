@@ -32,6 +32,7 @@ export const navigation = {
     'Χρήσιμοι Σύνδεσμοι': []
   },
   'Υπηρεσίες': {
+    'Επιχειρήσεις': [],
     'Νομική Υποστήριξη': [],
     'Συμβουλευτική': [],
     'Πιστοποιήσεις': [],
@@ -72,6 +73,9 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
       setActiveNavItem(null);
     } else if (subTitle === 'Προγράμματα' && item === 'Συγχρηματοδοτούμενα Έργα') {
       navigate('/projects');
+      setActiveNavItem(null);
+    } else if (subTitle === 'Επιχειρήσεις') {
+      navigate('/business');
       setActiveNavItem(null);
     }
   };
