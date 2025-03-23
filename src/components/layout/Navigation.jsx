@@ -18,7 +18,7 @@ export const navigation = {
     'Ταυτότητα': ['Ιστορικό', 'Καταστατικό', 'Διοίκηση', 'Οργανόγραμμα'],
     'Μέλη': ['Ομοσπονδίες', 'Εμπορικοί Σύλλογοι'],
     'Επιτροπές': ['Φορολογική', 'Ασφαλιστική', 'Εργασιακή'],
-    'Νομικές Πληροφορίες': []
+    'Νομικές Πληροφορίες': ['Όροι Χρήσης', 'Πολιτική Απορρήτου']
   },
   'Δράσεις': {
     'Έρευνες': ['Ετήσιες', 'ΙΝΕΜΥ', 'Κλαδικές'],
@@ -59,12 +59,16 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
     }
   };
 
-  const handleSubItemClick = (subTitle) => {
+  const handleSubItemClick = (subTitle, item) => {
     if (subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ') {
       navigate('/about');
       setActiveNavItem(null);
     } else if (subTitle === 'Νομικές Πληροφορίες') {
-      navigate('/legal');
+      if (item === 'Όροι Χρήσης') {
+        navigate('/legal');
+      } else if (item === 'Πολιτική Απορρήτου') {
+        navigate('/privacy');
+      }
       setActiveNavItem(null);
     }
   };
@@ -108,16 +112,16 @@ const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) =
                         <ul className="space-y-2">
                           {items.map((item) => (
                               <li key={item}>
-                                <a
-                                    href="#"
+                                <button
+                                    onClick={() => handleSubItemClick(subTitle, item)}
                                     className={`${
                                         isDark
                                             ? 'text-gray-400 hover:text-blue-400'
                                             : 'text-gray-600 hover:text-blue-600'
-                                    } transition-colors`}
+                                    } transition-colors w-full text-left`}
                                 >
                                   {item}
-                                </a>
+                                </button>
                               </li>
                           ))}
                         </ul>
