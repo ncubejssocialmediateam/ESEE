@@ -4,14 +4,15 @@ import ArticleCard from "../components/article/articleCard.jsx";
 import Button from '../components/shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { setArticles } from '../redux/Reducer';
+import {useTheme} from "../context/ThemeContext.jsx";
 
 const Archive = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const { isDark, toggleTheme } = useTheme();
     const articlesPerPage = 12;
-    const isDark = useSelector(state => state.darkMode);
     const dispatch = useDispatch();
     const stateArticles = useSelector(state => state.articles);
 
