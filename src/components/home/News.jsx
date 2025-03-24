@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getData } from '../../api/apiClient.jsx';
 import ArticleCard from "../article/articleCard.jsx";
 import {setArticles} from '../../redux/Reducer';
 import {useSelector, useDispatch } from 'react-redux';
+import Button from '../shared/Button';
 
 
 const News = ({ isDark }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const dispatch = useDispatch();
 
 
@@ -100,6 +101,13 @@ const News = ({ isDark }) => {
               {stateArticles && stateArticles?.map((article) => (
                   <ArticleCard key={article.id} article={article} isDark={isDark} />
               ))}
+          </div>
+          <div className="mt-8 text-center">
+              <Link to="/archive">
+                  <Button isDark={isDark}>
+                      Αρχείο Νέων
+                  </Button>
+              </Link>
           </div>
         </div>
       </section>
