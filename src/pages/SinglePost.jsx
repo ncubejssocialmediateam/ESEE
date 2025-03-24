@@ -56,7 +56,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <span className="text-blue-600 text-sm font-medium">{post.category}</span>
-                  <span className="text-gray-500 text-sm">{new Date(post.published_at).toLocaleDateString()}</span>
+                  <span className="text-gray-500 text-sm">{new Date(post.publishedAt).toLocaleDateString()}</span>
                 </div>
                 <h1 className="text-5xl font-bold leading-tight">{post.title}</h1>
               </div>
@@ -78,15 +78,15 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                   if (block.type === 'paragraph' && block.children?.[0]?.text) {
                     return <p key={index}>{block.children[0].text}</p>;
                   }
-                  
+
                   if (block.type === 'horizontalrule') {
                     return <hr key={index} className="my-4" />;
                   }
-                  
+
                   if (block.type === 'block' && block.fields?.blockType === 'banner') {
                     return (
-                      <div 
-                        key={index} 
+                      <div
+                        key={index}
                         className={`p-4 rounded-lg my-4 ${
                           block.fields.style === 'warning' 
                             ? 'bg-yellow-100 text-yellow-800' 
@@ -97,13 +97,13 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                       </div>
                     );
                   }
-                  
+
                   if (block.type === 'block' && block.fields?.blockType === 'mediaBlock') {
                     const media = block.fields.media;
                     if (media?.mimeType?.startsWith('application/pdf')) {
                       return (
                         <div key={index} className="my-4">
-                          <a 
+                          <a
                             href={`https://cms.socialmediateam.gr${media.url}`}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -116,7 +116,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                     }
                     // Handle other media types if needed
                   }
-                  
+
                   return null;
                 })}
               </div>
