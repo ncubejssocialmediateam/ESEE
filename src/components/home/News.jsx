@@ -30,7 +30,6 @@ const News = ({ isDark }) => {
                 setLoading(false);
             }
         };
-        // https://cms.socialmediateam.gr/api/posts?where[categories][in][]=8
         void fetchArticles();
     }, [dispatch]);
 
