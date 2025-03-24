@@ -21,8 +21,8 @@ const News = ({ isDark }) => {
         const fetchArticles = async () => {
             try {
                 const res = await getData('/api/posts?limit=6&where[categories][in][]=8');
-                dispatch(setArticles(res.data));
-                console.log(res.data);
+                dispatch(setArticles(res.data.docs));
+                console.log(res.data.docs);
             } catch (err) {
                 console.error('Error fetching articles:', err);
                 setError(err);
@@ -97,7 +97,7 @@ const News = ({ isDark }) => {
             ΝΕΑ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {stateArticles && stateArticles?.docs?.map((article) => (
+              {stateArticles && stateArticles?.map((article) => (
                   <ArticleCard key={article.id} article={article} isDark={isDark} />
               ))}
           </div>

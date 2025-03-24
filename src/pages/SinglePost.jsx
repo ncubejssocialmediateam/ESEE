@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import fallbackImage from '../assets/20150811_151613.jpg';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
@@ -31,6 +30,10 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
       return () => clearTimeout(timer);
     }
   }, [imgLoaded]);
+
+  useEffect(() => {
+    console.log('post is ', post)
+  }, [post])
 
   if (!post) {
     return (
@@ -60,10 +63,10 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
               <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
-                    src={post?.media?.filename
-                        ? `https://cms.socialmediateam.gr/api/media/file/${post?.media?.filename}`
+                    src={post?.heroImage?.filename
+                        ? `https://cms.socialmediateam.gr/api/media/file/${post?.heroImage?.filename}`
                         : 'https://via.placeholder.com/400x300?text=No+Image'}
-                    alt={post?.media?.alt || 'Default Image'}
+                    alt={post?.heroImage?.alt || 'Default Image'}
                     className="w-full h-full object-cover"
                     onLoad={() => setImgLoaded(true)}
                 />

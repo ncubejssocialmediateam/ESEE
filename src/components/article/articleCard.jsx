@@ -50,8 +50,8 @@ const ArticleCard = ({ article, isDark }) => {
             <div className="relative h-48 overflow-hidden">
                 <img
                     src={
-                        heroImage && heroImage.url
-                            ? heroImage.url
+                        heroImage && heroImage?.filename
+                            ? 'https://cms.socialmediateam.gr/api/media/file/'+ heroImage?.filename
                             : 'https://via.placeholder.com/400x300?text=No+Image'
                     }
                     alt={heroImage?.alt || 'Default Image'}
