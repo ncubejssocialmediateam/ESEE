@@ -54,7 +54,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
           <div className="max-w-4xl mx-auto">
             <div className="post-content space-y-8">
               <div className="space-y-4">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4" >
                   <span className="text-blue-600 text-sm font-medium">{post.category}</span>
                   <span className="text-gray-500 text-sm">{new Date(post.publishedAt).toLocaleDateString()}</span>
                 </div>
