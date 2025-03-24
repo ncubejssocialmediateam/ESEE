@@ -1,158 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, X, ArrowDown } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
 
-// Mock navigation structure based on ESEE.gr sitemap
-export const navigation = {
-  'ΟΙ ΘΕΣΕΙΣ ΜΑΣ': {
-    'ΑΝΑΠΤΥΞΗ': [],
-    'ΑΣΦΑΛΙΣΤΙΚΑ - ΕΡΓΑΣΙΑΚΑ/ΑΠΑΣΧΟΛΗΣΗ': [],
-    'ΦΟΡΟΛΟΓΙΚΑ': [],
-    'ΚΟΣΤΟΣ ΛΕΙΤΟΥΡΓΙΑΣ': [],
-    'ΕΜΠΟΡΙΚΑ ΘΕΜΑΤΑ': []
-  },
-  'Η ΕΣΕΕ': {
-    'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ': [],
-    'Ταυτότητα': ['Ιστορικό', 'Καταστατικό', 'Διοίκηση', 'Οργανόγραμμα'],
-    'Μέλη': ['Ομοσπονδίες', 'Εμπορικοί Σύλλογοι'],
-    'Επιτροπές': ['Φορολογική', 'Ασφαλιστική', 'Εργασιακή'],
-    'Νομικές Πληροφορίες': ['Όροι Χρήσης', 'Πολιτική Απορρήτου']
-  },
-  'Δράσεις': {
-    'Έρευνες': ['Ετήσιες', 'ΙΝΕΜΥ', 'Κλαδικές'],
-    'Προγράμματα': ['Συγχρηματοδοτούμενα Έργα', 'Τρέχοντα', 'Ολοκληρωμένα'],
-    'Εκδηλώσεις': ['Συνέδρια', 'Ημερίδες']
-  },
-  'Ενημέρωση': {
-    'Δελτία Τύπου': [],
-    'Νέα - Ανακοινώσεις': [],
-    'Νομοθεσία': ['Εμπορική', 'Εργατική', 'Φορολογική'],
-    'Χρήσιμοι Σύνδεσμοι': []
-  },
-  'Υπηρεσίες': {
-    'Επιχειρήσεις': [],
-    'Νομική Υποστήριξη': [],
-    'Συμβουλευτική': [],
-    'Πιστοποιήσεις': [],
-    'Εκπαίδευση': []
-  }
-};
-
-const NavItem = ({ title, subItems, isDark, activeNavItem, setActiveNavItem }) => {
-  // Determine if this item should be open based on parent's state
-  const isOpen = activeNavItem === title;
-
-  const handleToggle = () => {
-    // Toggle open state: close if already open, or open this one and close any other
-    setActiveNavItem(isOpen ? null : title);
-  };
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    if (title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ') {
-      navigate('/positions');
-      setActiveNavItem(null);
-    } else {
-      handleToggle();
-    }
-  };
-
-  const handleSubItemClick = (subTitle, item) => {
-    if (subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ') {
-      navigate('/about');
-      setActiveNavItem(null);
-    } else if (subTitle === 'Νομικές Πληροφορίες') {
-      if (item === 'Όροι Χρήσης') {
-        navigate('/legal');
-      } else if (item === 'Πολιτική Απορρήτου') {
-        navigate('/privacy');
-      }
-      setActiveNavItem(null);
-    } else if (subTitle === 'Προγράμματα' && item === 'Συγχρηματοδοτούμενα Έργα') {
-      navigate('/projects');
-      setActiveNavItem(null);
-    } else if (subTitle === 'Επιχειρήσεις') {
-      navigate('/business');
-      setActiveNavItem(null);
-    }
-  };
-
+const NavItem = ({ item, isDark }) => {
+  const { link } = item;
+  const slug = link?.label;
+  
   return (
-      <div className="relative group">
-        <button
-            onClick={handleClick}
-            className={`flex items-center justify-between w-full px-4 py-2 text-lg font-medium ${
-                isDark
-                    ? 'text-gray-200 hover:text-blue-400'
-                    : 'text-gray-800 hover:text-blue-600'
-            } transition-colors`}
-        >
-          {title}
-          <ArrowDown
-              className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-              size={20}
-          />
-        </button>
-
-        {isOpen && (
-            <div className={`absolute left-0 w-64 mt-2 ${
-                isDark
-                    ? 'bg-blue-950 border-blue-900'
-                    : 'bg-white border-gray-200'
-            } border rounded-lg shadow-lg z-50`}>
-              {Object.entries(subItems).map(([subTitle, items]) => (
-                  <div key={subTitle} className="p-4">
-                    <Link 
-                      to={title === 'ΟΙ ΘΕΣΕΙΣ ΜΑΣ' ? '/positions' : subTitle === 'Η ΕΣΕΕ ΜΕ ΜΙΑ ΜΑΤΙΑ' ? '/about' : '#'} 
-                      className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2 hover:text-blue-600 transition-colors`}
-                      onClick={() => {
-                        handleSubItemClick(subTitle);
-                        setActiveNavItem(null);
-                      }}
-                    >
-                      {subTitle}
-                    </Link>
-                    {items.length > 0 && (
-                        <ul className="space-y-2">
-                          {items.map((item) => (
-                              <li key={item}>
-                                <button
-                                    onClick={() => handleSubItemClick(subTitle, item)}
-                                    className={`${
-                                        isDark
-                                            ? 'text-gray-400 hover:text-blue-400'
-                                            : 'text-gray-600 hover:text-blue-600'
-                                    } transition-colors w-full text-left`}
-                                >
-                                  {item}
-                                </button>
-                              </li>
-                          ))}
-                        </ul>
-                    )}
-                  </div>
-              ))}
-            </div>
-        )}
-      </div>
+    <div className="relative group">
+      <Link
+        to={`post/${slug}`}
+        className={`flex items-center px-4 py-2 text-lg font-medium ${
+          isDark
+            ? 'text-gray-200 hover:text-blue-400'
+            : 'text-gray-800 hover:text-blue-600'
+        } transition-colors`}
+      >
+        {link.label}
+      </Link>
+    </div>
   );
 };
 
 NavItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  subItems: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
-  isDark: PropTypes.bool.isRequired,
-  activeNavItem: PropTypes.string,
-  setActiveNavItem: PropTypes.func.isRequired
+  item: PropTypes.shape({
+    link: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      reference: PropTypes.shape({
+        value: PropTypes.shape({
+          slug: PropTypes.string.isRequired
+        })
+      })
+    }).isRequired
+  }).isRequired,
+  isDark: PropTypes.bool.isRequired
 };
 
 const Navigation = ({ isDark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // State to track which navigation item is open
-  const [activeNavItem, setActiveNavItem] = useState(null);
+  const [navItems, setNavItems] = useState([]);
+
+  useEffect(() => {
+    // Fetch navigation items from API
+    fetch('https://cms.socialmediateam.gr/api/globals/header')
+      .then(response => response.json())
+      .then(data => {
+        if (data.navItems) {
+          setNavItems(data.navItems);
+        }
+      })
+      .catch(error => console.error('Error fetching navigation:', error));
+  }, []);
 
   return (
       <>
@@ -173,15 +73,12 @@ const Navigation = ({ isDark }) => {
                 </a>
 
                 <div className="hidden lg:flex space-x-4">
-                  {Object.entries(navigation).map(([title, subItems]) => (
-                      <NavItem
-                          key={title}
-                          title={title}
-                          subItems={subItems}
-                          isDark={isDark}
-                          activeNavItem={activeNavItem}
-                          setActiveNavItem={setActiveNavItem}
-                      />
+                  {navItems.map((item) => (
+                    <NavItem
+                      key={item.id}
+                      item={item}
+                      isDark={isDark}
+                    />
                   ))}
                 </div>
               </div>
@@ -218,16 +115,13 @@ const Navigation = ({ isDark }) => {
                 isDark ? 'bg-blue-950' : 'bg-white'
             } z-30 lg:hidden pt-20 transition-colors duration-300`}>
               <div className="p-4">
-                {Object.entries(navigation).map(([title, subItems]) => (
-                    <div key={title} className="mb-4">
-                      <NavItem
-                          title={title}
-                          subItems={subItems}
-                          isDark={isDark}
-                          activeNavItem={activeNavItem}
-                          setActiveNavItem={setActiveNavItem}
-                      />
-                    </div>
+                {navItems.map((item) => (
+                  <div key={item.id} className="mb-4">
+                    <NavItem
+                      item={item}
+                      isDark={isDark}
+                    />
+                  </div>
                 ))}
 
                 <div className="space-y-6 mt-6">

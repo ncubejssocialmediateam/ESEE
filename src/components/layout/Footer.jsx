@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { navigation } from './Navigation';
 
 const Footer = ({ isDark }) => {
   return (
