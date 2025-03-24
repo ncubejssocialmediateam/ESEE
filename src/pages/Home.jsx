@@ -1,48 +1,21 @@
 import PropTypes from 'prop-types';
 import Navigation from '../components/layout/Navigation';
 import Hero from '../components/home/Hero';
-import Newspaper from '../components/home/Newspaper';
 import News from '../components/home/News';
 import Opinions from '../components/home/Opinions';
 import Competitions from '../components/home/Competitions';
 import Events from '../components/home/Events';
-import Features from '../components/home/Features';
-import ResearchHub from '../components/home/Research';
-import InnovationShowcase from '../components/home/Innovation';
 import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
-import {useEffect, useState} from "react";
-import {getData} from "../api/apiClient.jsx";
-import {setArticles} from "../redux/Reducer.jsx";
-import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 const Home = ({ isLoaded, setIsLoaded }) => {
   const { isDark, toggleTheme } = useTheme();
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const dispatch = useDispatch();
-
   useEffect(() => {
       setIsLoaded(false);
   }, [])
-
-    useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const res = await getData('/api/posts');
-                dispatch(setArticles(res.data.docs));
-                console.log(res.data.docs);
-            } catch (err) {
-                console.error('Error fetching articles:', err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        void fetchArticles();
-    }, [dispatch]);
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>

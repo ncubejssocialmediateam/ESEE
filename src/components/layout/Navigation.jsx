@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
+import {getData} from "../../api/apiClient.jsx";
+import {setArticles} from "../../redux/Reducer.jsx";
+import {useSelector} from "react-redux";
 
 const NavItem = ({ item, isDark }) => {
   const { link } = item;
   const slug = link?.label;
-  
+
   return (
     <div className="relative group">
       <Link
@@ -40,19 +43,7 @@ NavItem.propTypes = {
 
 const Navigation = ({ isDark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [navItems, setNavItems] = useState([]);
-
-  useEffect(() => {
-    // Fetch navigation items from API
-    fetch('https://cms.socialmediateam.gr/api/globals/header')
-      .then(response => response.json())
-      .then(data => {
-        if (data.navItems) {
-          setNavItems(data.navItems);
-        }
-      })
-      .catch(error => console.error('Error fetching navigation:', error));
-  }, []);
+  const stateNavItems = useSelector(state => state.navItems);
 
   return (
       <>
@@ -73,7 +64,7 @@ const Navigation = ({ isDark }) => {
                 </a>
 
                 <div className="hidden lg:flex space-x-4">
-                  {navItems.map((item) => (
+                  {stateNavItems && stateNavItems?.map((item) => (
                     <NavItem
                       key={item.id}
                       item={item}
@@ -115,7 +106,7 @@ const Navigation = ({ isDark }) => {
                 isDark ? 'bg-blue-950' : 'bg-white'
             } z-30 lg:hidden pt-20 transition-colors duration-300`}>
               <div className="p-4">
-                {navItems.map((item) => (
+                {stateNavItems && stateNavItems?.map((item) => (
                   <div key={item.id} className="mb-4">
                     <NavItem
                       item={item}

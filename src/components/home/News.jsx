@@ -12,13 +12,12 @@ const News = ({ isDark }) => {
     const stateArticles = useSelector(state => state.articles);
 
     // Filter articles that have a category with id: 8
-    const filteredArticles = stateArticles.filter(article =>
-        article.categories.some(category => category.id === 8)
-    );
+    const filteredArticles = stateArticles
+        .filter(article => article.categories.some(category => category.id === 8))
+        .slice(0, 6);
 
     useEffect(() => {
         setTimeout(() => {
-            console.log('filteredArticles => ', filteredArticles)
             setLoading(false);
         }, 3000)
     }, []);

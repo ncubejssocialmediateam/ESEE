@@ -12,32 +12,19 @@ const Archive = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const { isDark, toggleTheme } = useTheme();
-    const articlesPerPage = 12;
-    const dispatch = useDispatch();
     const stateArticles = useSelector(state => state.articles);
 
+    // Filter articles that have a category with id: 8
+    const filteredArticles = stateArticles.filter(article =>
+        article.categories.some(category => category.id === 8)
+    );
+
     useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const res = await getData(`/api/posts?page=${page}&limit=${articlesPerPage}&where[categories][in][]=8`);
-                if (page === 1) {
-                    dispatch(setArticles(res.data.docs));
-                } else {
-                    dispatch(setArticles({
-                        ...res.data,
-                        docs: [...(stateArticles?.docs || []), ...res.data.docs]
-                    }));
-                }
-                setHasMore(res.data.hasNextPage);
-            } catch (err) {
-                console.error('Error fetching articles:', err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        void fetchArticles();
-    }, [dispatch, page]);
+        setTimeout(() => {
+            console.log('stateArticles', stateArticles);
+            setLoading(false);
+        }, 1000)
+    }, [])
 
     const loadMore = () => {
         setPage(prev => prev + 1);
@@ -94,7 +81,7 @@ const Archive = () => {
                     Αρχείο Νέων
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {stateArticles && stateArticles?.map((article) => (
+                    {filteredArticles && filteredArticles?.map((article) => (
                         <ArticleCard key={article.id} article={article} isDark={isDark} />
                     ))}
                 </div>
