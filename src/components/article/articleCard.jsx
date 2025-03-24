@@ -10,6 +10,7 @@ const categoryTranslations = {
     6: 'Εκδηλώσεις',
     7: 'Απόψεις',
     8: 'Νέα',
+    9: 'Page',
 };
 
 const getCategoryTranslation = (categoryId) =>
