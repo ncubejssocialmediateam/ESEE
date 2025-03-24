@@ -31,9 +31,9 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     }
   }, [imgLoaded]);
 
-  useEffect(() => {
-    console.log('post is ', post)
-  }, [post])
+  // useEffect(() => {
+  //   console.log('post is ', post)
+  // }, [post])
 
   if (!post) {
     return (

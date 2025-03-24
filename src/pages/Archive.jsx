@@ -21,7 +21,6 @@ const Archive = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            console.log('stateArticles', stateArticles);
             setLoading(false);
         }, 1000)
     }, [])

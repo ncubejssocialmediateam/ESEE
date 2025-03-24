@@ -24,7 +24,6 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             try {
                 const res = await getData('/api/posts?limit=10000');
                 dispatch(setArticles(res.data.docs));
-                console.log(res.data.docs);
             } catch (err) {
                 console.error('Error fetching articles:', err);
                 setError(err);
@@ -40,7 +39,6 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             try {
                 const res = await getData('/api/globals/header');
                 dispatch(setNavItems(res.data.navItems));
-                console.log(res.data.navItems);
             } catch (err) {
                 console.error('Error fetching header:', err);
             }
