@@ -22,6 +22,7 @@ const News = ({ isDark }) => {
             try {
                 const res = await getData('/api/posts');
                 dispatch(setArticles(res.data));
+                console.log(res.data);
             } catch (err) {
                 console.error('Error fetching articles:', err);
                 setError(err);
@@ -30,10 +31,11 @@ const News = ({ isDark }) => {
             }
         };
 
-        fetchArticles();
+        void fetchArticles();
     }, [dispatch]);
 
-  if (loading) {
+
+    if (loading) {
     return (
         <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
           <div className="max-w-7xl mx-auto px-4">
@@ -96,11 +98,11 @@ const News = ({ isDark }) => {
           >
             ΝΕΑ
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {stateArticles && stateArticles.map((article) => (
-                  <ArticleCard key={article.id} article={article} isDark={isDark} />
-              ))}
-          </div>
+          {/*<div className="grid grid-cols-1 md:grid-cols-3 gap-8">*/}
+          {/*    {stateArticles && stateArticles?.map((article) => (*/}
+          {/*        <ArticleCard key={article.id} article={article} isDark={isDark} />*/}
+          {/*    ))}*/}
+          {/*</div>*/}
         </div>
       </section>
   );
