@@ -20,7 +20,7 @@ const News = ({ isDark }) => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const res = await getData('/api/posts');
+                const res = await getData('/api/posts?limit=6&where[categories][in][]=8');
                 dispatch(setArticles(res.data));
                 console.log(res.data);
             } catch (err) {
@@ -30,7 +30,7 @@ const News = ({ isDark }) => {
                 setLoading(false);
             }
         };
-
+        // https://cms.socialmediateam.gr/api/posts?where[categories][in][]=8
         void fetchArticles();
     }, [dispatch]);
 
