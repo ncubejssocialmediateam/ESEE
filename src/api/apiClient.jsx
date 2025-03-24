@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set your API base URL (you can configure it via an environment variable)
-const API_BASE_URL = 'https://esee-back-lb-1331523788.eu-west-1.elb.amazonaws.com';
+const API_BASE_URL = 'https://cms.socialmediateam.gr';
 const API_KEY = 'ad4a0daec06454dcdc51492275b048d3f1d5f84d5da3033db0123fd8739fa5d5'; // Should be stored securely, preferably in env variables
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
