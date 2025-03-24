@@ -20,7 +20,7 @@ const Archive = () => {
             try {
                 const res = await getData(`/api/posts?page=${page}&limit=${articlesPerPage}&where[categories][in][]=8`);
                 if (page === 1) {
-                    dispatch(setArticles(res.data));
+                    dispatch(setArticles(res.data.docs));
                 } else {
                     dispatch(setArticles({
                         ...res.data,
@@ -93,7 +93,7 @@ const Archive = () => {
                     Αρχείο Νέων
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {stateArticles && stateArticles?.docs?.map((article) => (
+                    {stateArticles && stateArticles?.map((article) => (
                         <ArticleCard key={article.id} article={article} isDark={isDark} />
                     ))}
                 </div>
