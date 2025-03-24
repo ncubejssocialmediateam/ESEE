@@ -34,11 +34,6 @@ const News = ({ isDark }) => {
         void fetchArticles();
     }, [dispatch]);
 
-    useEffect(() => {
-        console.log('stateArticles is ', stateArticles);
-    }, [stateArticles, dispatch]);
-
-
     if (loading) {
     return (
         <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
