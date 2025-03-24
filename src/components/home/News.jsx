@@ -34,6 +34,10 @@ const News = ({ isDark }) => {
         void fetchArticles();
     }, [dispatch]);
 
+    useEffect(() => {
+        console.log('stateArticles is ', stateArticles);
+    }, [stateArticles, dispatch]);
+
 
     if (loading) {
     return (
@@ -98,11 +102,11 @@ const News = ({ isDark }) => {
           >
             ΝΕΑ
           </h2>
-          {/*<div className="grid grid-cols-1 md:grid-cols-3 gap-8">*/}
-          {/*    {stateArticles && stateArticles?.map((article) => (*/}
-          {/*        <ArticleCard key={article.id} article={article} isDark={isDark} />*/}
-          {/*    ))}*/}
-          {/*</div>*/}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {stateArticles && stateArticles?.docs?.map((article) => (
+                  <ArticleCard key={article.id} article={article} isDark={isDark} />
+              ))}
+          </div>
         </div>
       </section>
   );
