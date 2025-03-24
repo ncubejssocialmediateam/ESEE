@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import RichTextRenderer from '../components/richTextRenderer/RichTextRenderer.jsx'; // Import the new component
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
@@ -32,9 +31,9 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     }
   }, [imgLoaded]);
 
-  // useEffect(() => {
-  //   console.log('post is ', post.published_at);
-  // }, [post]);
+  useEffect(() => {
+    console.log('post is ', post)
+  }, [post])
 
   if (!post) {
     return (
@@ -57,7 +56,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <span className="text-blue-600 text-sm font-medium">{post.category}</span>
-                  <span className="text-gray-500 text-sm">{new Date(post.updatedAt).toLocaleDateString()}</span>
+                  <span className="text-gray-500 text-sm">{new Date(post.publishedAt).toLocaleDateString()}</span>
                 </div>
                 <h1 className="text-5xl font-bold leading-tight">{post.title}</h1>
               </div>
@@ -74,7 +73,53 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               </div>
 
 
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div className="prose max-w-none">
+                {post.content?.root?.children?.map((block, index) => {
+                  if (block.type === 'paragraph' && block.children?.[0]?.text) {
+                    return <p key={index}>{block.children[0].text}</p>;
+                  }
+
+                  if (block.type === 'horizontalrule') {
+                    return <hr key={index} className="my-4" />;
+                  }
+
+                  if (block.type === 'block' && block.fields?.blockType === 'banner') {
+                    return (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg my-4 ${
+                          block.fields.style === 'warning' 
+                            ? 'bg-yellow-100 text-yellow-800' 
+                            : 'bg-blue-100 text-blue-800'
+                        }`}
+                      >
+                        {block.fields.content?.root?.children?.[0]?.children?.[0]?.text}
+                      </div>
+                    );
+                  }
+
+                  if (block.type === 'block' && block.fields?.blockType === 'mediaBlock') {
+                    const media = block.fields.media;
+                    if (media?.mimeType?.startsWith('application/pdf')) {
+                      return (
+                        <div key={index} className="my-4">
+                          <a
+                            href={`https://cms.socialmediateam.gr${media.url}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                          >
+                            Download {media.filename}
+                          </a>
+                        </div>
+                      );
+                    }
+                    // Handle other media types if needed
+                  }
+
+                  return null;
+                })}
+              </div>
 
               <div className="flex justify-center mt-12">
                 <button className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg">Κοινοποίηση</button>
