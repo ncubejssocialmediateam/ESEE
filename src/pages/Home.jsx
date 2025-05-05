@@ -8,14 +8,14 @@ import Events from '../components/home/Events';
 import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 const Home = ({ isLoaded, setIsLoaded }) => {
   const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
-      setIsLoaded(false);
-  }, [])
+    setIsLoaded(false);
+  }, []);
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>

@@ -40,7 +40,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 const res = await getData('/api/categories');
                 dispatch(setCategories(res.data.docs));
             } catch (err) {
-                console.error('Error fetching categories:', err);
+                console.error('Error fetching categori:', err);
                 setError(err);
             } finally {
                 setLoading(false);
