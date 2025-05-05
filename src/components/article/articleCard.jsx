@@ -52,7 +52,7 @@ const ArticleCard = ({ article, isDark }) => {
                 <img
                     src={
                         heroImage && heroImage?.filename
-                            ? 'https://cms.socialmediateam.gr/api/media/file/'+ heroImage?.filename
+                            ? 'https://back.socialmediateam.gr/api/media/file/'+ heroImage?.filename
                             : 'https://via.placeholder.com/400x300?text=No+Image'
                     }
                     alt={heroImage?.alt || 'Default Image'}

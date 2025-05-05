@@ -65,7 +65,7 @@ const Opinions = ({ isDark }) => {
                 </p>
 
                 <Link
-                  to={`/posts/${opinion.slug}`}
+                  to={`/post/${opinion.slug}`}
                   className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors"
                 >
                   <span>Διαβάστε περισσότερα</span>

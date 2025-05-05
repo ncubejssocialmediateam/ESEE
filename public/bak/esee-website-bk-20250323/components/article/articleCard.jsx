@@ -39,7 +39,7 @@ const ArticleCard = ({ article, isDark }) => {
             <div className="relative h-48 overflow-hidden">
                 <img
                     src={media?.filename
-                        ? `https://cms.socialmediateam.gr/api/media/file/${media.filename}`
+                        ? `https://back.socialmediateam.gr/api/media/file/${media.filename}`
                         : 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={media?.alt || 'Default Image'}
                     className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"

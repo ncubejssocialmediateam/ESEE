@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const Events = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
-  
+
   // Filter articles for the 'Εκδηλώσεις' category (ID: 6)
-  const events = stateArticles.filter(article => 
+  const events = stateArticles.filter(article =>
     article.categories.some(category => category.id === 6)
   ).slice(0, 3); // Show only the 3 most recent events
 
@@ -29,7 +29,7 @@ const Events = ({ isDark }) => {
 
           <div className="relative">
             {events.map((event, index) => (
-              <div 
+              <div
                 key={event.id}
                 className={`flex items-center mb-16 ${
                   index % 2 === 0 ? 'justify-start' : 'justify-end'
@@ -43,8 +43,8 @@ const Events = ({ isDark }) => {
                     isDark ? 'bg-gray-800' : 'bg-white'
                   } rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}>
                     <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={event.featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=500'} 
+                      <img
+                        src={event.featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=500'}
                         alt={event.title}
                         className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                       />
@@ -83,22 +83,22 @@ const Events = ({ isDark }) => {
                         <div className={`flex items-center ${
                           isDark ? 'text-gray-400' : 'text-gray-500'
                         } mb-4`}>
-                          <svg 
-                            className="w-5 h-5 mr-2" 
-                            fill="none" 
-                            stroke="currentColor" 
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
                             viewBox="0 0 24 24"
                           >
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth="2" 
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
                               d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                             />
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth="2" 
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
                               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                           </svg>
@@ -106,8 +106,8 @@ const Events = ({ isDark }) => {
                         </div>
                       )}
 
-                      <Link 
-                        to={`/article/${event.slug}`}
+                      <Link
+                        to={`/post/${event.slug}`}
                         className={`${
                           isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
                         } font-medium transition-colors`}

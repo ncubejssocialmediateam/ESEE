@@ -61,7 +61,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
                     src={post?.media?.filename
-                        ? `https://cms.socialmediateam.gr/api/media/file/${post?.media?.filename}`
+                        ? `https://back.socialmediateam.gr/api/media/file/${post?.media?.filename}`
                         : 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={post?.media?.alt || 'Default Image'}
                     className="w-full h-full object-cover"

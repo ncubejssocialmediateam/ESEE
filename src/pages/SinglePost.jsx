@@ -64,7 +64,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
                     src={post?.heroImage?.filename
-                        ? `https://cms.socialmediateam.gr/api/media/file/${post?.heroImage?.filename}`
+                        ? `https://back.socialmediateam.gr/api/media/file/${post?.heroImage?.filename}`
                         : 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={post?.heroImage?.alt || 'Default Image'}
                     className="w-full h-full object-cover"
@@ -104,7 +104,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                       return (
                         <div key={index} className="my-4">
                           <a
-                            href={`https://cms.socialmediateam.gr${media.url}`}
+                            href={`https://back.socialmediateam.gr${media.url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

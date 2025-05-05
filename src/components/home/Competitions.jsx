@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const Competitions = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
-  
+
   // Filter articles for both 'Διαγωνισμός' (ID: 2) and 'Πρόσκλησεις' (ID: 3) categories
-  const items = stateArticles.filter(article => 
+  const items = stateArticles.filter(article =>
     article.categories.some(category => category.id === 2 || category.id === 3)
   ).slice(0, 3); // Show only the 3 most recent items
 
@@ -24,9 +24,9 @@ const Competitions = ({ isDark }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map(item => {
             const isCompetition = item.categories.some(category => category.id === 2);
-            
+
             return (
-              <div 
+              <div
                 key={item.id}
                 className={`group relative ${
                   isDark ? 'bg-gray-800' : 'bg-white'
@@ -66,7 +66,7 @@ const Competitions = ({ isDark }) => {
                   {item.categories && (
                     <div className="flex flex-wrap gap-2 mb-6">
                       {item.categories.map(category => (
-                        <span 
+                        <span
                           key={category.id}
                           className={`px-3 py-1 ${
                             isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
@@ -82,8 +82,8 @@ const Competitions = ({ isDark }) => {
                     <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                       <span className="font-medium">Ημερομηνία:</span> {new Date(item.date).toLocaleDateString('el-GR')}
                     </div>
-                    <Link 
-                      to={`/article/${item.slug}`}
+                    <Link
+                      to={`/post/${item.slug}`}
                       className={`${
                         isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
                       } font-medium transition-colors`}
