@@ -3,25 +3,36 @@ import PropTypes from 'prop-types';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
-import {getData} from "../../api/apiClient.jsx";
-import {setArticles} from "../../redux/Reducer.jsx";
 import {useSelector} from "react-redux";
 
 const NavItem = ({ item, isDark }) => {
   const { link } = item;
-  const slug = link?.label;
+  const slug = link?.url;
+  const label = link?.label;
+
+  // Handle archive links with category parameter
+  const getNavigationUrl = () => {
+    if (slug === 'archive') {
+      return `/archive?category=${encodeURIComponent(label)}`;
+    }
+    return `/${slug}`;
+  };
+
+  useEffect(() => {
+    console.log(link)
+  }, [])
 
   return (
     <div className="relative group">
       <Link
-        to={`post/${slug}`}
+        to={getNavigationUrl()}
         className={`flex items-center px-4 py-2 text-lg font-medium ${
           isDark
             ? 'text-gray-200 hover:text-blue-400'
             : 'text-gray-800 hover:text-blue-600'
         } transition-colors`}
       >
-        {link.label}
+        {label}
       </Link>
     </div>
   );
@@ -30,12 +41,8 @@ const NavItem = ({ item, isDark }) => {
 NavItem.propTypes = {
   item: PropTypes.shape({
     link: PropTypes.shape({
+      url: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
-      reference: PropTypes.shape({
-        value: PropTypes.shape({
-          slug: PropTypes.string.isRequired
-        })
-      })
     }).isRequired
   }).isRequired,
   isDark: PropTypes.bool.isRequired

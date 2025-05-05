@@ -1,29 +1,54 @@
 import { useState, useEffect } from 'react';
-import { getData } from '../api/apiClient.jsx';
 import ArticleCard from "../components/article/articleCard.jsx";
 import Button from '../components/shared/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import { setArticles } from '../redux/Reducer';
-import {useTheme} from "../context/ThemeContext.jsx";
+import { useSelector } from 'react-redux';
+import { useTheme } from "../context/ThemeContext.jsx";
+import { useSearchParams } from 'react-router-dom';
+
+// Category translations for filtering
+const categoryTranslations = {
+    'ΝΕΑ': 8,
+    'Απόψεις': 7,
+    'Εκδηλώσεις': 6,
+    'Ανακοινώσεις': 5,
+    'Δελτία Τύπου': 4,
+    'Πρόσκλησεις': 3,
+    'Διαγωνισμός': 2,
+    'Page': 43,
+};
 
 const Archive = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const { isDark, toggleTheme } = useTheme();
+    const { isDark } = useTheme();
     const stateArticles = useSelector(state => state.articles);
+    const [searchParams] = useSearchParams();
+    const categoryParam = searchParams.get('category');
 
-    // Filter articles that have a category with id: 8
-    const filteredArticles = stateArticles.filter(article =>
-        article.categories.some(category => category.id === 8)
-    );
+    // Filter articles based on category parameter
+    const filteredArticles = stateArticles.filter(article => {
+        if (!categoryParam) {
+            // If no category specified, show all articles
+            return true;
+        }
+        const categoryId = categoryTranslations[categoryParam];
+        return article.categories.some(category => category.id === categoryId);
+    });
+
+    // Calculate if there are more articles to load
+    const hasMore = filteredArticles.length > page * 9; // Assuming 9 articles per page
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
+            if (!stateArticles.length) {
+                setError('Failed to load articles');
+            }
             setLoading(false);
-        }, 1000)
-    }, [])
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [stateArticles]);
 
     const loadMore = () => {
         setPage(prev => prev + 1);
@@ -35,7 +60,7 @@ const Archive = () => {
             <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className={`text-4xl md:text-5xl font-bold mb-12 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                        Αρχείο Νέων
+                        {categoryParam || 'Αρχείο Νέων'}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[1, 2, 3].map((i) => (
@@ -63,7 +88,7 @@ const Archive = () => {
             <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                        Αρχείο Νέων
+                        {categoryParam || 'Αρχείο Νέων'}
                     </h2>
                     <p className="text-red-500">
                         Failed to load articles. Please try again later.
@@ -77,18 +102,25 @@ const Archive = () => {
         <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
             <div className="max-w-7xl mx-auto px-4">
                 <h2 className={`text-4xl md:text-5xl font-bold mb-12 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    Αρχείο Νέων
+                    {categoryParam || 'Αρχείο Νέων'}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {filteredArticles && filteredArticles?.map((article) => (
                         <ArticleCard key={article.id} article={article} isDark={isDark} />
                     ))}
                 </div>
-                {hasMore && !loading && (
+                {hasMore && !loading && filteredArticles.length > 0 && (
                     <div className="mt-8 text-center">
                         <Button onClick={loadMore} isDark={isDark}>
                             Φόρτωση Περισσότερων
                         </Button>
+                    </div>
+                )}
+                {filteredArticles.length === 0 && (
+                    <div className="text-center mt-8">
+                        <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                            Δεν βρέθηκαν άρθρα για την επιλεγμένη κατηγορία.
+                        </p>
                     </div>
                 )}
             </div>

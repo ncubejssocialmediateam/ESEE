@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     articles: [],
+    categories: [],
     navItems: [],
 };
 
@@ -12,6 +13,9 @@ const stateSlice = createSlice({
         setArticles: (state, { payload }) => {
             state.articles = payload;
         },
+        setCategories: (state, { payload }) => {
+            state.categories = payload;
+        },
         setNavItems: (state, { payload }) => {
             state.navItems = payload;
         },
@@ -20,6 +24,7 @@ const stateSlice = createSlice({
 
 export const {
     setArticles,
+    setCategories,
     setNavItems
 } = stateSlice.actions;
 

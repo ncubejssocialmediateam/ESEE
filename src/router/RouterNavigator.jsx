@@ -10,7 +10,7 @@ import Business from "../pages/Business.jsx";
 import Archive from "../pages/Archive.jsx";
 import {useEffect, useState} from "react";
 import {getData} from "../api/apiClient.jsx";
-import {setArticles, setNavItems} from "../redux/Reducer.jsx";
+import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
 import {useDispatch} from "react-redux";
 
 // eslint-disable-next-line react/prop-types
@@ -26,6 +26,21 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 dispatch(setArticles(res.data.docs));
             } catch (err) {
                 console.error('Error fetching articles:', err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        void fetchArticles();
+    }, [dispatch]);
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const res = await getData('/api/categories');
+                dispatch(setCategories(res.data.docs));
+            } catch (err) {
+                console.error('Error fetching categories:', err);
                 setError(err);
             } finally {
                 setLoading(false);

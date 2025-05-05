@@ -7,9 +7,6 @@ const API_BASE_URL = 'https://back.socialmediateam.gr';
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
     referrerPolicy: 'no-referrer-when-downgrade',
     timeout: 10000, // 10 seconds timeout
 });
