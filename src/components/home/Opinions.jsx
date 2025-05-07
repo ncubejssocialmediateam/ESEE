@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {useEffect} from "react";
 
 const Opinions = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
@@ -11,6 +12,7 @@ const Opinions = ({ isDark }) => {
   ).slice(0, 2); // Show only the 2 most recent opinions
 
   if (!opinions.length) return null;
+
 
   return (
     <section className={`py-24 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
@@ -34,7 +36,7 @@ const Opinions = ({ isDark }) => {
               <div className="relative z-10 p-2">
                 <div className="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
                   <img
-                    src={opinion.featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=500'}
+                    src={`https://back.socialmediateam.gr/${opinion.heroImage?.url}` || 'https://back.socialmediateam.gr/api/media/file/PATS8575-1024x576-300x169.jpg'}
                     alt={opinion.title}
                     className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                   />

@@ -19,9 +19,9 @@ const ResearchHub = ({ isDark }) => {
       {/* Header Section */}
       <div className={`${isDark ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'} border-b`}>
         <div className="max-w-7xl mx-auto px-8 py-12">
-          <h1 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Κέντρο Έρευνας & Ανάλυσης</h1>
+          <h1 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Το Εμπόριο σε Αριθμούς</h1>
           <p className={`text-xl max-w-3xl ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            Εμπεριστατωμένες αναλύσεις και έρευνες για την πορεία του ελληνικού εμπορίου 
+            Εμπεριστατωμένες αναλύσεις και έρευνες για την πορεία του ελληνικού εμπορίου
             και τις τάσεις της αγοράς.
           </p>
         </div>
@@ -115,7 +115,7 @@ const ResearchHub = ({ isDark }) => {
               <div className="flex justify-between items-center mb-6">
                 <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Πρόσφατες Εκθέσεις</h2>
                 <div className="flex space-x-2">
-                  <button 
+                  <button
                     onClick={() => setActiveView('latest')}
                     className={`px-4 py-2 rounded-lg ${
                       activeView === 'latest' 
@@ -125,7 +125,7 @@ const ResearchHub = ({ isDark }) => {
                   >
                     Πρόσφατες
                   </button>
-                  <button 
+                  <button
                     onClick={() => setActiveView('trending')}
                     className={`px-4 py-2 rounded-lg ${
                       activeView === 'trending' 
@@ -140,7 +140,7 @@ const ResearchHub = ({ isDark }) => {
 
               <div className="space-y-4">
                 {[1, 2, 3, 4].map((item) => (
-                  <div 
+                  <div
                     key={item}
                     className={`flex items-center p-4 border rounded-lg transition-colors cursor-pointer ${
                       isDark 

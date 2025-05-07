@@ -5,10 +5,13 @@ import News from '../components/home/News';
 import Opinions from '../components/home/Opinions';
 import Competitions from '../components/home/Competitions';
 import Events from '../components/home/Events';
+import Newspaper from '../components/home/Newspaper';
+import Features from '../components/home/Features';
 import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useEffect } from "react";
+import ResearchHub from "../components/home/Research.jsx";
 
 const Home = ({ isLoaded, setIsLoaded }) => {
   const { isDark, toggleTheme } = useTheme();
@@ -32,9 +35,9 @@ const Home = ({ isLoaded, setIsLoaded }) => {
 
       <Navigation isDark={isDark} />
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
-      {/*<Newspaper isDark={isDark} />*/}
+      <Newspaper isDark={isDark} />
       <News isDark={isDark} />
-      {/*<ResearchHub isDark={isDark} />*/}
+      <ResearchHub isDark={isDark} />
       {/*<InnovationShowcase isDark={isDark} />*/}
       <Opinions isDark={isDark} />
       <Competitions isDark={isDark} />
