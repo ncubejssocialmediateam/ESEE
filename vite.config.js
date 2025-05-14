@@ -10,7 +10,12 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
-    strictPort: true
+    strictPort: true,
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    }
   },
   build: {
     outDir: 'dist',
