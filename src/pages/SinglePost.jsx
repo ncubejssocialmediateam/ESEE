@@ -6,11 +6,14 @@ import { gsap } from 'gsap';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useSelector } from "react-redux";
+import ShareButton from '../components/common/ShareButton';
+import SharePopup from '../components/common/SharePopup';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
   const { isDark, toggleTheme } = useTheme();
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const stateArticles = useSelector(state => state.articles);
 
@@ -122,11 +125,18 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
               </div>
 
               <div className="flex justify-center mt-12">
-                <button className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg">Κοινοποίηση</button>
+                <ShareButton onClick={() => setIsShareOpen(true)} />
               </div>
             </div>
           </div>
         </div>
+        <SharePopup
+            isOpen={isShareOpen}
+            onClose={() => setIsShareOpen(false)}
+            isDark={isDark}
+            title={post.title}
+            url={window.location.href}
+        />
       </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Calendar, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
+import ShareMenu from '../common/ShareMenu';
 
 const ESEENewspaper = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -172,10 +173,11 @@ const ESEENewspaper = () => {
         <div className="border-t border-gray-200 p-8">
           <div className="flex justify-between items-center">
             <div className="flex space-x-4">
-              <button className="flex items-center text-gray-600 hover:text-blue-600">
-                <Share2 className="w-4 h-4 mr-2" />
-                Κοινοποίηση
-              </button>
+              <ShareMenu 
+                isDark={false}
+                title="Η ΕΦΗΜΕΡΙΔΑ ΤΗΣ ΕΣΕΕ"
+                url={window.location.href}
+              />
               <button className="flex items-center text-gray-600 hover:text-blue-600">
                 <Bookmark className="w-4 h-4 mr-2" />
                 Αποθήκευση
