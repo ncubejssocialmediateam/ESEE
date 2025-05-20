@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Calendar, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
-import ShareMenu from '../common/ShareMenu';
+import { useTheme } from "../../context/ThemeContext.jsx";
+import ShareButton from '../common/ShareButton';
+import SharePopup from '../common/SharePopup';
 
 const ESEENewspaper = () => {
+  const { isDark } = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   
   return (
     <div className="py-12" style={{ background: '#f5f5f5' }}>
@@ -173,11 +177,7 @@ const ESEENewspaper = () => {
         <div className="border-t border-gray-200 p-8">
           <div className="flex justify-between items-center">
             <div className="flex space-x-4">
-              <ShareMenu 
-                isDark={false}
-                title="Η ΕΦΗΜΕΡΙΔΑ ΤΗΣ ΕΣΕΕ"
-                url={window.location.href}
-              />
+              <ShareButton onClick={() => setIsShareOpen(true)} />
               <button className="flex items-center text-gray-600 hover:text-blue-600">
                 <Bookmark className="w-4 h-4 mr-2" />
                 Αποθήκευση
@@ -197,6 +197,13 @@ const ESEENewspaper = () => {
         </div>
       </div>
 
+      <SharePopup 
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        isDark={isDark}
+        title="Εφημερίδα"
+        url={window.location.href}
+      />
     </div>
   );
 };

@@ -17,6 +17,8 @@ const categoryTranslations = {
     'Page': 43,
 };
 
+const ARTICLES_PER_PAGE = 20;
+
 const Archive = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,17 +29,22 @@ const Archive = () => {
     const categoryParam = searchParams.get('category');
 
     // Filter articles based on category parameter
-    const filteredArticles = stateArticles.filter(article => {
-        if (!categoryParam) {
-            // If no category specified, show all articles
-            return true;
-        }
-        const categoryId = categoryTranslations[categoryParam];
-        return article.categories.some(category => category.id === categoryId);
-    });
+    const filteredArticles = stateArticles
+        .filter(article => {
+            if (!categoryParam) {
+                // If no category specified, show all articles
+                return true;
+            }
+            const categoryId = categoryTranslations[categoryParam];
+            return article.categories.some(category => category.id === categoryId);
+        })
+        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)); // Sort by date, newest first
+
+    // Get current page articles
+    const currentPageArticles = filteredArticles.slice(0, page * ARTICLES_PER_PAGE);
 
     // Calculate if there are more articles to load
-    const hasMore = filteredArticles.length > page * 9; // Assuming 9 articles per page
+    const hasMore = filteredArticles.length > page * ARTICLES_PER_PAGE;
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -53,6 +60,8 @@ const Archive = () => {
     const loadMore = () => {
         setPage(prev => prev + 1);
         setLoading(true);
+        // Simulate loading delay
+        setTimeout(() => setLoading(false), 500);
     };
 
     if (loading && page === 1) {
@@ -105,14 +114,14 @@ const Archive = () => {
                     {categoryParam || 'Αρχείο Νέων'}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {filteredArticles && filteredArticles?.map((article) => (
+                    {currentPageArticles.map((article) => (
                         <ArticleCard key={article.id} article={article} isDark={isDark} />
                     ))}
                 </div>
-                {hasMore && !loading && filteredArticles.length > 0 && (
+                {hasMore && (
                     <div className="mt-8 text-center">
                         <Button onClick={loadMore} isDark={isDark}>
-                            Φόρτωση Περισσότερων
+                            {loading ? 'Φόρτωση...' : 'Φόρτωση Περισσότερων'}
                         </Button>
                     </div>
                 )}
