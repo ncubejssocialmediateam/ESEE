@@ -1,16 +1,36 @@
 // store.js
 import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import rootReducer from './Reducer.jsx'; // Your root reducer combining your app reducers
+
+// Create a storage instance that falls back to memory storage if quota is exceeded
+const createNoopStorage = () => {
+    return {
+        getItem(_key) {
+            return Promise.resolve(null);
+        },
+        setItem(_key, value) {
+            return Promise.resolve(value);
+        },
+        removeItem(_key) {
+            return Promise.resolve();
+        },
+    };
+};
+
+const storage = typeof window !== 'undefined' 
+    ? createWebStorage('session') // Use sessionStorage instead of localStorage
+    : createNoopStorage();
 
 // Configuration object for redux-persist
 const persistConfig = {
-    key: 'root', // key for the persisted data in storage
-    storage,     // storage method (localStorage in this case)
-    // You can also whitelist or blacklist specific reducers here:
-    // whitelist: ['reducerName'],
-    // blacklist: ['anotherReducer']
+    key: 'root',
+    storage,
+    whitelist: ['navItems'], // Only persist navigation items
+    throttle: 500, // Throttle storage operations
+    serialize: true, // Enable serialization
+    debug: process.env.NODE_ENV === 'development', // Enable debug mode in development
 };
 
 // Create a persisted reducer using the persistConfig

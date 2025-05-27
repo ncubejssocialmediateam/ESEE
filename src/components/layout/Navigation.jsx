@@ -18,10 +18,6 @@ const NavItem = ({ item, isDark }) => {
     return `/${slug}`;
   };
 
-  useEffect(() => {
-    console.log(link)
-  }, [])
-
   return (
     <div className="relative group">
       <Link
