@@ -21,22 +21,30 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
     if (!isLoaded) setIsLoaded(true);
   }, [isLoaded, setIsLoaded]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [params.slug]); // Added params.slug as dependency
+
+
   const post = stateArticles.find(article => article.slug === params.slug);
 
   useEffect(() => {
     if (imgLoaded) {
       const timer = setTimeout(() => {
         const tl = gsap.timeline();
-        tl.fromTo('.post-content', { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
-        tl.fromTo('.post-image', { scale: 1.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out' }, '-=0.5');
+        tl.fromTo('.post-content',
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: 'power3.out' }
+        );
+        tl.fromTo('.post-image',
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: 'power3.out' },
+          '-=0.5'
+        );
       }, 200);
       return () => clearTimeout(timer);
     }
   }, [imgLoaded]);
-
-  // useEffect(() => {
-  //   console.log('post is ', post)
-  // }, [post])
 
   if (!post) {
     return (
