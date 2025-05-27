@@ -8,6 +8,7 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import { useSelector } from "react-redux";
 import ShareButton from '../components/common/ShareButton';
 import SharePopup from '../components/common/SharePopup';
+import ArticleCard from '../components/article/articleCard';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
@@ -23,24 +24,28 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [params.slug]); // Added params.slug as dependency
-
+  }, [params.slug]);
 
   const post = stateArticles.find(article => article.slug === params.slug);
+
+  // Get related posts
+  const relatedPosts = post ? stateArticles
+    .filter(article => 
+      // Same category and not the current post
+      article.categories.some(category => 
+        post.categories.some(postCategory => postCategory.id === category.id)
+      ) && article.id !== post.id
+    )
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, 5) // Get only 5 posts
+    : [];
 
   useEffect(() => {
     if (imgLoaded) {
       const timer = setTimeout(() => {
         const tl = gsap.timeline();
-        tl.fromTo('.post-content',
-          { opacity: 0 },
-          { opacity: 1, duration: 1, ease: 'power3.out' }
-        );
-        tl.fromTo('.post-image',
-          { opacity: 0 },
-          { opacity: 1, duration: 1, ease: 'power3.out' },
-          '-=0.5'
-        );
+        tl.fromTo('.post-content', { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power3.out' });
+        tl.fromTo('.post-image', { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power3.out' }, '-=0.5');
       }, 200);
       return () => clearTimeout(timer);
     }
@@ -55,7 +60,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
   }
 
   return (
-      <div className={`relative min-h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} overflow-hidden transition-colors duration-300`}>
+      <div className={`relative min-h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} transition-colors duration-300`}>
         {isDark && <ParticleBackground color="#ffffff" count={100} />}
         <button onClick={toggleTheme} className="fixed top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 z-50">
           {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
@@ -82,7 +87,6 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                     onLoad={() => setImgLoaded(true)}
                 />
               </div>
-
 
               <div className="prose max-w-none">
                 {post.content?.root?.children?.map((block, index) => {
@@ -136,6 +140,20 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                 <ShareButton onClick={() => setIsShareOpen(true)} />
               </div>
             </div>
+
+            {/* Related Posts Section */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-20 border-t border-gray-200 pt-12">
+                <h2 className={`text-3xl font-bold mb-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  Σχετικά Άρθρα
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {relatedPosts.map((article) => (
+                    <ArticleCard key={article.id} article={article} isDark={isDark} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <SharePopup
