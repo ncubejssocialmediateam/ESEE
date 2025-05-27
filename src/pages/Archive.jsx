@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import ArticleCard from "../components/article/articleCard.jsx";
 import Button from '../components/shared/Button';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useSearchParams } from 'react-router-dom';
+import { getData } from '../api/apiClient.jsx';
+import { setArticles } from '../redux/Reducer.jsx';
 
 // Category translations for filtering
 const categoryTranslations = {
@@ -27,6 +29,32 @@ const Archive = () => {
     const stateArticles = useSelector(state => state.articles);
     const [searchParams] = useSearchParams();
     const categoryParam = searchParams.get('category');
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, []); //
+
+    // Add effect to fetch articles if they are not in the store
+    useEffect(() => {
+        const fetchArticles = async () => {
+            if (!stateArticles.length) {
+                try {
+                    const res = await getData('/api/posts?limit=10000');
+                    dispatch(setArticles(res.data.docs));
+                } catch (err) {
+                    console.error('Error fetching articles:', err);
+                    setError(err);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
+        };
+        void fetchArticles();
+    }, [stateArticles.length, dispatch]);
 
     // Filter articles based on category parameter
     const filteredArticles = stateArticles
@@ -45,17 +73,6 @@ const Archive = () => {
 
     // Calculate if there are more articles to load
     const hasMore = filteredArticles.length > page * ARTICLES_PER_PAGE;
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (!stateArticles.length) {
-                setError('Failed to load articles');
-            }
-            setLoading(false);
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, [stateArticles]);
 
     const loadMore = () => {
         setPage(prev => prev + 1);
