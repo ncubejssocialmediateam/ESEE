@@ -8,16 +8,18 @@ import Privacy from "../pages/Privacy.jsx";
 import Projects from "../pages/Projects.jsx";
 import Business from "../pages/Business.jsx";
 import Archive from "../pages/Archive.jsx";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
 import {useDispatch} from "react-redux";
+import useScrollToTop from "../hooks/useScrollToTop.js";
 
 // eslint-disable-next-line react/prop-types
 const RouterNavigator = ({isLoaded, setIsLoaded}) => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const dispatch = useDispatch();
+
+    // Use the scroll to top hook
+    useScrollToTop();
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -26,9 +28,6 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 dispatch(setArticles(res.data.docs));
             } catch (err) {
                 console.error('Error fetching articles:', err);
-                setError(err);
-            } finally {
-                setLoading(false);
             }
         };
         void fetchArticles();
@@ -41,9 +40,6 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 dispatch(setCategories(res.data.docs));
             } catch (err) {
                 console.error('Error fetching categori:', err);
-                setError(err);
-            } finally {
-                setLoading(false);
             }
         };
         void fetchArticles();
