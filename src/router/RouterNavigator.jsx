@@ -9,6 +9,7 @@ import Projects from "../pages/Projects.jsx";
 import Business from "../pages/Business.jsx";
 import Archive from "../pages/Archive.jsx";
 import PdfUploads from "../pages/PdfUploads.jsx";
+import Stats from "../pages/Stats.jsx";
 import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
@@ -70,6 +71,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             <Route path="/business" element={<Business />} />
             <Route path="/archive" element={<Archive />} />
             <Route path="/pdfuploads" element={<PdfUploads />} />
+            <Route path="/stats" element={<Stats />} />
         </Routes>
     );
 };
