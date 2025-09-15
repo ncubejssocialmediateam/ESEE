@@ -1,5 +1,21 @@
 # ESEE Website
 
+## Features
+
+### Φορολογικό Ημερολόγιο (Tax Calendar)
+A comprehensive tax calendar feature that displays Greek tax obligations and deadlines from the Taxheaven RSS feed.
+
+**Features:**
+- Real-time RSS feed integration from Taxheaven.gr
+- Monthly and yearly filtering
+- Event type categorization (deadlines, payments, applications, forms, obligations)
+- Visual indicators for overdue, today, and upcoming events
+- Statistics dashboard showing event counts
+- Responsive design with modern UI
+- Refresh functionality to update data
+
+**Access:** Navigate to `/tax-calendar` or use the "Φορολογικό Ημερολόγιο" link in the navigation menu.
+
 ## Deployment Guide
 
 ### Prerequisites
