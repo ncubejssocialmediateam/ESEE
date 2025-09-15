@@ -1,0 +1,3 @@
+Color1=#00B5F1;
+Color2=#332F31;
+Color3=#929DA5;
