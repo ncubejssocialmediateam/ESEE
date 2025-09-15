@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { gsap } from '../../utils/gsap';
 import ParticleBackground from '../shared/ParticleBackground';
+import ESEE_LOGO from '../../assets/ESEE-LOGO_white.png';
+import ESEE_LOGO_LOADING from '../../assets/ESEE-LOGO7.png';
 
 const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -57,25 +59,12 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
     if (isLoaded && isMounted) {
       const tl = gsap.timeline({ delay: 1 });
 
-      // Title animation with staggered letters effect
-      const titleText = titleRef.current.textContent;
-      titleRef.current.textContent = '';
-      titleRef.current.style.opacity = '1';
-      
-      const titleLetters = titleText.split('').map(letter => {
-        const span = document.createElement('span');
-        span.textContent = letter;
-        span.style.display = 'inline-block';
-        titleRef.current.appendChild(span);
-        return span;
-      });
-
-      tl.from(titleLetters, {
+      // Logo animation with scale and fade effect
+      tl.from(titleRef.current, {
         opacity: 0,
-        y: 100,
-        rotateX: -90,
-        duration: 0.8,
-        stagger: 0.02,
+        scale: 0.5,
+        y: 50,
+        duration: 1,
         ease: 'power4.out'
       });
 
@@ -140,11 +129,13 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
         } z-50 flex items-center justify-center transition-colors duration-300`}>
           <div 
             ref={loadingRef}
-            className={`text-9xl font-bold tracking-wider ${
-              isDark ? 'text-blue-400' : 'text-blue-600'
-            }`}
+            className="flex items-center justify-center"
           >
-            ΕΣΕΕ
+            <img 
+              src={ESEE_LOGO_LOADING} 
+              alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
+              className="h-32 md:h-40 lg:h-48 w-auto"
+            />
           </div>
         </div>
       )}
@@ -170,17 +161,16 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
           className="w-full max-w-7xl mx-auto px-4 relative z-10"
         >
           <div className={`max-w-4xl mx-auto text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            <h1 
+            <div 
               ref={titleRef}
-              className={`text-6xl md:text-8xl font-bold mb-8 leading-tight tracking-tight ${
-                isDark 
-                  ? 'bg-gradient-to-r from-blue-300 via-blue-400 to-indigo-400' 
-                  : 'bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700'
-              } bg-clip-text  drop-shadow-lg`}
-              style={{ perspective: '1000px' }}
+              className="mb-8 flex justify-center"
             >
-              Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας
-            </h1>
+              <img 
+                src={ESEE_LOGO} 
+                alt="Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
+                className="max-w-full h-auto max-h-32 md:max-h-40 lg:max-h-48 drop-shadow-lg"
+              />
+            </div>
             <p 
               ref={descRef}
               className={`text-xl md:text-3xl mb-12 leading-relaxed ${

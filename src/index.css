@@ -56,3 +56,9 @@ a, button, [role="button"] {
 ::selection {
   @apply bg-blue-500 text-white;
 }
+
+/* Custom blue-400 override */
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: #02B5F2;
+}
