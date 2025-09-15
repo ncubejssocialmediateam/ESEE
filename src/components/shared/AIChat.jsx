@@ -16,6 +16,7 @@ const AIChat = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isInChatMode, setIsInChatMode] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -84,6 +85,10 @@ const AIChat = () => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    setIsInChatMode(inputValue.trim().length > 0);
+  }, [inputValue]);
+
   const handleQuickAnswer = (answer) => {
     const userMessage = {
       id: Date.now(),
@@ -93,6 +98,7 @@ const AIChat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    setInputValue(''); // Clear any existing input
     setIsTyping(true);
 
     // Simulate AI response
@@ -131,7 +137,7 @@ const AIChat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInputValue('');
+    setInputValue(''); // Clear input immediately
     setIsTyping(true);
 
     // Simulate AI response
@@ -232,7 +238,7 @@ const AIChat = () => {
                   ΕΣΕΕ AI Assistant
                 </h3>
                 <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>
-                  Online • 2025
+                  {isInChatMode ? 'Συνομιλία • 2025' : 'Online • 2025'}
                 </p>
               </div>
             </div>
@@ -267,7 +273,7 @@ const AIChat = () => {
               {/* Quick Answer Buttons */}
               <div className={`p-3 border-b flex-shrink-0 transition-all duration-300 ${
                 inputValue.trim() 
-                  ? 'max-h-0 p-0 border-0 overflow-hidden opacity-0' 
+                  ? 'max-h-0 p-0 border-0 overflow-hidden opacity-0 pointer-events-none' 
                   : 'max-h-96 opacity-100'
               } ${isDark ? 'border-slate-700/50' : 'border-gray-200/50'}`}>
                 <p className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
@@ -400,7 +406,7 @@ const AIChat = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder={inputValue.trim() ? "Συνεχίστε να γράφετε..." : "Γράψτε την ερώτησή σας..."}
+                    placeholder={inputValue.trim() ? "Συνεχίστε τη συνομιλία..." : "Γράψτε την ερώτησή σας..."}
                     className={`flex-1 p-3 rounded-xl border transition-all duration-200 focus:scale-[1.01] ${
                       isDark
                         ? 'bg-gradient-to-r from-slate-800/80 to-slate-700/80 border-slate-600/50 text-white placeholder-slate-400 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20'
