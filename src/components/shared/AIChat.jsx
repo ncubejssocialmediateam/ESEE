@@ -291,82 +291,79 @@ const AIChat = () => {
 
           {!isMinimized && (
             <>
-              {/* Quick Answer Buttons */}
-              <div className={`p-3 border-b flex-shrink-0 transition-all duration-300 ${
-                inputValue.trim() 
-                  ? 'max-h-0 p-0 border-0 overflow-hidden opacity-0 pointer-events-none' 
-                  : 'max-h-96 opacity-100'
-              } ${isDark ? 'border-slate-700/50' : 'border-gray-200/50'}`}>
-                <p className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
-                  Γρήγορες απαντήσεις:
-                </p>
-                
-                {/* Mobile: Horizontal scrollable */}
-                <div className="sm:hidden">
-                  <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
-                    {quickAnswers.map((answer) => {
-                      const IconComponent = answer.icon;
-                      return (
-                        <button
-                          key={answer.id}
-                          onClick={() => handleQuickAnswer(answer)}
-                          className={`group relative flex-shrink-0 w-28 p-2.5 rounded-lg text-center transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-                            isDark
-                              ? `${answer.bgColor} hover:bg-opacity-30 border border-slate-600/30 hover:border-slate-500/50`
-                              : `${answer.bgColor} hover:bg-opacity-40 border border-gray-200/50 hover:border-gray-300/50`
-                          } backdrop-blur-sm`}
-                        >
-                          <div className="flex flex-col items-center space-y-1.5">
-                            <div className={`p-1.5 rounded-md bg-gradient-to-r ${answer.color} shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                              <IconComponent size={14} className="text-white" />
-                            </div>
-                            <div>
-                              <p className={`text-xs font-semibold ${isDark ? 'text-slate-200' : 'text-gray-800'} group-hover:text-opacity-90 transition-colors`}>
-                                {answer.title}
-                              </p>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Desktop: Grid layout */}
-                <div className="hidden sm:grid grid-cols-2 gap-2">
-                  {quickAnswers.map((answer) => {
-                    const IconComponent = answer.icon;
-                    return (
-                      <button
-                        key={answer.id}
-                        onClick={() => handleQuickAnswer(answer)}
-                        className={`group relative p-2.5 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-                          isDark
-                            ? `${answer.bgColor} hover:bg-opacity-30 border border-slate-600/30 hover:border-slate-500/50`
-                            : `${answer.bgColor} hover:bg-opacity-40 border border-gray-200/50 hover:border-gray-300/50`
-                        } backdrop-blur-sm`}
-                      >
-                        <div className="flex items-center space-x-2.5">
-                          <div className={`p-1.5 rounded-md bg-gradient-to-r ${answer.color} shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                            <IconComponent size={14} className="text-white" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className={`text-sm font-semibold ${isDark ? 'text-slate-200' : 'text-gray-800'} group-hover:text-opacity-90 transition-colors`}>
-                              {answer.title}
-                            </p>
-                            <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-gray-600'} group-hover:text-opacity-80 transition-colors`}>
-                              {answer.description}
-                            </p>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 transition-all duration-300">
+                {messages.length <= 1 && (
+                  <div className={`pb-3 border-b ${isDark ? 'border-slate-700/50' : 'border-gray-200/50'}`}>
+                    <p className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
+                      Γρήγορες απαντήσεις:
+                    </p>
+                    
+                    {/* Mobile: Horizontal scrollable */}
+                    <div className="sm:hidden">
+                      <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+                        {quickAnswers.map((answer) => {
+                          const IconComponent = answer.icon;
+                          return (
+                            <button
+                              key={answer.id}
+                              onClick={() => handleQuickAnswer(answer)}
+                              className={`group relative flex-shrink-0 w-28 p-2.5 rounded-lg text-center transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+                                isDark
+                                  ? `${answer.bgColor} hover:bg-opacity-30 border border-slate-600/30 hover:border-slate-500/50`
+                                  : `${answer.bgColor} hover:bg-opacity-40 border border-gray-200/50 hover:border-gray-300/50`
+                              } backdrop-blur-sm`}
+                            >
+                              <div className="flex flex-col items-center space-y-1.5">
+                                <div className={`p-1.5 rounded-md bg-gradient-to-r ${answer.color} shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                                  <IconComponent size={14} className="text-white" />
+                                </div>
+                                <div>
+                                  <p className={`text-xs font-semibold ${isDark ? 'text-slate-200' : 'text-gray-800'} group-hover:text-opacity-90 transition-colors`}>
+                                    {answer.title}
+                                  </p>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Desktop: Grid layout */}
+                    <div className="hidden sm:grid grid-cols-2 gap-2">
+                      {quickAnswers.map((answer) => {
+                        const IconComponent = answer.icon;
+                        return (
+                          <button
+                            key={answer.id}
+                            onClick={() => handleQuickAnswer(answer)}
+                            className={`group relative p-2.5 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+                              isDark
+                                ? `${answer.bgColor} hover:bg-opacity-30 border border-slate-600/30 hover:border-slate-500/50`
+                                : `${answer.bgColor} hover:bg-opacity-40 border border-gray-200/50 hover:border-gray-300/50`
+                            } backdrop-blur-sm`}
+                          >
+                            <div className="flex items-center space-x-2.5">
+                              <div className={`p-1.5 rounded-md bg-gradient-to-r ${answer.color} shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                                <IconComponent size={14} className="text-white" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className={`text-sm font-semibold ${isDark ? 'text-slate-200' : 'text-gray-800'} group-hover:text-opacity-90 transition-colors`}>
+                                  {answer.title}
+                                </p>
+                                <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-gray-600'} group-hover:text-opacity-80 transition-colors`}>
+                                  {answer.description}
+                                </p>
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {messages.map((message) => (
                   <div
                     key={message.id}
