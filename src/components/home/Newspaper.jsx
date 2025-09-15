@@ -29,7 +29,7 @@ const ESEENewspaper = () => {
         <div className="border-b-4 border-black p-8" style={{ borderColor: 'rgba(0,0,0,0.85)' }}>
           <div className="text-center">
             <div className="text-sm font-serif mb-2">Τεύχος 1 • Ιανουάριος 2025</div>
-            <h1 className="font-serif text-6xl font-bold tracking-tight mb-4">
+            <h1 className="font-serif text-6xl font-bold tracking-tight mb-4 text-black">
               Η ΕΦΗΜΕΡΙΔΑ ΤΗΣ ΕΣΕΕ
             </h1>
             <div className="flex items-center justify-center space-x-4 text-gray-600">
@@ -62,7 +62,7 @@ const ESEENewspaper = () => {
                 }}></div>
                 <div className="text-white text-opacity-90 text-6xl">🏢</div>
               </div>
-              <h2 className="font-serif text-4xl font-bold mb-4">
+              <h2 className="font-serif text-4xl font-bold mb-4 text-black">
                 Νέες Προοπτικές Ανάπτυξης για το Ελληνικό Εμπόριο
               </h2>
               <div className="flex items-center text-sm text-gray-600 mb-4">
@@ -94,7 +94,7 @@ const ESEENewspaper = () => {
                   }}></div>
                   <div className="text-white text-opacity-90 text-6xl">💻</div>
                 </div>
-                <h3 className="font-serif text-2xl font-bold mb-2">
+                <h3 className="font-serif text-2xl font-bold mb-2 text-black">
                   Ψηφιακός Μετασχηματισμός
                 </h3>
                 <p className="text-gray-700">
@@ -114,7 +114,7 @@ const ESEENewspaper = () => {
                   }}></div>
                   <div className="text-white text-opacity-90 text-6xl">🌱</div>
                 </div>
-                <h3 className="font-serif text-2xl font-bold mb-2">
+                <h3 className="font-serif text-2xl font-bold mb-2 text-black">
                   Πράσινη Ανάπτυξη
                 </h3>
                 <p className="text-gray-700">
@@ -135,13 +135,13 @@ const ESEENewspaper = () => {
               backgroundSize: '16px 16px',
               backgroundPosition: '0 0, 8px 8px'
             }}>
-              <h3 className="font-serif text-xl font-bold mb-4">
+              <h3 className="font-serif text-xl font-bold mb-4 text-black">
                 Τελευταία Νέα
               </h3>
               <div className="space-y-4">
                 {[1, 2, 3].map((item) => (
                   <div key={item} className="border-b border-gray-200 pb-4 last:border-0">
-                    <h4 className="font-serif font-bold mb-2">
+                    <h4 className="font-serif font-bold mb-2 text-black">
                       Ανακοίνωση Νέων Προγραμμάτων
                     </h4>
                     <p className="text-gray-600 text-sm">
@@ -154,7 +154,7 @@ const ESEENewspaper = () => {
 
             {/* Market Overview */}
             <div className="border-t-2 pt-4" style={{ borderColor: 'rgba(0,0,0,0.85)' }}>
-              <h3 className="font-serif text-xl font-bold mb-4">
+              <h3 className="font-serif text-xl font-bold mb-4 text-black">
                 Επισκόπηση Αγοράς
               </h3>
               <div className="space-y-4">
