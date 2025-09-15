@@ -102,7 +102,7 @@ const ResearchHub = ({ isDark }) => {
                     <XAxis dataKey="month" />
                     <YAxis />
                     <Tooltip />
-                    <Line type="monotone" dataKey="retail" stroke="#2563eb" name="Λιανεμπόριο" />
+                    <Line type="monotone" dataKey="retail" stroke="#00B5F1" name="Λιανεμπόριο" />
                     <Line type="monotone" dataKey="ecommerce" stroke="#16a34a" name="E-commerce" />
                     <Line type="monotone" dataKey="exports" stroke="#9333ea" name="Εξαγωγές" />
                   </LineChart>
