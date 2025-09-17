@@ -76,14 +76,24 @@ const Navigation = ({ isDark }) => {
                     />
                   ))}
                   <Link
-                    to="/tax-calendar"
+                    to="/positions"
                     className={`flex items-center px-4 py-2 text-lg font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Φορολογικό Ημερολόγιο
+                    Θέσεις
+                  </Link>
+                  <Link
+                    to="/portal"
+                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Portal ΕΣΕΕ
                   </Link>
                 </div>
               </div>
@@ -130,14 +140,26 @@ const Navigation = ({ isDark }) => {
                 ))}
                 <div className="mb-4">
                   <Link
-                    to="/tax-calendar"
+                    to="/positions"
                     className={`flex items-center px-4 py-2 text-lg font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Φορολογικό Ημερολόγιο
+                    Θέσεις
+                  </Link>
+                </div>
+                <div className="mb-4">
+                  <Link
+                    to="/portal"
+                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Portal ΕΣΕΕ
                   </Link>
                 </div>
 
