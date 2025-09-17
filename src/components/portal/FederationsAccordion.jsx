@@ -329,3 +329,4 @@ const FederationsAccordion = () => {
 };
 
 export default FederationsAccordion;
+

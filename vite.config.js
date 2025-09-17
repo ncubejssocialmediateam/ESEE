@@ -15,6 +15,24 @@ export default defineConfig({
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0'
+    },
+    proxy: {
+      '/api/eurostat': {
+        target: 'https://ec.europa.eu/eurostat/api/dissemination',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/eurostat/, ''),
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log('Sending Request to the Target:', req.method, req.url);
+          });
+          proxy.on('proxyRes', (proxyRes, req, res) => {
+            console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+          });
+        }
+      }
     }
   },
   build: {

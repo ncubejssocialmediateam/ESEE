@@ -17,13 +17,15 @@ import {
   AlertCircle,
   CheckCircle,
   XCircle,
-  RefreshCw
+  RefreshCw,
+  Globe
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TaxCalendar from './TaxCalendar';
 import usePortalData from '../hooks/usePortalData';
 import ContactInfo from '../components/portal/ContactInfo';
 import FederationsAccordion from '../components/portal/FederationsAccordion';
+import EurostatStatistics from '../components/portal/EurostatStatistics';
 
 const Portal = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -83,6 +85,14 @@ const Portal = () => {
       icon: Shield,
       color: 'bg-indigo-500',
       href: '#federations'
+    },
+    {
+      id: 'eurostat',
+      title: 'Ευρωπαϊκά Στατιστικά',
+      description: 'Οικονομικά δεδομένα από το Eurostat',
+      icon: Globe,
+      color: 'bg-indigo-500',
+      href: '#eurostat'
     },
     {
       id: 'settings',
@@ -556,6 +566,8 @@ const Portal = () => {
         );
       case 'federations':
         return <FederationsAccordion />;
+      case 'eurostat':
+        return <EurostatStatistics />;
       case 'settings':
         return (
           <div className="space-y-6">
@@ -750,6 +762,16 @@ const Portal = () => {
                 }`}
               >
                 Ομοσπονδίες
+              </button>
+              <button
+                onClick={() => setActiveTab('eurostat')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'eurostat'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Ευρωπαϊκά Στατιστικά
               </button>
               <button
                 onClick={() => setActiveTab('settings')}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eurostat API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .success {
+            background-color: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+        .error {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        .info {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        pre {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Eurostat API Test</h1>
+        <p>Δοκιμή του Eurostat API για την ΕΣΕΕ Portal</p>
+        
+        <div>
+            <button onclick="testDirectAPI()">🌐 Δοκιμή Direct API</button>
+            <button onclick="testProxyAPI()">🔄 Δοκιμή Proxy API</button>
+            <button onclick="testMockData()">🎭 Δοκιμή Mock Data</button>
+            <button onclick="clearResults()">🗑️ Καθαρισμός</button>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(message, type = 'info', data = null) {
+            const results = document.getElementById('results');
+            const result = document.createElement('div');
+            result.className = `test-result ${type}`;
+            
+            let content = message;
+            if (data) {
+                content += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+            
+            result.innerHTML = content;
+            results.appendChild(result);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        async function testDirectAPI() {
+            addResult('🔄 Δοκιμή Direct Eurostat API...', 'info');
+            
+            try {
+                const url = 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data?dataset=prc_hicp_midx&geo=EL&time=2024-01&format=json';
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'User-Agent': 'ESEE-Portal/1.0'
+                    },
+                    mode: 'cors'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult('✅ Direct API Success!', 'success', data);
+                } else {
+                    addResult(`❌ Direct API Error: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Direct API Failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testProxyAPI() {
+            addResult('🔄 Δοκιμή Proxy API...', 'info');
+            
+            try {
+                const url = 'http://localhost:5173/api/eurostat/statistics/1.0/data?dataset=prc_hicp_midx&geo=EL&time=2024-01&format=json';
+                
+                const response = await fetch(url);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult('✅ Proxy API Success!', 'success', data);
+                } else {
+                    addResult(`❌ Proxy API Error: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Proxy API Failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testMockData() {
+            addResult('🔄 Δοκιμή Mock Data...', 'info');
+            
+            try {
+                // Simulate the mock data structure
+                const mockData = {
+                    value: {
+                        '0,0': 3.2, // Greece, latest month
+                        '1,0': 2.8, // Germany, latest month
+                        '2,0': 3.1, // France, latest month
+                        '3,0': 2.9, // Italy, latest month
+                        '4,0': 3.4  // Spain, latest month
+                    },
+                    dimension: {
+                        geo: {
+                            category: {
+                                index: { 'EL': 0, 'DE': 1, 'FR': 2, 'IT': 3, 'ES': 4 },
+                                label: { 'EL': 'Greece', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain' }
+                            }
+                        },
+                        time: {
+                            category: {
+                                index: { '2024-01': 0 },
+                                label: { '2024-01': '2024-01' }
+                            }
+                        }
+                    },
+                    label: {
+                        geo: { 'EL': 'Greece', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain' },
+                        time: { '2024-01': '2024-01' }
+                    }
+                };
+
+                // Process the data
+                const processedData = processEurostatData(mockData, 'inflation');
+                addResult('✅ Mock Data Success!', 'success', processedData);
+                
+            } catch (error) {
+                addResult(`❌ Mock Data Failed: ${error.message}`, 'error');
+            }
+        }
+
+        function processEurostatData(rawData, indicator) {
+            if (!rawData || !rawData.value) {
+                return { error: 'No data available' };
+            }
+
+            const { value, dimension, label } = rawData;
+            const processedData = [];
+
+            // Extract time periods
+            const timeLabels = label.time || {};
+            const geoLabels = label.geo || {};
+
+            // Process each data point
+            Object.entries(value).forEach(([key, val]) => {
+                const dimensions = key.split(',');
+                const geo = dimensions[0];
+                const time = dimensions[1];
+
+                if (geoLabels[geo] && timeLabels[time] && val !== null) {
+                    processedData.push({
+                        country: geoLabels[geo],
+                        countryCode: geo,
+                        time: timeLabels[time],
+                        value: val,
+                        indicator: indicator
+                    });
+                }
+            });
+
+            // Sort by time (most recent first)
+            processedData.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+            return {
+                data: processedData,
+                metadata: {
+                    indicator,
+                    totalPoints: processedData.length,
+                    countries: [...new Set(processedData.map(d => d.country))],
+                    timeRange: {
+                        from: processedData[processedData.length - 1]?.time,
+                        to: processedData[0]?.time
+                    }
+                }
+            };
+        }
+
+        // Auto-run mock data test on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testMockData();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
