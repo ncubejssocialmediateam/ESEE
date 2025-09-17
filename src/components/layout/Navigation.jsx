@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
 import {useSelector} from "react-redux";
@@ -23,7 +23,7 @@ const NavItem = ({ item, isDark }) => {
     <div className="relative group">
       <Link
         to={getNavigationUrl()}
-        className={`flex items-center px-4 py-2 text-lg font-medium ${
+        className={`flex items-center px-3 py-1.5 text-sm font-medium ${
           isDark
             ? 'text-gray-200 hover:text-blue-400'
             : 'text-gray-800 hover:text-blue-600'
@@ -31,6 +31,57 @@ const NavItem = ({ item, isDark }) => {
       >
         {label}
       </Link>
+    </div>
+  );
+};
+
+const DropdownNavItem = ({ isDark }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const pressOfficeItems = [
+    { label: 'Νέα', url: '/news' },
+    { label: 'Ανακοινώσεις & Δελτία Τύπου', url: '/press-releases' }
+  ];
+
+  return (
+    <div 
+      className="relative group"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <button
+        className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+          isDark
+            ? 'text-gray-200 hover:text-blue-400'
+            : 'text-gray-800 hover:text-blue-600'
+        } transition-colors`}
+      >
+        Γραφείο Τύπου
+        <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      
+      {isOpen && (
+        <div className={`absolute top-full left-0 mt-1 w-64 rounded-md shadow-lg z-50 ${
+          isDark ? 'bg-blue-950 border border-blue-800' : 'bg-white border border-gray-200'
+        }`}>
+          <div className="py-1">
+            {pressOfficeItems.map((item, index) => (
+              <Link
+                key={index}
+                to={item.url}
+                className={`block px-4 py-2 text-sm ${
+                  isDark
+                    ? 'text-gray-200 hover:bg-blue-900 hover:text-blue-400'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
+                } transition-colors`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -57,7 +108,7 @@ const Navigation = ({ isDark }) => {
                 : 'bg-white/80 border-b border-gray-100'
         } backdrop-blur-sm shadow-lg z-40 transition-colors duration-300`}>
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-between items-center h-20">
+            <div className="flex justify-between items-center h-16">
               <div className="flex items-center space-x-8">
                 <a href="#" className="flex items-center">
                   <img 
@@ -67,7 +118,7 @@ const Navigation = ({ isDark }) => {
                   />
                 </a>
 
-                <div className="hidden lg:flex space-x-4">
+                <div className="hidden lg:flex space-x-2">
                   {stateNavItems && stateNavItems?.map((item) => (
                     <NavItem
                       key={item.id}
@@ -75,9 +126,10 @@ const Navigation = ({ isDark }) => {
                       isDark={isDark}
                     />
                   ))}
+                  <DropdownNavItem isDark={isDark} />
                   <Link
                     to="/positions"
-                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
@@ -87,23 +139,33 @@ const Navigation = ({ isDark }) => {
                   </Link>
                   <Link
                     to="/portal"
-                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Portal ΕΣΕΕ
+                    Portal
+                  </Link>
+                  <Link
+                    to="/administration"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Διοίκηση
                   </Link>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="hidden lg:flex items-center space-x-6">
+                <div className="hidden lg:flex items-center space-x-4">
                   <div className="relative z-50">
                     <AccessibilityMenu isDark={isDark} />
                   </div>
-                  <button className={`px-6 py-2 ${
+                  <button className={`px-4 py-1.5 text-sm ${
                       isDark
                           ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                           : 'bg-blue-600 hover:bg-blue-700 text-white'
@@ -128,20 +190,49 @@ const Navigation = ({ isDark }) => {
         {isMenuOpen && (
             <div className={`fixed inset-0 ${
                 isDark ? 'bg-blue-950' : 'bg-white'
-            } z-30 lg:hidden pt-20 transition-colors duration-300`}>
+            } z-30 lg:hidden pt-16 transition-colors duration-300`}>
               <div className="p-4">
                 {stateNavItems && stateNavItems?.map((item) => (
-                  <div key={item.id} className="mb-4">
+                  <div key={item.id} className="mb-2">
                     <NavItem
                       item={item}
                       isDark={isDark}
                     />
                   </div>
                 ))}
-                <div className="mb-4">
+                <div className="mb-2">
+                  <div className={`px-3 py-1.5 text-sm font-medium ${
+                    isDark ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    Γραφείο Τύπου
+                  </div>
+                  <div className="ml-3 space-y-1">
+                    <Link
+                      to="/news"
+                      className={`block px-3 py-1.5 text-sm font-medium ${
+                        isDark
+                          ? 'text-gray-200 hover:text-blue-400'
+                          : 'text-gray-700 hover:text-blue-600'
+                      } transition-colors`}
+                    >
+                      Νέα
+                    </Link>
+                    <Link
+                      to="/press-releases"
+                      className={`block px-3 py-1.5 text-sm font-medium ${
+                        isDark
+                          ? 'text-gray-200 hover:text-blue-400'
+                          : 'text-gray-700 hover:text-blue-600'
+                      } transition-colors`}
+                    >
+                      Ανακοινώσεις
+                    </Link>
+                  </div>
+                </div>
+                <div className="mb-2">
                   <Link
                     to="/positions"
-                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
@@ -150,24 +241,36 @@ const Navigation = ({ isDark }) => {
                     Θέσεις
                   </Link>
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                   <Link
                     to="/portal"
-                    className={`flex items-center px-4 py-2 text-lg font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Portal ΕΣΕΕ
+                    Portal
+                  </Link>
+                </div>
+                <div className="mb-2">
+                  <Link
+                    to="/administration"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Διοίκηση
                   </Link>
                 </div>
 
-                <div className="space-y-6 mt-6">
+                <div className="space-y-4 mt-4">
                   <div className="relative z-50">
                     <AccessibilityMenu isDark={isDark} />
                   </div>
-                  <button className={`w-full px-6 py-2 ${
+                  <button className={`w-full px-4 py-1.5 text-sm ${
                       isDark
                           ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                           : 'bg-blue-600 hover:bg-blue-700 text-white'

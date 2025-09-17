@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Accessibility, Type, Eye, Monitor, MousePointer, X } from 'lucide-react';
+import { Accessibility, Type, Eye, Monitor, MousePointer, X, Settings } from 'lucide-react';
 
 const AccessibilityMenu = ({ isDark }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,15 +53,14 @@ const AccessibilityMenu = ({ isDark }) => {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        aria-label="Μενού προσβασιμότητας"
-        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-base ${
+        aria-label="Επιλογές προσβασιμότητας"
+        className={`flex items-center justify-center w-10 h-10 rounded-full ${
           isDark
             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
             : 'bg-blue-600 hover:bg-blue-700 text-white'
-        } transition-colors focus:ring-2 focus:ring-blue-300`}
+        } transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-105`}
       >
-        <Accessibility size={20} />
-        <span>ΑΜΕΑ</span>
+        <Settings size={20} />
       </button>
 
       {isOpen && (
@@ -69,52 +68,65 @@ const AccessibilityMenu = ({ isDark }) => {
           ref={menuRef}
           role="menu"
           aria-label="Επιλογές προσβασιμότητας"
-          className={`absolute right-0 w-72 mt-2 p-2 ${
+          className={`absolute right-0 w-80 mt-2 p-4 ${
             isDark
-              ? 'bg-blue-950 border-blue-900'
+              ? 'bg-blue-950 border-blue-800'
               : 'bg-white border-gray-200'
-          } border rounded-lg shadow-lg z-50`}
+          } border rounded-xl shadow-xl backdrop-blur-sm z-50`}
         >
-          <div className="flex justify-between items-center p-4 pb-2">
-            <h3 className={`text-sm font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-              Επιλογές προσβασιμότητας
+          <div className="flex justify-between items-center mb-4">
+            <h3 className={`text-lg font-semibold flex items-center space-x-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
+              <Accessibility size={20} />
+              <span>Προσβασιμότητα</span>
             </h3>
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Κλείσιμο μενού"
-              className={`p-1 rounded-md transition-colors focus:ring-2 focus:ring-blue-300 ${
+              className={`p-2 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-105 ${
                 isDark 
                   ? 'text-gray-400 hover:text-gray-200 hover:bg-blue-900' 
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
               }`}
             >
-              <X size={16} />
+              <X size={18} />
             </button>
           </div>
-          <div className="px-4 pb-4 space-y-4">
-            <div role="menuitem" className="space-y-2">
-              <div className={`flex items-center space-x-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                <Type size={18} />
-                <span>Μέγεθος γραμματοσειράς</span>
+          <div className="space-y-6">
+            <div role="menuitem" className="space-y-3">
+              <div className={`flex items-center space-x-3 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                <Type size={20} />
+                <span className="font-medium">Μέγεθος γραμματοσειράς</span>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex space-x-3">
                 <button
                   onClick={() => handleFontSize('14px')}
-                  className="px-3 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-300"
+                  className={`px-4 py-3 text-sm rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-105 ${
+                    isDark 
+                      ? 'bg-blue-900 hover:bg-blue-800 text-blue-200' 
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                  }`}
                   aria-label="Μικρή γραμματοσειρά"
                 >
                   A
                 </button>
                 <button
                   onClick={() => handleFontSize('16px')}
-                  className="px-3 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-300"
+                  className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-105 ${
+                    isDark 
+                      ? 'bg-blue-900 hover:bg-blue-800 text-blue-200' 
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                  }`}
                   aria-label="Μεσαία γραμματοσειρά"
                 >
                   A
                 </button>
                 <button
                   onClick={() => handleFontSize('20px')}
-                  className="px-3 py-2 text-lg rounded bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-300"
+                  className={`px-4 py-3 text-lg rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-105 ${
+                    isDark 
+                      ? 'bg-blue-900 hover:bg-blue-800 text-blue-200' 
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                  }`}
                   aria-label="Μεγάλη γραμματοσειρά"
                 >
                   A
@@ -125,34 +137,40 @@ const AccessibilityMenu = ({ isDark }) => {
             <button
               onClick={handleContrast}
               role="menuitem"
-              className={`flex items-center space-x-2 w-full p-2 rounded-lg ${
-                isDark ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900' : 'text-gray-800 hover:text-blue-600 hover:bg-gray-100'
-              } transition-colors focus:ring-2 focus:ring-blue-300`}
+              className={`flex items-center space-x-3 w-full p-4 rounded-xl ${
+                isDark 
+                  ? 'text-gray-200 hover:text-blue-300 hover:bg-blue-900' 
+                  : 'text-gray-800 hover:text-blue-600 hover:bg-gray-50'
+              } transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-[1.02]`}
             >
-              <Eye size={18} />
-              <span>Υψηλή αντίθεση</span>
+              <Eye size={20} />
+              <span className="font-medium">Υψηλή αντίθεση</span>
             </button>
 
             <button
               onClick={handleScreenReader}
               role="menuitem"
-              className={`flex items-center space-x-2 w-full p-2 rounded-lg ${
-                isDark ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900' : 'text-gray-800 hover:text-blue-600 hover:bg-gray-100'
-              } transition-colors focus:ring-2 focus:ring-blue-300`}
+              className={`flex items-center space-x-3 w-full p-4 rounded-xl ${
+                isDark 
+                  ? 'text-gray-200 hover:text-blue-300 hover:bg-blue-900' 
+                  : 'text-gray-800 hover:text-blue-600 hover:bg-gray-50'
+              } transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-[1.02]`}
             >
-              <Monitor size={18} />
-              <span>Βελτιστοποίηση για αναγνώστη οθόνης</span>
+              <Monitor size={20} />
+              <span className="font-medium">Βελτιστοποίηση για αναγνώστη οθόνης</span>
             </button>
 
             <button
               onClick={handleReduceMotion}
               role="menuitem"
-              className={`flex items-center space-x-2 w-full p-2 rounded-lg ${
-                isDark ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900' : 'text-gray-800 hover:text-blue-600 hover:bg-gray-100'
-              } transition-colors focus:ring-2 focus:ring-blue-300`}
+              className={`flex items-center space-x-3 w-full p-4 rounded-xl ${
+                isDark 
+                  ? 'text-gray-200 hover:text-blue-300 hover:bg-blue-900' 
+                  : 'text-gray-800 hover:text-blue-600 hover:bg-gray-50'
+              } transition-all duration-200 focus:ring-2 focus:ring-blue-300 hover:scale-[1.02]`}
             >
-              <MousePointer size={18} />
-              <span>Μείωση κίνησης</span>
+              <MousePointer size={20} />
+              <span className="font-medium">Μείωση κίνησης</span>
             </button>
           </div>
         </div>

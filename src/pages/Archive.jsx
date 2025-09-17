@@ -7,13 +7,11 @@ import { useSearchParams } from 'react-router-dom';
 import { getData } from '../api/apiClient.jsx';
 import { setArticles } from '../redux/Reducer.jsx';
 
-// Category translations for filtering
+// Category translations for filtering (excluding redundant press release categories)
 const categoryTranslations = {
     'ΝΕΑ': 8,
     'Απόψεις': 7,
     'Εκδηλώσεις': 6,
-    'Ανακοινώσεις': 5,
-    'Δελτία Τύπου': 4,
     'Πρόσκλησεις': 3,
     'Διαγωνισμός': 2,
     'Page': 43,
@@ -59,8 +57,20 @@ const Archive = () => {
     // Filter articles based on category parameter
     const filteredArticles = stateArticles
         .filter(article => {
+            // Exclude press release articles by default
+            const isPressRelease = article.categories?.some(category => 
+                category.title?.toLowerCase().includes('ανακοινώσεις') ||
+                category.title?.toLowerCase().includes('δελτία') ||
+                category.title?.toLowerCase().includes('τύπου') ||
+                category.title?.toLowerCase().includes('press')
+            );
+            
+            if (isPressRelease) {
+                return false; // Exclude press releases from archive
+            }
+            
             if (!categoryParam) {
-                // If no category specified, show all articles
+                // If no category specified, show all non-press-release articles
                 return true;
             }
             const categoryId = categoryTranslations[categoryParam];

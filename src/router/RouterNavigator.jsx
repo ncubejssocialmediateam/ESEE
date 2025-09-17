@@ -10,6 +10,9 @@ import Business from "../pages/Business.jsx";
 import Archive from "../pages/Archive.jsx";
 import TaxCalendar from "../pages/TaxCalendar.jsx";
 import Portal from "../pages/Portal.jsx";
+import News from "../pages/News.jsx";
+import PressReleases from "../pages/PressReleases.jsx";
+import Administration from "../pages/Administration.jsx";
 import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
@@ -72,6 +75,9 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             <Route path="/archive" element={<Archive />} />
             <Route path="/tax-calendar" element={<TaxCalendar />} />
             <Route path="/portal" element={<Portal />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/press-releases" element={<PressReleases />} />
+            <Route path="/administration" element={<Administration />} />
         </Routes>
     );
 };
