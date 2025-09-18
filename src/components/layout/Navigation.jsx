@@ -128,16 +128,6 @@ const Navigation = ({ isDark }) => {
                   ))}
                   <DropdownNavItem isDark={isDark} />
                   <Link
-                    to="/positions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Θέσεις
-                  </Link>
-                  <Link
                     to="/projects"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
@@ -248,18 +238,6 @@ const Navigation = ({ isDark }) => {
                       Ανακοινώσεις
                     </Link>
                   </div>
-                </div>
-                <div className="mb-2">
-                  <Link
-                    to="/positions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Θέσεις
-                  </Link>
                 </div>
                 <div className="mb-2">
                   <Link
