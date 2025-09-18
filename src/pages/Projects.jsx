@@ -76,6 +76,135 @@ const Projects = () => {
           </div>
         </div>
 
+        {/* Logo Carousel Section */}
+        <div className="mt-16 mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+            Συνεργαζόμενοι Φορείς
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+            {/* Digital Transformation */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="https://www.digitaltransform.gr/" target="_blank" rel="noopener noreferrer" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-blue-100 rounded flex items-center justify-center">
+                    <span className="text-blue-600 font-bold text-sm">Ψηφιακός Μετασχηματισμός 2021-2027</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Ψηφιακός Μετασχηματισμός</p>
+              </a>
+            </div>
+
+            {/* Ministry of Education */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="https://empedu.gov.gr/" target="_blank" rel="noopener noreferrer" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-green-100 rounded flex items-center justify-center">
+                    <span className="text-green-600 font-bold text-sm">Υπουργείο Παιδείας</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Υπουργείο Παιδείας</p>
+              </a>
+            </div>
+
+            {/* Competitiveness */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-purple-100 rounded flex items-center justify-center">
+                    <span className="text-purple-600 font-bold text-sm">Ανταγωνιστικότητα & Επιχειρηματικότητα</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Ανταγωνιστικότητα</p>
+              </a>
+            </div>
+
+            {/* Human Resources */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-orange-100 rounded flex items-center justify-center">
+                    <span className="text-orange-600 font-bold text-sm">Ανάπτυξη Ανθρώπινου Δυναμικού</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Ανθρώπινο Δυναμικό</p>
+              </a>
+            </div>
+
+            {/* Administrative Reform */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-red-100 rounded flex items-center justify-center">
+                    <span className="text-red-600 font-bold text-sm">Διοικητική Μεταρρύθμιση</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Διοικητική Μεταρρύθμιση</p>
+              </a>
+            </div>
+
+            {/* Education & Training */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-indigo-100 rounded flex items-center justify-center">
+                    <span className="text-indigo-600 font-bold text-sm">Εκπαίδευση & Δια Βίου Μάθηση</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Εκπαίδευση</p>
+              </a>
+            </div>
+
+            {/* European Fund */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-yellow-100 rounded flex items-center justify-center">
+                    <span className="text-yellow-600 font-bold text-sm">Ευρωπαϊκό Ταμείο</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Ευρωπαϊκό Ταμείο</p>
+              </a>
+            </div>
+
+            {/* Ionian Islands */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-teal-100 rounded flex items-center justify-center">
+                    <span className="text-teal-600 font-bold text-sm">Ιόνια Νησιά</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Ιόνια Νησιά</p>
+              </a>
+            </div>
+
+            {/* Erasmus */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-pink-100 rounded flex items-center justify-center">
+                    <span className="text-pink-600 font-bold text-sm">Erasmus+</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Erasmus+</p>
+              </a>
+            </div>
+
+            {/* Additional Partner */}
+            <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+              <a href="#" className="block">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="w-full h-full bg-gray-100 rounded flex items-center justify-center">
+                    <span className="text-gray-600 font-bold text-sm">Συνεργαζόμενοι Φορείς</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">Συνεργαζόμενοι</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* EU Funding Notice */}
         <div className="mt-12 bg-gray-50 p-6 rounded-lg">
           <p className="text-gray-700 text-center">

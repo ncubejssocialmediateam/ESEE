@@ -138,6 +138,16 @@ const Navigation = ({ isDark }) => {
                     Θέσεις
                   </Link>
                   <Link
+                    to="/projects"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Έργα
+                  </Link>
+                  <Link
                     to="/portal"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
@@ -156,6 +166,16 @@ const Navigation = ({ isDark }) => {
                     } transition-colors`}
                   >
                     Διοίκηση
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Επικοινωνία
                   </Link>
                 </div>
               </div>
@@ -243,6 +263,18 @@ const Navigation = ({ isDark }) => {
                 </div>
                 <div className="mb-2">
                   <Link
+                    to="/projects"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Έργα
+                  </Link>
+                </div>
+                <div className="mb-2">
+                  <Link
                     to="/portal"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
                       isDark
@@ -263,6 +295,18 @@ const Navigation = ({ isDark }) => {
                     } transition-colors`}
                   >
                     Διοίκηση
+                  </Link>
+                </div>
+                <div className="mb-2">
+                  <Link
+                    to="/contact"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    Επικοινωνία
                   </Link>
                 </div>
 
