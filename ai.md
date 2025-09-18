@@ -1,7 +1,7 @@
 # Greek Commerce Confederations Research Report
 
 ## Important Organizational Clarification
-
+ΠΡΟΕΔΡΟΣ ΣΤΑΥΡΟΣ ΚΑΦΟΥΝΗΣ
 Based on my comprehensive research, there are **two distinct major Greek confederations** that your query encompasses:
 
 1. **ΕΣΕΕ (Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας)** - Hellenic Confederation of Commerce & Entrepreneurship

@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { FiMessageCircle, FiX, FiSend, FiMinimize2, FiMaximize2, FiZap, FiTrendingUp, FiShield, FiDollarSign, FiUsers, FiBookOpen } from 'react-icons/fi';
+import { FiMessageCircle, FiX, FiSend, FiMinimize2, FiMaximize2, FiZap, FiTrendingUp, FiShield, FiDollarSign, FiUsers, FiBookOpen, FiAlertCircle, FiRefreshCw } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
+import aiService from '../../services/aiService';
+import PropTypes from 'prop-types';
 
-const AIChat = () => {
+const AIChat = ({ aiStatus }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -16,6 +18,9 @@ const AIChat = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState(null);
+  const [isConfigured, setIsConfigured] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -84,14 +89,26 @@ const AIChat = () => {
     }
   }, [isOpen]);
 
+  // Check if AI service is configured on component mount
+  useEffect(() => {
+    setIsConfigured(aiService.isConfigured());
+  }, []);
+
+  // Update configuration status when AI status changes
+  useEffect(() => {
+    if (aiStatus) {
+      setIsConfigured(aiStatus.isInitialized);
+    }
+  }, [aiStatus]);
+
   const getAIResponse = (answerId) => {
     const responses = {
-      'tax-compliance': 'Η ΕΣΕΕ παρέχει ολοκληρωμένη υποστήριξη για φορολογική συμμόρφωση:\n\n• Υλοποίηση συστήματος myDATA\n• Ηλεκτρονικές αποδείξεις και παραστατικά\n• Διαχείριση ΦΠΑ (6%, 13%, 24%)\n• Ηλεκτρονικό τέλος συναλλαγών (0.3%-3.6%)\n• Οδηγίες πληρωμής εταιρικού φόρου (8 μηνιαίες δόσεις)\n\nΘέλετε περισσότερες λεπτομέρειες για κάποιο συγκεκριμένο θέμα;',
-      'energy-costs': 'Για τη διαχείριση του κόστους ενέργειας, η ΕΣΕΕ προτείνει:\n\n• Παρακολούθηση τιμών ενέργειας\n• Εφαρμογή ενεργειακών μέτρων αποδοτικότητας\n• Αξιοποίηση κρατικών επιδοτήσεων\n• Συνεργασία με ενεργειακούς συμβούλους\n• Αναζήτηση εναλλακτικών πηγών ενέργειας\n\nΤο 85.7% των επιχειρήσεων επηρεάζεται αρνητικά από το κόστος ενέργειας. Πώς μπορώ να σας βοηθήσω περαιτέρω;',
-      'digital-transformation': 'Η ψηφιακή μετάβαση είναι κρίσιμη για την επιβίωση:\n\n• Πύλη ΕΣΕΕ Digital Services (esee-digital.gr)\n• Υλοποίηση υποχρεωτικών ηλεκτρονικών συστημάτων\n• Εκπαίδευση ψηφιακών δεξιοτήτων\n• Κέντρο Καινοτομίας Λιανικής\n• Συνεργασία με τεχνολογικούς παρόχους\n\nΜόνο το 52.4% των ελληνικών ΜΜΕ έχει βασική ψηφιακή ολοκλήρωση. Θέλετε βοήθεια με συγκεκριμένο σύστημα;',
-      'financial-assistance': 'Διαθέσιμες οικονομικές υποστηρίξεις:\n\n• Ευρωπαϊκό Ταμείο Ανάκαμψης (€2.79 δισ. σε 265 δάνεια ΜΜΕ)\n• Κρατικά προγράμματα επιδοτήσεων\n• Συντονισμός κρίσεων\n• Συμβουλευτική αναδιάρθρωσης χρέους\n• Πρόσβαση σε χρηματοδοτικά προγράμματα\n\nΠοια κατηγορία χρηματοδότησης σας ενδιαφέρει περισσότερο;',
-      'labor-law': 'Υποστήριξη εργατικού δικαίου:\n\n• Ψηφιακές Κάρτες Εργασίας (ERGANI II)\n• Ηλεκτρονικά συστήματα παρακολούθησης ωρών\n• Προστασία καταγγελιών (επιχειρήσεις >50 εργαζομένων)\n• Ίση μεταχείριση και αντιαποκλεισμός\n• Διαχείριση άδειας μητρότητας/πατρότητας\n\nΈχετε συγκεκριμένη ερώτηση για εργατικό δίκαιο;',
-      'training': 'Εκπαιδευτικά προγράμματα KAELE:\n\n• Πιστοποιημένη ποιότητα ISO 9001:2015\n• 70ωρα προγράμματα Δια Βίου Μάθησης\n• Ψηφιακή πλατφόρμα ERMEION+ (ermeion.kaele.gr)\n• 62 τρέχοντα προγράμματα\n• 700+ συμμετέχοντες εθνικά\n• Επαγγελματική συμβουλευτική\n\nΠοιον τομέα εξειδίκεσης σας ενδιαφέρει;'
+      'tax-compliance': 'Η ΕΣΕΕ παρέχει ολοκληρωμένη υποστήριξη για φορολογική συμμόρφωση:\n\n• Υλοποίηση συστήματος myDATA\n• Ηλεκτρονικές αποδείξεις και παραστατικά\n• Διαχείριση ΦΠΑ (6%, 13%, 24%)\n• Ηλεκτρονικό τέλος συναλλαγών (0.3%-3.6%)\n• Οδηγίες πληρωμής εταιρικού φόρου (8 μηνιαίες δόσεις)\n• Ηλεκτρονικά παραστατικά παράδοσης\n\nΗ φορολογική συμμόρφωση είναι ένας από τους κύριους τομείς υποστήριξης της ΕΣΕΕ. Θέλετε περισσότερες λεπτομέρειες για κάποιο συγκεκριμένο θέμα;',
+      'energy-costs': 'Διαχείριση κόστους ενέργειας - Κρίσιμη πρόκληση για τις επιχειρήσεις:\n\n• 85.7% των εμπορικών επιχειρήσεων επηρεάζεται αρνητικά\n• 23% αντιμετωπίζει αύξηση 21-30%\n• 30% αντιμετωπίζει αύξηση 31-50%\n\nΗ ΕΣΕΕ παρέχει:\n• Παρακολούθηση τιμών ενέργειας\n• Εφαρμογή ενεργειακών μέτρων αποδοτικότητας\n• Αξιοποίηση κρατικών επιδοτήσεων\n• Συνεργασία με ενεργειακούς συμβούλους\n\nΠώς μπορώ να σας βοηθήσω με τη διαχείριση του ενεργειακού κόστους;',
+      'digital-transformation': 'Ψηφιακός Μετασχηματισμός - Προκλήσεις και Ευκαιρίες:\n\n**Στατιστικά:**\n• Μόνο 52.4% των ελληνικών ΜΜΕ έχει βασική ψηφιακή ολοκλήρωση\n• Η Ελλάδα είναι στο τέλος του ευρωπαϊκού δείκτη ψηφιακής ετοιμότητας\n• 58.5% αναφέρει ότι τα διαδικτυακά έσοδα δεν καλύπτουν τα λειτουργικά κόστη\n\n**Υπηρεσίες ΕΣΕΕ:**\n• Πύλη ΕΣΕΕ Digital Services (esee-digital.gr)\n• Υλοποίηση υποχρεωτικών ηλεκτρονικών συστημάτων\n• Κέντρο Καινοτομίας Λιανικής\n• Εκπαίδευση ψηφιακών δεξιοτήτων\n\nΘέλετε βοήθεια με συγκεκριμένο σύστημα ή ψηφιακή στρατηγική;',
+      'financial-assistance': 'Οικονομική Υποστήριξη - Διαθέσιμα Προγράμματα:\n\n**Ευρωπαϊκά Προγράμματα:**\n• Ευρωπαϊκό Ταμείο Ανάκαμψης (€2.79 δισ. σε 265 δάνεια ΜΜΕ)\n• EU Recovery Fund coordination\n\n**Κρατική Υποστήριξη:**\n• Κρατικά προγράμματα επιδοτήσεων\n• Συντονισμός κρίσεων\n• Συμβουλευτική αναδιάρθρωσης χρέους\n• Πρόσβαση σε χρηματοδοτικά προγράμματα\n\n**Συμμετοχή σε Διεθνή Δίκτυα:**\n• EuroCommerce (ένα από τα παλαιότερα μέλη)\n• Ευρωπαϊκή Οικονομική και Κοινωνική Επιτροπή\n\nΠοια κατηγορία χρηματοδότησης σας ενδιαφέρει περισσότερο;',
+      'labor-law': 'Εργατικό Δίκαιο - Υποστήριξη Επιχειρήσεων:\n\n**Ψηφιακά Συστήματα:**\n• Ψηφιακές Κάρτες Εργασίας (ERGANI II)\n• Ηλεκτρονικά συστήματα παρακολούθησης ωρών\n\n**Προστασία Εργαζομένων:**\n• Προστασία καταγγελιών (επιχειρήσεις >50 εργαζομένων)\n• Ίση μεταχείριση και αντιαποκλεισμός\n• Διαχείριση άδειας μητρότητας/πατρότητας (17 εβδομάδες/14 ημέρες)\n\n**Κοινωνική Συμμετοχή:**\n• Συμμετοχή σε συλλογικές διαπραγματεύσεις\n• Εθνική Γενική Συλλογική Συμφωνία\n\nΈχετε συγκεκριμένη ερώτηση για εργατικό δίκαιο ή ψηφιακά συστήματα;',
+      'training': 'Εκπαίδευση - KAELE (Κέντρο Εκπαίδευσης ΕΣΕΕ):\n\n**Πιστοποιήσεις:**\n• ISO 9001:2015 και ELOT 1429:2008\n• Πιστοποιημένη ποιότητα διαχείρισης\n\n**Προγράμματα:**\n• 70ωρα προγράμματα Δια Βίου Μάθησης\n• 62 τρέχοντα προγράμματα\n• 700+ συμμετέχοντες εθνικά\n• Μικτή μεθοδολογία εκπαίδευσης\n\n**Ψηφιακή Πλατφόρμα:**\n• ERMEION+ (ermeion.kaele.gr)\n• E-learning capabilities\n\n**Επιπλέον Υπηρεσίες:**\n• Επαγγελματική συμβουλευτική\n• Επιχειρηματική συμβουλευτική\n\nΠοιον τομέα εξειδίκεσης ή τύπο εκπαίδευσης σας ενδιαφέρει;'
     };
     return responses[answerId] || 'Συγγνώμη, δεν μπορώ να βρω την απάντηση. Μπορείτε να ρωτήσετε κάτι άλλο;';
   };
@@ -121,7 +138,7 @@ const AIChat = () => {
     return 'Συγγνώμη, δεν κατάλαβα την ερώτησή σας. Μπορείτε να δοκιμάσετε μια από τις γρήγορες απαντήσεις ή να διατυπώσετε την ερώτησή σας διαφορετικά?';
   }
 
-  const handleQuickAnswer = (answer) => {
+  const handleQuickAnswer = async (answer) => {
     const userMessage = {
       id: Date.now(),
       type: 'user',
@@ -132,9 +149,29 @@ const AIChat = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputValue(''); // Clear any existing input
     setIsTyping(true);
+    setError(null);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Prepare conversation history for context
+      const conversationHistory = messages.slice(-6).map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
+
+      const response = await aiService.sendMessage(answer.title, conversationHistory);
+      
+      const aiResponse = {
+        id: Date.now() + 1,
+        type: 'ai',
+        content: response.message,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, aiResponse]);
+    } catch (err) {
+      console.error('AI Service Error:', err);
+      setError(err.message);
+      
+      // Fallback to static response
       const aiResponse = {
         id: Date.now() + 1,
         type: 'ai',
@@ -142,11 +179,12 @@ const AIChat = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, aiResponse]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
     const userMessage = {
@@ -160,9 +198,29 @@ const AIChat = () => {
     const currentInputValue = inputValue;
     setInputValue(''); // Clear input immediately
     setIsTyping(true);
+    setError(null);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Prepare conversation history for context
+      const conversationHistory = messages.slice(-6).map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
+
+      const response = await aiService.sendMessage(currentInputValue, conversationHistory);
+      
+      const aiResponse = {
+        id: Date.now() + 1,
+        type: 'ai',
+        content: response.message,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, aiResponse]);
+    } catch (err) {
+      console.error('AI Service Error:', err);
+      setError(err.message);
+      
+      // Fallback to static response
       const aiResponse = {
         id: Date.now() + 1,
         type: 'ai',
@@ -170,14 +228,38 @@ const AIChat = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, aiResponse]);
+    } finally {
       setIsTyping(false);
-    }, 2000);
+    }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const handleRefreshMemory = async () => {
+    if (!aiStatus?.refreshMemory) return;
+    
+    setIsRefreshing(true);
+    try {
+      const result = await aiStatus.refreshMemory();
+      if (result.success) {
+        // Add a system message to show memory was refreshed
+        const refreshMessage = {
+          id: Date.now(),
+          type: 'ai',
+          content: '✅ Η μνήμη μου ανανεώθηκε επιτυχώς! Έχω πρόσβαση σε όλες τις πιο ενημερωμένες πληροφορίες της ΕΣΕΕ και είμαι έτοιμος να σας βοηθήσω.',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, refreshMessage]);
+      }
+    } catch (error) {
+      console.error('Memory refresh failed:', error);
+    } finally {
+      setIsRefreshing(false);
     }
   };
 
@@ -259,11 +341,32 @@ const AIChat = () => {
                   ΕΣΕΕ AI Assistant
                 </h3>
                 <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>
-                  {(inputValue.trim().length > 0 || messages.length > 1) ? 'Συνομιλία • 2025' : 'Online • 2025'}
+                  {aiStatus?.isLoading 
+                    ? 'Initializing AI... • 2025'
+                    : isConfigured 
+                      ? (inputValue.trim().length > 0 || messages.length > 1) ? 'Συνομιλία • 2025' : 'Online • 2025'
+                      : 'Offline • 2025'
+                  }
                 </p>
               </div>
             </div>
             <div className="flex items-center space-x-1">
+              {isConfigured && (
+                <button
+                  onClick={handleRefreshMemory}
+                  disabled={isRefreshing}
+                  className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                    isRefreshing
+                      ? 'opacity-50 cursor-not-allowed'
+                      : isDark 
+                        ? 'hover:bg-blue-500/20 text-slate-400 hover:text-blue-400' 
+                        : 'hover:bg-blue-50 text-gray-500 hover:text-blue-500'
+                  }`}
+                  aria-label="Ανάνεωση μνήμης AI"
+                >
+                  <FiRefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
+                </button>
+              )}
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
                 className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
@@ -291,6 +394,40 @@ const AIChat = () => {
 
           {!isMinimized && (
             <>
+              {/* Configuration Warning */}
+              {!isConfigured && !aiStatus?.isLoading && (
+                <div className={`p-3 border-b ${isDark ? 'border-slate-700/50 bg-slate-800/50' : 'border-gray-200/50 bg-yellow-50/50'}`}>
+                  <div className="flex items-center space-x-2">
+                    <FiAlertCircle className={`text-yellow-500`} size={16} />
+                    <div className="flex-1">
+                      <p className={`text-xs ${isDark ? 'text-yellow-300' : 'text-yellow-700'}`}>
+                        {aiStatus?.error 
+                          ? `AI service error: ${aiStatus.error}`
+                          : 'AI service not configured. Using fallback responses. Add VITE_OPENROUTER_API_KEY to .env file.'
+                        }
+                      </p>
+                      {aiStatus?.modelInfo && (
+                        <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>
+                          Model: {aiStatus.modelInfo.model}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Display */}
+              {error && (
+                <div className={`p-3 border-b ${isDark ? 'border-red-700/50 bg-red-900/20' : 'border-red-200/50 bg-red-50/50'}`}>
+                  <div className="flex items-center space-x-2">
+                    <FiAlertCircle className="text-red-500" size={16} />
+                    <p className={`text-xs ${isDark ? 'text-red-300' : 'text-red-700'}`}>
+                      {error}
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 transition-all duration-300">
                 {messages.length <= 1 && (
@@ -455,6 +592,20 @@ const AIChat = () => {
       )}
     </>
   );
+};
+
+AIChat.propTypes = {
+  aiStatus: PropTypes.shape({
+    isInitialized: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
+    modelInfo: PropTypes.shape({
+      model: PropTypes.string,
+      status: PropTypes.string
+    }),
+    refreshMemory: PropTypes.func,
+    getSystemInfo: PropTypes.func
+  })
 };
 
 export default AIChat;
