@@ -35,19 +35,12 @@ const NavItem = ({ item, isDark }) => {
   );
 };
 
-const DropdownNavItem = ({ isDark }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const pressOfficeItems = [
-    { label: 'Νέα', url: '/news' },
-    { label: 'Ανακοινώσεις & Δελτία Τύπου', url: '/press-releases' }
-  ];
-
+const DropdownNavItem = ({ isDark, title, items, onMouseEnter, onMouseLeave, isOpen }) => {
   return (
     <div 
       className="relative group"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <button
         className={`flex items-center px-3 py-1.5 text-sm font-medium ${
@@ -56,27 +49,34 @@ const DropdownNavItem = ({ isDark }) => {
             : 'text-gray-800 hover:text-blue-600'
         } transition-colors`}
       >
-        Γραφείο Τύπου
+        {title}
         <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-1 w-64 rounded-md shadow-lg z-50 ${
+        <div className={`absolute top-full left-0 mt-1 w-80 rounded-md shadow-lg z-50 ${
           isDark ? 'bg-blue-950 border border-blue-800' : 'bg-white border border-gray-200'
         }`}>
-          <div className="py-1">
-            {pressOfficeItems.map((item, index) => (
+          <div className="py-2">
+            {items.map((item, index) => (
               <Link
                 key={index}
                 to={item.url}
-                className={`block px-4 py-2 text-sm ${
+                className={`block px-4 py-3 text-sm ${
                   isDark
                     ? 'text-gray-200 hover:bg-blue-900 hover:text-blue-400'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
                 } transition-colors`}
                 onClick={() => setIsOpen(false)}
               >
-                {item.label}
+                <div className="font-medium">{item.label}</div>
+                {item.description && (
+                  <div className={`text-xs mt-1 ${
+                    isDark ? 'text-gray-400' : 'text-gray-500'
+                  }`}>
+                    {item.description}
+                  </div>
+                )}
               </Link>
             ))}
           </div>
@@ -98,7 +98,32 @@ NavItem.propTypes = {
 
 const Navigation = ({ isDark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const stateNavItems = useSelector(state => state.navItems);
+
+  const eseeItems = [
+    { label: 'ΠΟΙΟΙ ΕΙΜΑΣΤΕ', url: '/about', description: 'Υπεύθυνη φωνή του ελληνικού εμπορίου και της μικρομεσαίας επιχειρηματικότητας' },
+    { label: 'ΤΟ ΟΡΑΜΑ & Η ΑΠΟΣΤΟΛΗ', url: '/vision-mission', description: 'Όταν οι άνθρωποι επιχειρούν, οι κοινωνίες ευημερούν' },
+    { label: 'ΔΙΟΙΚΗΣΗ', url: '/administration', description: 'Τα όργανα διοίκησης της ΕΣΕΕ, σύμφωνα με το καταστατικό της' },
+    { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 340 Εμπορικούς Συλλόγους και 5 Συνδέσμους σε όλη την Ελλάδα' },
+    { label: 'ΙΝΕΜΥ – ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Τα επίσημα επιστημονικά όργανα της ΕΣΕΕ' }
+  ];
+
+  const pressOfficeItems = [
+    { label: 'ΔΕΛΤΙΑ ΤΥΠΟΥ – ΑΝΑΚΟΙΝΩΣΕΙΣ', url: '/press-releases' },
+    { label: 'ΕΓΚΥΚΛΙΟΙ', url: '/circulars' }
+  ];
+
+  const competitionsItems = [
+    { label: '«Ψηφιακός Μετασχηματισμός 2021-2027»', url: '/digital-transformation' },
+    { label: '«Ανθρώπινο Δυναμικό και Κοινωνική Συνοχή 2021-2027»', url: '/human-resources' },
+    { label: 'Ε.Π. Ανάπτυξη Ανθρώπινου Δυναμικού – Εκπαίδευση & Δια Βίου Μάθηση 2014-20', url: '/education-lifelong-learning' },
+    { label: 'Ε.Π. «Ανταγωνιστικότητα, Επιχειρηματικότητα & Καινοτομία 2014-2020»', url: '/competitiveness-innovation' },
+    { label: 'Ε.Π. «Ανάπτυξη Ανθρώπινου Δυναμικού»', url: '/human-development' },
+    { label: 'Ε.Π. «Ιόνια Νησιά»', url: '/ionian-islands' },
+    { label: 'Ε.Π. «Ανταγωνιστικότητα & Επιχειρηματικότητα»', url: '/competitiveness-entrepreneurship' },
+    { label: 'Ε.Π. «Ευρωπαϊκό Ταμείο Προσαρμογής στην Παγκοσμιοποίηση»', url: '/european-adjustment-fund' }
+  ];
 
   return (
       <>
@@ -119,14 +144,42 @@ const Navigation = ({ isDark }) => {
                 </a>
 
                 <div className="hidden lg:flex space-x-2">
-                  {stateNavItems && stateNavItems?.map((item) => (
-                    <NavItem
-                      key={item.id}
-                      item={item}
-                      isDark={isDark}
-                    />
-                  ))}
-                  <DropdownNavItem isDark={isDark} />
+                  <DropdownNavItem 
+                    isDark={isDark}
+                    title="ΕΣΕΕ"
+                    items={eseeItems}
+                    onMouseEnter={() => setActiveDropdown('esee')}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                    isOpen={activeDropdown === 'esee'}
+                  />
+                  <Link
+                    to="/business"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    ΕΠΙΧΕΙΡΗΣΕΙΣ
+                  </Link>
+                  <DropdownNavItem 
+                    isDark={isDark}
+                    title="ΓΡΑΦΕΙΟ ΤΥΠΟΥ"
+                    items={pressOfficeItems}
+                    onMouseEnter={() => setActiveDropdown('press')}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                    isOpen={activeDropdown === 'press'}
+                  />
+                  <Link
+                    to="/positions"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    ΘΕΣΕΙΣ
+                  </Link>
                   <Link
                     to="/projects"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
@@ -135,28 +188,16 @@ const Navigation = ({ isDark }) => {
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Έργα
+                    ΕΡΓΑ
                   </Link>
-                  <Link
-                    to="/portal"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Portal
-                  </Link>
-                  <Link
-                    to="/administration"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Διοίκηση
-                  </Link>
+                  <DropdownNavItem 
+                    isDark={isDark}
+                    title="ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ"
+                    items={competitionsItems}
+                    onMouseEnter={() => setActiveDropdown('competitions')}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                    isOpen={activeDropdown === 'competitions'}
+                  />
                   <Link
                     to="/contact"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
@@ -165,7 +206,7 @@ const Navigation = ({ isDark }) => {
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
                   >
-                    Επικοινωνία
+                    ΕΠΙΚΟΙΝΩΝΙΑ
                   </Link>
                 </div>
               </div>
@@ -202,43 +243,92 @@ const Navigation = ({ isDark }) => {
                 isDark ? 'bg-blue-950' : 'bg-white'
             } z-30 lg:hidden pt-16 transition-colors duration-300`}>
               <div className="p-4">
-                {stateNavItems && stateNavItems?.map((item) => (
-                  <div key={item.id} className="mb-2">
-                    <NavItem
-                      item={item}
-                      isDark={isDark}
-                    />
-                  </div>
-                ))}
-                <div className="mb-2">
+                {/* ΕΣΕΕ Dropdown */}
+                <div className="mb-4">
                   <div className={`px-3 py-1.5 text-sm font-medium ${
                     isDark ? 'text-gray-300' : 'text-gray-600'
                   }`}>
-                    Γραφείο Τύπου
+                    ΕΣΕΕ
                   </div>
                   <div className="ml-3 space-y-1">
-                    <Link
-                      to="/news"
-                      className={`block px-3 py-1.5 text-sm font-medium ${
-                        isDark
-                          ? 'text-gray-200 hover:text-blue-400'
-                          : 'text-gray-700 hover:text-blue-600'
-                      } transition-colors`}
-                    >
-                      Νέα
-                    </Link>
-                    <Link
-                      to="/press-releases"
-                      className={`block px-3 py-1.5 text-sm font-medium ${
-                        isDark
-                          ? 'text-gray-200 hover:text-blue-400'
-                          : 'text-gray-700 hover:text-blue-600'
-                      } transition-colors`}
-                    >
-                      Ανακοινώσεις
-                    </Link>
+                    {eseeItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        to={item.url}
+                        className={`block px-3 py-2 text-sm ${
+                          isDark
+                            ? 'text-gray-200 hover:text-blue-400'
+                            : 'text-gray-700 hover:text-blue-600'
+                        } transition-colors`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium">{item.label}</div>
+                        <div className={`text-xs mt-1 ${
+                          isDark ? 'text-gray-400' : 'text-gray-500'
+                        }`}>
+                          {item.description}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
+
+                {/* ΕΠΙΧΕΙΡΗΣΕΙΣ */}
+                <div className="mb-2">
+                  <Link
+                    to="/business"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    ΕΠΙΧΕΙΡΗΣΕΙΣ
+                  </Link>
+                </div>
+
+                {/* ΓΡΑΦΕΙΟ ΤΥΠΟΥ Dropdown */}
+                <div className="mb-4">
+                  <div className={`px-3 py-1.5 text-sm font-medium ${
+                    isDark ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    ΓΡΑΦΕΙΟ ΤΥΠΟΥ
+                  </div>
+                  <div className="ml-3 space-y-1">
+                    {pressOfficeItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        to={item.url}
+                        className={`block px-3 py-1.5 text-sm font-medium ${
+                          isDark
+                            ? 'text-gray-200 hover:text-blue-400'
+                            : 'text-gray-700 hover:text-blue-600'
+                        } transition-colors`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ΘΕΣΕΙΣ */}
+                <div className="mb-2">
+                  <Link
+                    to="/positions"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    ΘΕΣΕΙΣ
+                  </Link>
+                </div>
+
+                {/* ΕΡΓΑ */}
                 <div className="mb-2">
                   <Link
                     to="/projects"
@@ -247,34 +337,38 @@ const Navigation = ({ isDark }) => {
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    Έργα
+                    ΕΡΓΑ
                   </Link>
                 </div>
-                <div className="mb-2">
-                  <Link
-                    to="/portal"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Portal
-                  </Link>
+
+                {/* ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ Dropdown */}
+                <div className="mb-4">
+                  <div className={`px-3 py-1.5 text-sm font-medium ${
+                    isDark ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ
+                  </div>
+                  <div className="ml-3 space-y-1">
+                    {competitionsItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        to={item.url}
+                        className={`block px-3 py-1.5 text-sm font-medium ${
+                          isDark
+                            ? 'text-gray-200 hover:text-blue-400'
+                            : 'text-gray-700 hover:text-blue-600'
+                        } transition-colors`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-                <div className="mb-2">
-                  <Link
-                    to="/administration"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                  >
-                    Διοίκηση
-                  </Link>
-                </div>
+
+                {/* ΕΠΙΚΟΙΝΩΝΙΑ */}
                 <div className="mb-2">
                   <Link
                     to="/contact"
@@ -283,8 +377,9 @@ const Navigation = ({ isDark }) => {
                         ? 'text-gray-200 hover:text-blue-400'
                         : 'text-gray-800 hover:text-blue-600'
                     } transition-colors`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    Επικοινωνία
+                    ΕΠΙΚΟΙΝΩΝΙΑ
                   </Link>
                 </div>
 
