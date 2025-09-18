@@ -111,7 +111,8 @@ const Navigation = ({ isDark }) => {
 
   const pressOfficeItems = [
     { label: 'ΔΕΛΤΙΑ ΤΥΠΟΥ – ΑΝΑΚΟΙΝΩΣΕΙΣ', url: '/press-releases' },
-    { label: 'ΕΓΚΥΚΛΙΟΙ', url: '/circulars' }
+    { label: 'ΕΓΚΥΚΛΙΟΙ', url: '/circulars' },
+    { label: 'ΔΗΜΟΣΙΕΥΣΕΙΣ', url: '/publications' }
   ];
 
   const competitionsItems = [

@@ -222,7 +222,7 @@ export class PortalService {
           category: 'Μέλη',
           size: '245 KB',
           format: 'PDF',
-          lastUpdated: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+          lastUpdated: new Date('2025-09-16'), // 16/9/2025 as specified
           downloadUrl: '/documents/member-application.pdf',
           isRequired: true
         },
