@@ -207,10 +207,10 @@ const Navigation = ({ isDark }) => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="hidden lg:flex items-center space-x-4">
-                  <div className="relative z-50">
-                    <AccessibilityMenu isDark={isDark} />
-                  </div>
+                    <div className="hidden lg:flex items-center space-x-4">
+                      {/* <div className="relative z-50">
+                        <AccessibilityMenu isDark={isDark} />
+                      </div> */}
                   <button className={`px-4 py-1.5 text-sm ${
                       isDark
                           ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
@@ -368,10 +368,10 @@ const Navigation = ({ isDark }) => {
                   </Link>
                 </div>
 
-                <div className="space-y-4 mt-4">
-                  <div className="relative z-50">
-                    <AccessibilityMenu isDark={isDark} />
-                  </div>
+                    <div className="space-y-4 mt-4">
+                      {/* <div className="relative z-50">
+                        <AccessibilityMenu isDark={isDark} />
+                      </div> */}
                   <button className={`w-full px-4 py-1.5 text-sm ${
                       isDark
                           ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
