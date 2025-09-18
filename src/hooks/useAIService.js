@@ -3,7 +3,8 @@ import aiService from '../services/aiService';
 
 /**
  * Custom hook to manage AI service initialization and status
- * This hook ensures the DeepSeek model is ready on app load
+ * This hook checks if the AI service is configured without making API calls
+ * API calls are only made when the user interacts with the chat
  */
 export const useAIService = () => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -12,30 +13,22 @@ export const useAIService = () => {
   const [modelInfo, setModelInfo] = useState(null);
 
   useEffect(() => {
-    const initializeAIService = async () => {
+    const initializeAIService = () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        // Check if service is configured
+        // Check if service is configured without making API calls
         if (!aiService.isConfigured()) {
           setError('OpenRouter API key not configured');
           setIsInitialized(false);
-          return;
-        }
-
-        // Test the AI service with a simple message to ensure it's working
-        const testMessage = "Γεια σας! Είμαι έτοιμος να σας βοηθήσω.";
-        const response = await aiService.sendMessage(testMessage);
-        
-        if (response.success) {
+        } else {
+          // Service is configured, mark as ready without testing
           setIsInitialized(true);
           setModelInfo({
             model: aiService.getCurrentModel(),
             status: 'ready'
           });
-        } else {
-          throw new Error('Failed to initialize AI service');
         }
       } catch (err) {
         console.error('AI Service Initialization Error:', err);
@@ -46,7 +39,7 @@ export const useAIService = () => {
       }
     };
 
-    // Initialize the service
+    // Initialize the service (configuration check only)
     initializeAIService();
   }, []);
 
