@@ -106,7 +106,8 @@ const Navigation = ({ isDark }) => {
     { label: 'ΤΟ ΟΡΑΜΑ & Η ΑΠΟΣΤΟΛΗ', url: '/vision-mission', description: 'Όταν οι άνθρωποι επιχειρούν, οι κοινωνίες ευημερούν' },
     { label: 'ΔΙΟΙΚΗΣΗ', url: '/administration', description: 'Τα όργανα διοίκησης της ΕΣΕΕ, σύμφωνα με το καταστατικό της' },
     { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 340 Εμπορικούς Συλλόγους και 5 Συνδέσμους σε όλη την Ελλάδα' },
-    { label: 'ΙΝΕΜΥ – ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Τα επίσημα επιστημονικά όργανα της ΕΣΕΕ' }
+    { label: 'ΙΝΕΜΥ – ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Τα επίσημα επιστημονικά όργανα της ΕΣΕΕ' },
+    { label: 'ΕΣΕΕ Helpdesk', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
   ];
 
   const pressOfficeItems = [
