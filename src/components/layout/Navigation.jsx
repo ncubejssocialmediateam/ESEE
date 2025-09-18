@@ -115,16 +115,7 @@ const Navigation = ({ isDark }) => {
     { label: 'ΔΗΜΟΣΙΕΥΣΕΙΣ', url: '/publications' }
   ];
 
-  const competitionsItems = [
-    { label: '«Ψηφιακός Μετασχηματισμός 2021-2027»', url: '/digital-transformation' },
-    { label: '«Ανθρώπινο Δυναμικό και Κοινωνική Συνοχή 2021-2027»', url: '/human-resources' },
-    { label: 'Ε.Π. Ανάπτυξη Ανθρώπινου Δυναμικού – Εκπαίδευση & Δια Βίου Μάθηση 2014-20', url: '/education-lifelong-learning' },
-    { label: 'Ε.Π. «Ανταγωνιστικότητα, Επιχειρηματικότητα & Καινοτομία 2014-2020»', url: '/competitiveness-innovation' },
-    { label: 'Ε.Π. «Ανάπτυξη Ανθρώπινου Δυναμικού»', url: '/human-development' },
-    { label: 'Ε.Π. «Ιόνια Νησιά»', url: '/ionian-islands' },
-    { label: 'Ε.Π. «Ανταγωνιστικότητα & Επιχειρηματικότητα»', url: '/competitiveness-entrepreneurship' },
-    { label: 'Ε.Π. «Ευρωπαϊκό Ταμείο Προσαρμογής στην Παγκοσμιοποίηση»', url: '/european-adjustment-fund' }
-  ];
+  // Competitions dropdown replaced with direct link to /competitions page
 
   return (
       <>
@@ -191,14 +182,16 @@ const Navigation = ({ isDark }) => {
                   >
                     ΕΡΓΑ
                   </Link>
-                  <DropdownNavItem 
-                    isDark={isDark}
-                    title="ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ"
-                    items={competitionsItems}
-                    onMouseEnter={() => setActiveDropdown('competitions')}
-                    onMouseLeave={() => setActiveDropdown(null)}
-                    isOpen={activeDropdown === 'competitions'}
-                  />
+                  <Link
+                    to="/competitions"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                  >
+                    ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ
+                  </Link>
                   <Link
                     to="/contact"
                     className={`flex items-center px-3 py-1.5 text-sm font-medium ${
@@ -344,29 +337,19 @@ const Navigation = ({ isDark }) => {
                   </Link>
                 </div>
 
-                {/* ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ Dropdown */}
-                <div className="mb-4">
-                  <div className={`px-3 py-1.5 text-sm font-medium ${
-                    isDark ? 'text-gray-300' : 'text-gray-600'
-                  }`}>
+                {/* ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ */}
+                <div className="mb-2">
+                  <Link
+                    to="/competitions"
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                      isDark
+                        ? 'text-gray-200 hover:text-blue-400'
+                        : 'text-gray-800 hover:text-blue-600'
+                    } transition-colors`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ
-                  </div>
-                  <div className="ml-3 space-y-1">
-                    {competitionsItems.map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.url}
-                        className={`block px-3 py-1.5 text-sm font-medium ${
-                          isDark
-                            ? 'text-gray-200 hover:text-blue-400'
-                            : 'text-gray-700 hover:text-blue-600'
-                        } transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
+                  </Link>
                 </div>
 
                 {/* ΕΠΙΚΟΙΝΩΝΙΑ */}

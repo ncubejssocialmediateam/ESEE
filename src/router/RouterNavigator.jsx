@@ -19,6 +19,7 @@ import Members from "../pages/Members.jsx";
 import InemyKaele from "../pages/InemyKaele.jsx";
 import Circulars from "../pages/Circulars.jsx";
 import Publications from "../pages/Publications.jsx";
+import Competitions from "../pages/Competitions.jsx";
 import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
@@ -90,6 +91,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 <Route path="/inemy-kaele" element={<InemyKaele />} />
                 <Route path="/circulars" element={<Circulars />} />
                 <Route path="/publications" element={<Publications />} />
+                <Route path="/competitions" element={<Competitions />} />
         </Routes>
     );
 };
