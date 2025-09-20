@@ -25,7 +25,7 @@ import {
 const MemberSupport = () => {
   const { isDark } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Όλες');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [formData, setFormData] = useState({
     category: '',
@@ -191,7 +191,7 @@ const MemberSupport = () => {
   const filteredFAQs = faqs.filter(faq => {
     const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Όλες' || faq.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -267,7 +267,7 @@ const MemberSupport = () => {
                     ? 'bg-white/10 border-2 border-white/30' 
                     : 'bg-white/5 border border-white/10 hover:border-white/20'
                 }`}
-                onClick={() => setSelectedCategory(selectedCategory === category.id ? 'Όλες' : category.id)}
+                onClick={() => setSelectedCategory(selectedCategory === category.id ? 'all' : category.id)}
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-gradient-to-br ${category.color} text-white shadow-lg`}>
                   {category.icon}
@@ -311,7 +311,7 @@ const MemberSupport = () => {
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                <option value="Όλες" className="bg-gray-800">Όλες οι κατηγορίες</option>
+                <option value="all" className="bg-gray-800">Όλες οι κατηγορίες</option>
                 {categories.map(category => (
                   <option key={category.id} value={category.id} className="bg-gray-800">{category.name}</option>
                 ))}
@@ -326,7 +326,7 @@ const MemberSupport = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">
             Συχνές Ερωτήσεις
-            {selectedCategory !== 'Όλες' && (
+            {selectedCategory !== 'all' && (
               <span className="block text-xl text-white/70 mt-2">
                 {categories.find(c => c.id === selectedCategory)?.name}
               </span>
