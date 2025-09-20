@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESEE Chat Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .debug-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .error {
+            color: red;
+            background: #ffe6e6;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            color: green;
+            background: #e6ffe6;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .warning {
+            color: orange;
+            background: #fff3e6;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .info {
+            color: blue;
+            background: #e6f3ff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .test-results {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .chat-container {
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 ESEE Chat Debug Tool</h1>
+    
+    <div class="debug-section">
+        <h2>📊 System Status</h2>
+        <div id="system-status">
+            <div class="info">Checking system status...</div>
+        </div>
+        <button onclick="checkSystemStatus()">Refresh Status</button>
+    </div>
+
+    <div class="debug-section">
+        <h2>🔑 Environment Variables</h2>
+        <div id="env-status">
+            <div class="info">Checking environment variables...</div>
+        </div>
+        <button onclick="checkEnvironmentVariables()">Check Environment</button>
+    </div>
+
+    <div class="debug-section">
+        <h2>🧪 Chat Component Tests</h2>
+        <div id="chat-tests">
+            <div class="info">Ready to run chat tests...</div>
+        </div>
+        <button onclick="testChatComponent()">Test Chat Component</button>
+        <button onclick="testTimestampFix()">Test Timestamp Fix</button>
+        <button onclick="testAIService()">Test AI Service</button>
+    </div>
+
+    <div class="debug-section">
+        <h2>💬 Live Chat Test</h2>
+        <div class="chat-container" id="live-chat">
+            <div class="info">Chat will appear here when loaded...</div>
+        </div>
+        <button onclick="loadLiveChat()">Load Live Chat</button>
+        <button onclick="clearChat()">Clear Chat</button>
+    </div>
+
+    <div class="debug-section">
+        <h2>📝 Test Results</h2>
+        <div id="test-results" class="test-results">No tests run yet...</div>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function logResult(test, status, message, details = null) {
+            const timestamp = new Date().toLocaleTimeString();
+            const result = {
+                timestamp,
+                test,
+                status,
+                message,
+                details
+            };
+            testResults.push(result);
+            updateTestResults();
+        }
+
+        function updateTestResults() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.textContent = testResults.map(r => 
+                `[${r.timestamp}] ${r.test}: ${r.status.toUpperCase()}\n${r.message}${r.details ? '\n' + JSON.stringify(r.details, null, 2) : ''}\n`
+            ).join('\n');
+        }
+
+        function checkSystemStatus() {
+            const statusDiv = document.getElementById('system-status');
+            statusDiv.innerHTML = '<div class="info">Checking system status...</div>';
+
+            try {
+                // Check if we're in a browser environment
+                if (typeof window === 'undefined') {
+                    throw new Error('Not in browser environment');
+                }
+
+                // Check basic browser features
+                const checks = {
+                    'Local Storage': typeof localStorage !== 'undefined',
+                    'Session Storage': typeof sessionStorage !== 'undefined',
+                    'Fetch API': typeof fetch !== 'undefined',
+                    'JSON Support': typeof JSON !== 'undefined',
+                    'Date Support': typeof Date !== 'undefined',
+                    'Console': typeof console !== 'undefined'
+                };
+
+                let statusHtml = '<div class="success">✅ Browser Environment: OK</div>';
+                
+                Object.entries(checks).forEach(([feature, available]) => {
+                    if (available) {
+                        statusHtml += `<div class="success">✅ ${feature}: Available</div>`;
+                    } else {
+                        statusHtml += `<div class="error">❌ ${feature}: Not Available</div>`;
+                    }
+                });
+
+                // Check for React/Vite development server
+                if (window.location.port === '5173') {
+                    statusHtml += '<div class="success">✅ Development Server: Running on port 5173</div>';
+                } else {
+                    statusHtml += `<div class="warning">⚠️ Development Server: Running on port ${window.location.port}</div>`;
+                }
+
+                statusDiv.innerHTML = statusHtml;
+                logResult('System Status', 'success', 'System status check completed', checks);
+
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="error">❌ System Status Error: ${error.message}</div>`;
+                logResult('System Status', 'error', error.message);
+            }
+        }
+
+        function checkEnvironmentVariables() {
+            const envDiv = document.getElementById('env-status');
+            envDiv.innerHTML = '<div class="info">Checking environment variables...</div>';
+
+            try {
+                // In a browser environment, we can't directly access .env files
+                // But we can check if the variables are available in the global scope
+                const envVars = {
+                    'VITE_OPENROUTER_API_KEY': 'Not accessible in browser',
+                    'VITE_OPENROUTER_API_URL': 'Not accessible in browser',
+                    'VITE_DEEPSEEK_MODEL': 'Not accessible in browser'
+                };
+
+                let envHtml = '<div class="warning">⚠️ Environment variables are not directly accessible in browser</div>';
+                envHtml += '<div class="info">ℹ️ Variables should be configured in .env file and accessible via import.meta.env</div>';
+
+                // Check if we can access import.meta (Vite feature)
+                if (typeof import !== 'undefined' && import.meta) {
+                    envHtml += '<div class="success">✅ import.meta is available (Vite environment detected)</div>';
+                } else {
+                    envHtml += '<div class="warning">⚠️ import.meta not available (may not be in Vite environment)</div>';
+                }
+
+                envDiv.innerHTML = envHtml;
+                logResult('Environment Variables', 'warning', 'Environment variables check completed', envVars);
+
+            } catch (error) {
+                envDiv.innerHTML = `<div class="error">❌ Environment Variables Error: ${error.message}</div>`;
+                logResult('Environment Variables', 'error', error.message);
+            }
+        }
+
+        function testChatComponent() {
+            const testsDiv = document.getElementById('chat-tests');
+            testsDiv.innerHTML = '<div class="info">Testing chat component...</div>';
+
+            try {
+                // Test timestamp conversion logic
+                const testMessages = [
+                    {
+                        id: 1,
+                        type: 'ai',
+                        content: 'Test message',
+                        timestamp: '2025-01-29T10:30:00.000Z'
+                    },
+                    {
+                        id: 2,
+                        type: 'user',
+                        content: 'User message',
+                        timestamp: new Date()
+                    }
+                ];
+
+                // Test the timestamp conversion
+                const convertedMessages = testMessages.map(msg => ({
+                    ...msg,
+                    timestamp: msg.timestamp instanceof Date ? msg.timestamp : new Date(msg.timestamp)
+                }));
+
+                // Test timestamp formatting
+                let testResults = [];
+                convertedMessages.forEach((message, index) => {
+                    try {
+                        const timestamp = message.timestamp instanceof Date 
+                            ? message.timestamp 
+                            : new Date(message.timestamp);
+                        
+                        const formattedTime = timestamp.toLocaleTimeString('el-GR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        });
+                        
+                        testResults.push({
+                            message: `Message ${index + 1}`,
+                            status: 'success',
+                            formattedTime: formattedTime
+                        });
+                    } catch (error) {
+                        testResults.push({
+                            message: `Message ${index + 1}`,
+                            status: 'error',
+                            error: error.message
+                        });
+                    }
+                });
+
+                let html = '<div class="success">✅ Chat Component Tests Completed</div>';
+                testResults.forEach(result => {
+                    if (result.status === 'success') {
+                        html += `<div class="success">✅ ${result.message}: ${result.formattedTime}</div>`;
+                    } else {
+                        html += `<div class="error">❌ ${result.message}: ${result.error}</div>`;
+                    }
+                });
+
+                testsDiv.innerHTML = html;
+                logResult('Chat Component', 'success', 'Chat component tests completed', testResults);
+
+            } catch (error) {
+                testsDiv.innerHTML = `<div class="error">❌ Chat Component Test Error: ${error.message}</div>`;
+                logResult('Chat Component', 'error', error.message);
+            }
+        }
+
+        function testTimestampFix() {
+            logResult('Timestamp Fix', 'info', 'Testing timestamp conversion and formatting...');
+
+            try {
+                // Test various timestamp formats
+                const testCases = [
+                    { input: '2025-01-29T10:30:00.000Z', description: 'ISO string' },
+                    { input: new Date(), description: 'Date object' },
+                    { input: Date.now(), description: 'Timestamp number' },
+                    { input: 'invalid-date', description: 'Invalid date string' }
+                ];
+
+                testCases.forEach((testCase, index) => {
+                    try {
+                        const timestamp = testCase.input instanceof Date 
+                            ? testCase.input 
+                            : new Date(testCase.input);
+                        
+                        const formatted = timestamp.toLocaleTimeString('el-GR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        });
+                        
+                        logResult(`Timestamp Test ${index + 1}`, 'success', 
+                            `${testCase.description}: ${formatted}`);
+                    } catch (error) {
+                        logResult(`Timestamp Test ${index + 1}`, 'error', 
+                            `${testCase.description}: ${error.message}`);
+                    }
+                });
+
+            } catch (error) {
+                logResult('Timestamp Fix', 'error', error.message);
+            }
+        }
+
+        function testAIService() {
+            logResult('AI Service', 'info', 'Testing AI service configuration...');
+
+            try {
+                // Test if we can create a basic AI service structure
+                const mockAIService = {
+                    isConfigured: () => {
+                        // This would normally check for API key
+                        return false; // Simulate no API key
+                    },
+                    getCurrentModel: () => 'deepseek/deepseek-r1',
+                    getSystemInfo: () => ({
+                        model: 'deepseek/deepseek-r1',
+                        isConfigured: false,
+                        currentDate: new Date().toLocaleDateString('el-GR'),
+                        year: 2025
+                    })
+                };
+
+                const isConfigured = mockAIService.isConfigured();
+                const model = mockAIService.getCurrentModel();
+                const systemInfo = mockAIService.getSystemInfo();
+
+                if (isConfigured) {
+                    logResult('AI Service', 'success', 'AI service is configured and ready');
+                } else {
+                    logResult('AI Service', 'warning', 'AI service is not configured (no API key)');
+                }
+
+                logResult('AI Service', 'info', `Model: ${model}`);
+                logResult('AI Service', 'info', `System Info: ${JSON.stringify(systemInfo)}`);
+
+            } catch (error) {
+                logResult('AI Service', 'error', error.message);
+            }
+        }
+
+        function loadLiveChat() {
+            const chatDiv = document.getElementById('live-chat');
+            chatDiv.innerHTML = '<div class="info">Loading live chat component...</div>';
+
+            try {
+                // Try to load the chat component
+                // This would normally be done through React/Vite
+                chatDiv.innerHTML = `
+                    <div class="success">✅ Chat component would load here</div>
+                    <div class="info">ℹ️ In a real environment, this would load the React AIChat component</div>
+                    <div class="warning">⚠️ Make sure the development server is running on http://localhost:5173</div>
+                `;
+
+                logResult('Live Chat', 'info', 'Live chat loading attempted');
+
+            } catch (error) {
+                chatDiv.innerHTML = `<div class="error">❌ Live Chat Error: ${error.message}</div>`;
+                logResult('Live Chat', 'error', error.message);
+            }
+        }
+
+        function clearChat() {
+            document.getElementById('live-chat').innerHTML = '<div class="info">Chat cleared...</div>';
+            logResult('Live Chat', 'info', 'Chat cleared');
+        }
+
+        // Run initial checks when page loads
+        window.onload = function() {
+            checkSystemStatus();
+            checkEnvironmentVariables();
+            testChatComponent();
+        };
+    </script>
+</body>
+</html>

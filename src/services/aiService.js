@@ -1,18 +1,20 @@
 import axios from 'axios';
+import contentService from './contentService.js';
 
 // OpenRouter API configuration
 const OPENROUTER_API_URL = import.meta.env.VITE_OPENROUTER_API_URL || 'https://openrouter.ai/api/v1';
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const DEEPSEEK_MODEL = import.meta.env.VITE_DEEPSEEK_MODEL || 'deepseek/deepseek-r1';
 
-// Enhanced system prompt based on ai-new.md configuration
-const SYSTEM_PROMPT = `Είσαι ο Ψηφιακός Οδηγός της ΕΣΕΕ (Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας).
+// Enhanced system prompt with improved intelligence and context awareness
+const SYSTEM_PROMPT = `Είσαι ο Ψηφιακός Οδηγός της ΕΣΕΕ (Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας) - ένας εξειδικευμένος AI βοηθός με βαθιά γνώση του ελληνικού επιχειρηματικού περιβάλλοντος.
 
 ## ΠΡΟΣΩΠΙΚΟΤΗΤΑ & ΣΤΥΛ:
-- **Τόνος**: Ευγενικός, επαγγελματικός, εξυπηρετικός
-- **Στυλ**: Έξυπνος, ακριβής, προσβάσιμος
-- **Προσέγγιση**: Προσωποποιημένη εξυπηρέτηση με εμπειρογνωμοσύνη
-- **Γλώσσα**: Ελληνικά με επίσημη προσφώνηση και επιχειρηματική ορολογία
+- **Τόνος**: Ευγενικός, επαγγελματικός, εξυπηρετικός, αλλά και φιλικός
+- **Στυλ**: Έξυπνος, ακριβής, προσβάσιμος, με βαθιά κατανόηση των επιχειρηματικών αναγκών
+- **Προσέγγιση**: Προσωποποιημένη εξυπηρέτηση με εμπειρογνωμοσύνη και πρακτική καθοδήγηση
+- **Γλώσσα**: Ελληνικά με επίσημη προσφώνηση, επιχειρηματική ορολογία και σαφή εξηγήσεις
+- **Ανταπόκριση**: Πάντα δομημένη, με συγκεκριμένες οδηγίες και actionable βήματα
 
 ## ΟΡΓΑΝΩΣΙΑΚΑ ΣΤΟΙΧΕΙΑ ΕΣΕΕ:
 - **Αντιπροσωπεύει**: 225,000 επιχειρήσεις με €167+ δισεκατομμύρια τζίρο και 725,000 εργαζομένους
@@ -96,11 +98,14 @@ const SYSTEM_PROMPT = `Είσαι ο Ψηφιακός Οδηγός της ΕΣΕ
 - Ψηφιακός μετασχηματισμός
 
 ## ΟΔΗΓΙΕΣ ΑΠΑΝΤΗΣΗΣ:
-- **Πάντα ευγενικός και επαγγελματικός**
-- **Ακριβείς πληροφορίες με αναφορά πηγών**
-- **Δομημένες απαντήσεις με πρακτικές οδηγίες**
-- **Ενέργειες που μπορούν να λάβουν οι χρήστες**
-- **Προτάσεις για περαιτέρω βοήθεια**
+- **Πάντα ευγενικός, επαγγελματικός και φιλικός**
+- **Ακριβείς πληροφορίες με αναφορά πηγών και ημερομηνιών**
+- **Δομημένες απαντήσεις με πρακτικές οδηγίες και συγκεκριμένα βήματα**
+- **Ενέργειες που μπορούν να λάβουν οι χρήστες με προτεραιότητες**
+- **Προτάσεις για περαιτέρω βοήθεια και σχετικές υπηρεσίες**
+- **Ανάλυση επιπτώσεων και πιθανών προκλήσεων**
+- **Συγκριτική ανάλυση επιλογών όπου εφαρμόζεται**
+- **Προληπτικές συμβουλές και best practices**
 
 ## ΑΠΑΓΟΡΕΥΜΕΝΕΣ ΔΡΑΣΕΙΣ:
 - Παροχή νομικών συμβουλών χωρίς disclaimer
@@ -116,22 +121,33 @@ const SYSTEM_PROMPT = `Είσαι ο Ψηφιακός Οδηγός της ΕΣΕ
 
 ## ΠΡΟΤΥΠΑ ΑΠΑΝΤΗΣΗΣ:
 ### Για ερωτήματα πληροφοριών:
-1. Άμεση απάντηση στο ερώτημα
-2. Αναλυτική εξήγηση
-3. Πρακτικές οδηγίες
-4. Σχετικοί σύνδεσμοι/πηγές
-5. Πρόταση για περαιτέρω βοήθεια
+1. **Σύντομη απάντηση** - Άμεση απάντηση στο ερώτημα
+2. **Αναλυτική εξήγηση** - Λεπτομερής ανάλυση με πλαίσιο
+3. **Πρακτικές οδηγίες** - Συγκεκριμένα βήματα και ενέργειες
+4. **Σχετικές πληροφορίες** - Επιπλέον context και σχετικά θέματα
+5. **Επόμενα βήματα** - Προτάσεις για περαιτέρω βοήθεια και ακολουθία ενεργειών
 
 ### Για νομικές πληροφορίες:
-- **Προοίμιο**: "Σύμφωνα με την ισχύουσα νομοθεσία:"
-- **Επίλογος**: "Για εξειδικευμένες νομικές συμβουλές, συνιστάται η επικοινωνία με δικηγόρο ειδικό στον τομέα."
+- **Προοίμιο**: "Σύμφωνα με την ισχύουσα νομοθεσία (ενημέρωση 2025):"
+- **Κύριο περιεχόμενο**: Δομημένη εξήγηση με παραγράφους και υποσημειώσεις
+- **Πρακτικές επιπτώσεις**: Τι σημαίνει αυτό για την επιχείρησή σας
+- **Επίλογος**: "⚠️ Για εξειδικευμένες νομικές συμβουλές, συνιστάται η επικοινωνία με δικηγόρο ειδικό στον τομέα."
 
 ### Για επιχειρηματικές συμβουλές:
-1. Ανάλυση της κατάστασης
-2. Διαθέσιμες επιλογές
-3. Πλεονεκτήματα/μειονεκτήματα
-4. Συγκεκριμένα βήματα δράσης
-5. Πηγές περαιτέρω υποστήριξης
+1. **Ανάλυση κατάστασης** - Κατανόηση του τρέχοντος περιβάλλοντος
+2. **Διαθέσιμες επιλογές** - Όλες οι πιθανές λύσεις
+3. **Συγκριτική ανάλυση** - Πλεονεκτήματα/μειονεκτήματα κάθε επιλογής
+4. **Συνιστώμενη προσέγγιση** - Η καλύτερη στρατηγική με αιτιολόγηση
+5. **Συγκεκριμένα βήματα** - Actionable plan με timeline
+6. **Πηγές υποστήριξης** - ΕΣΕΕ υπηρεσίες και εξωτερικοί συνεργάτες
+7. **Παρακολούθηση** - Πώς να μετρήσετε την επιτυχία
+
+### Για τεχνικά θέματα:
+1. **Τεχνική εξήγηση** - Απλή και κατανοητή
+2. **Πρακτική εφαρμογή** - Πώς να το εφαρμόσετε
+3. **Κοινές προκλήσεις** - Τι να προσέξετε
+4. **Βοηθητικά εργαλεία** - Πηγές και εργαλεία υποστήριξης
+5. **Επόμενα βήματα** - Προτάσεις για περαιτέρω εξέλιξη
 
 **Τρέχουσα Ημερομηνία**: ${new Date().toLocaleDateString('el-GR')}
 **Έτος**: 2025
@@ -148,8 +164,26 @@ class AIService {
         'HTTP-Referer': window.location.origin,
         'X-Title': 'ESEE AI Assistant'
       },
-      timeout: 30000 // 30 seconds timeout for AI responses
+      timeout: 45000 // 45 seconds timeout for more complex responses
     });
+    
+    // Enhanced conversation management
+    this.conversationContext = {
+      userProfile: null,
+      currentTopic: null,
+      conversationHistory: [],
+      userPreferences: {},
+      lastInteraction: null
+    };
+    
+    // Response enhancement settings
+    this.responseSettings = {
+      maxTokens: 1500, // Increased for more detailed responses
+      temperature: 0.6, // Slightly lower for more consistent responses
+      topP: 0.9,
+      frequencyPenalty: 0.1,
+      presencePenalty: 0.1
+    };
   }
 
   async sendMessage(userMessage, conversationHistory = [], includeExternalContent = true) {
@@ -158,6 +192,9 @@ class AIService {
     }
 
     try {
+      // Update conversation context
+      this.updateConversationContext(userMessage, conversationHistory);
+      
       // Get additional content from external sources if requested
       let enhancedSystemPrompt = SYSTEM_PROMPT;
       if (includeExternalContent) {
@@ -169,6 +206,9 @@ class AIService {
           // Continue with base system prompt if external content fails
         }
       }
+
+      // Add contextual information to system prompt
+      enhancedSystemPrompt += this.getContextualPrompt();
 
       // Prepare messages array with enhanced system prompt and conversation history
       const messages = [
@@ -186,18 +226,24 @@ class AIService {
       const response = await this.apiClient.post('/chat/completions', {
         model: DEEPSEEK_MODEL,
         messages: messages,
-        max_tokens: 1000,
-        temperature: 0.7,
-        top_p: 0.9,
-        frequency_penalty: 0.1,
-        presence_penalty: 0.1
+        max_tokens: this.responseSettings.maxTokens,
+        temperature: this.responseSettings.temperature,
+        top_p: this.responseSettings.topP,
+        frequency_penalty: this.responseSettings.frequencyPenalty,
+        presence_penalty: this.responseSettings.presencePenalty
       });
 
       if (response.data && response.data.choices && response.data.choices.length > 0) {
+        const aiResponse = response.data.choices[0].message.content;
+        
+        // Enhance the response with additional context
+        const enhancedResponse = this.enhanceResponse(aiResponse, userMessage);
+        
         return {
           success: true,
-          message: response.data.choices[0].message.content,
-          usage: response.data.usage
+          message: enhancedResponse,
+          usage: response.data.usage,
+          context: this.conversationContext
         };
       } else {
         throw new Error('Invalid response format from OpenRouter API');
@@ -225,6 +271,130 @@ class AIService {
         throw new Error('Network error. Please check your internet connection.');
       }
     }
+  }
+
+  // Enhanced conversation context management
+  updateConversationContext(userMessage, conversationHistory) {
+    this.conversationContext.lastInteraction = new Date();
+    this.conversationContext.conversationHistory = conversationHistory;
+    
+    // Analyze user message for topic detection
+    const topicKeywords = {
+      'φορολογ': 'tax-compliance',
+      'ενέργεια': 'energy-costs',
+      'ψηφιακ': 'digital-transformation',
+      'οικονομικ': 'financial-assistance',
+      'εργατικ': 'labor-law',
+      'εκπαίδευση': 'training',
+      'myDATA': 'tax-compliance',
+      'ERGANI': 'labor-law',
+      'KAELE': 'training'
+    };
+    
+    const lowerMessage = userMessage.toLowerCase();
+    for (const [keyword, topic] of Object.entries(topicKeywords)) {
+      if (lowerMessage.includes(keyword)) {
+        this.conversationContext.currentTopic = topic;
+        break;
+      }
+    }
+  }
+
+  // Generate contextual prompt based on conversation state
+  getContextualPrompt() {
+    let contextualPrompt = '\n\n## ΤΡΕΧΟΥΣΑ ΣΥΝΟΜΙΛΙΑ:\n';
+    
+    if (this.conversationContext.currentTopic) {
+      contextualPrompt += `- **Τρέχον θέμα**: ${this.conversationContext.currentTopic}\n`;
+    }
+    
+    if (this.conversationContext.conversationHistory.length > 0) {
+      contextualPrompt += `- **Ιστορικό συνομιλίας**: ${this.conversationContext.conversationHistory.length} προηγούμενα μηνύματα\n`;
+    }
+    
+    contextualPrompt += `- **Ώρα αλληλεπίδρασης**: ${new Date().toLocaleString('el-GR')}\n`;
+    
+    // Add conversation-specific guidance
+    if (this.conversationContext.conversationHistory.length > 3) {
+      contextualPrompt += '\n**ΟΔΗΓΙΑ**: Αυτή είναι μια συνεχής συνομιλία. Αναφέρετε προηγούμενα σημεία όπου είναι σχετικό και προσφέρετε follow-up ερωτήσεις.\n';
+    }
+    
+    return contextualPrompt;
+  }
+
+  // Enhance AI response with additional context and formatting
+  enhanceResponse(aiResponse, userMessage) {
+    let enhancedResponse = aiResponse;
+    
+    // Add follow-up suggestions for better conversation flow
+    const followUpSuggestions = this.generateFollowUpSuggestions(userMessage, aiResponse);
+    if (followUpSuggestions.length > 0) {
+      enhancedResponse += '\n\n**💡 Σχετικές ερωτήσεις που μπορείτε να κάνετε:**\n';
+      followUpSuggestions.forEach((suggestion, index) => {
+        enhancedResponse += `${index + 1}. ${suggestion}\n`;
+      });
+    }
+    
+    // Add relevant ESEE services if applicable
+    const relevantServices = this.getRelevantServices(userMessage);
+    if (relevantServices.length > 0) {
+      enhancedResponse += '\n\n**🔗 Σχετικές υπηρεσίες ΕΣΕΕ:**\n';
+      relevantServices.forEach(service => {
+        enhancedResponse += `• ${service}\n`;
+      });
+    }
+    
+    return enhancedResponse;
+  }
+
+  // Generate intelligent follow-up suggestions
+  generateFollowUpSuggestions(userMessage, aiResponse) {
+    const suggestions = [];
+    const lowerMessage = userMessage.toLowerCase();
+    const lowerResponse = aiResponse.toLowerCase();
+    
+    if (lowerMessage.includes('φορολογ') || lowerResponse.includes('φορολογ')) {
+      suggestions.push('Πώς μπορώ να εφαρμόσω το σύστημα myDATA στην επιχείρησή μου;');
+      suggestions.push('Ποια είναι τα βήματα για την ηλεκτρονική υποβολή ΦΠΑ;');
+      suggestions.push('Υπάρχουν επιπτώσεις για καθυστερημένες φορολογικές υποχρεώσεις;');
+    }
+    
+    if (lowerMessage.includes('ενέργεια') || lowerResponse.includes('ενέργεια')) {
+      suggestions.push('Ποια μέτρα ενεργειακής αποδοτικότητας μπορώ να εφαρμόσω;');
+      suggestions.push('Υπάρχουν επιδοτήσεις για ανανεώσιμες πηγές ενέργειας;');
+      suggestions.push('Πώς μπορώ να μειώσω το κόστος ενέργειας στην επιχείρησή μου;');
+    }
+    
+    if (lowerMessage.includes('ψηφιακ') || lowerResponse.includes('ψηφιακ')) {
+      suggestions.push('Ποια είναι τα πρώτα βήματα για ψηφιακό μετασχηματισμό;');
+      suggestions.push('Πώς μπορώ να βελτιώσω την online παρουσία της επιχείρησής μου;');
+      suggestions.push('Υπάρχουν εκπαιδευτικά προγράμματα για ψηφιακές δεξιότητες;');
+    }
+    
+    return suggestions.slice(0, 3); // Limit to 3 suggestions
+  }
+
+  // Get relevant ESEE services based on user message
+  getRelevantServices(userMessage) {
+    const services = [];
+    const lowerMessage = userMessage.toLowerCase();
+    
+    if (lowerMessage.includes('φορολογ') || lowerMessage.includes('mydata')) {
+      services.push('ΕΣΕΕ Digital Services - Φορολογική Συμμόρφωση');
+      services.push('Συμβουλευτική Υπηρεσία Φορολογικών Θεμάτων');
+    }
+    
+    if (lowerMessage.includes('εκπαίδευση') || lowerMessage.includes('σεμινάρια')) {
+      services.push('KAELE - Κέντρο Εκπαίδευσης ΕΣΕΕ');
+      services.push('ERMEION+ - Ψηφιακή Πλατφόρμα Εκπαίδευσης');
+    }
+    
+    if (lowerMessage.includes('οικονομικ') || lowerMessage.includes('χρηματοδότηση')) {
+      services.push('Ευρωπαϊκό Ταμείο Ανάκαμψης - Δάνεια ΜΜΕ');
+      services.push('Συμβουλευτική Αναδιάρθρωσης Χρέους');
+    }
+    
+    return services;
   }
 
   // Method to check if the service is properly configured

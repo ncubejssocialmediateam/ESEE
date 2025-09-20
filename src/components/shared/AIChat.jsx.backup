@@ -190,16 +190,11 @@ const AIChat = ({ aiStatus }) => {
     if (savedMessages && savedMessages.length > 1) {
       try {
         const parsedMessages = JSON.parse(savedMessages);
-        // Convert timestamp strings back to Date objects
-        const messagesWithDateTimestamps = parsedMessages.map(msg => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp)
-        }));
-        setMessages(messagesWithDateTimestamps);
+        setMessages(parsedMessages);
         
         // Initialize displayed messages for all AI messages
         const newDisplayedMessages = new Map();
-        messagesWithDateTimestamps.forEach(msg => {
+        parsedMessages.forEach(msg => {
           if (msg.type === 'ai') {
             newDisplayedMessages.set(msg.id, msg.content);
           }
@@ -221,7 +216,7 @@ const AIChat = ({ aiStatus }) => {
     if (savedTopic) {
       setCurrentTopic(savedTopic);
     }
-  }, [messages, smartTypewriterEffect]);
+  }, []);
 
   // Save conversation state to localStorage
   useEffect(() => {
@@ -1045,20 +1040,10 @@ const AIChat = ({ aiStatus }) => {
                             ? 'text-blue-100/80' 
                             : isDark ? 'text-slate-400' : 'text-gray-500'
                         }`}>
-                          {(() => {
-                            try {
-                              const timestamp = message.timestamp instanceof Date 
-                                ? message.timestamp 
-                                : new Date(message.timestamp);
-                              return timestamp.toLocaleTimeString('el-GR', { 
-                                hour: '2-digit', 
-                                minute: '2-digit' 
-                              });
-                            } catch (error) {
-                              console.warn('Timestamp formatting error:', error);
-                              return '--:--';
-                            }
-                          })()}
+                          {message.timestamp.toLocaleTimeString('el-GR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          })}
                         </p>
                         
                         {/* AI message status indicator */}
