@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Phone, Mail, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import ESEE_LOGO_WHITE from '../../assets/ESEE-LOGO_white.png';
 
 const Footer = ({ isDark }) => {
@@ -162,11 +163,13 @@ const Footer = ({ isDark }) => {
           {/* ESEE Logo */}
           <div className="lg:col-span-1 flex justify-center lg:justify-end">
             <div className="flex flex-col items-center lg:items-end">
-              <img 
-                src={ESEE_LOGO_WHITE} 
-                alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
-                className="h-16 w-auto mb-4"
-              />
+              <Link to="/">
+                <img 
+                  src={ESEE_LOGO_WHITE} 
+                  alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
+                  className="h-16 w-auto mb-4 hover:opacity-80 transition-opacity duration-300"
+                />
+              </Link>
               <p className={`text-sm text-center lg:text-right ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 Ελληνική Συνομοσπονδία<br />
                 Εμπορίου & Επιχειρηματικότητας

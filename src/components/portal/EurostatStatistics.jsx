@@ -74,43 +74,9 @@ const EurostatStatistics = () => {
       setError(err.message);
       console.error('Error fetching Eurostat data:', err);
       
-      // Fallback to mock data if API fails
-      const mockGreeceData = {
-        greece: {
-          inflation: {
-            data: [{ country: 'Greece', countryCode: 'EL', time: '2024-01', value: 3.2, indicator: 'inflation' }],
-            metadata: { indicator: 'inflation', totalPoints: 1, countries: ['Greece'], timeRange: { from: '2024-01', to: '2024-01' } }
-          },
-          unemployment: {
-            data: [{ country: 'Greece', countryCode: 'EL', time: '2024-01', value: 10.8, indicator: 'unemployment' }],
-            metadata: { indicator: 'unemployment', totalPoints: 1, countries: ['Greece'], timeRange: { from: '2024-01', to: '2024-01' } }
-          },
-          retail_trade: {
-            data: [{ country: 'Greece', countryCode: 'EL', time: '2024-01', value: 105.2, indicator: 'retail_trade' }],
-            metadata: { indicator: 'retail_trade', totalPoints: 1, countries: ['Greece'], timeRange: { from: '2024-01', to: '2024-01' } }
-          },
-          business_confidence: {
-            data: [{ country: 'Greece', countryCode: 'EL', time: '2024-01', value: 2.1, indicator: 'business_confidence' }],
-            metadata: { indicator: 'business_confidence', totalPoints: 1, countries: ['Greece'], timeRange: { from: '2024-01', to: '2024-01' } }
-          }
-        },
-        lastUpdated: new Date().toISOString()
-      };
-
-      const mockEUData = {
-        data: [
-          { country: 'Greece', countryCode: 'EL', time: '2024-01', value: 3.2, indicator: selectedIndicator },
-          { country: 'Germany', countryCode: 'DE', time: '2024-01', value: 2.8, indicator: selectedIndicator },
-          { country: 'France', countryCode: 'FR', time: '2024-01', value: 3.1, indicator: selectedIndicator },
-          { country: 'Italy', countryCode: 'IT', time: '2024-01', value: 2.9, indicator: selectedIndicator },
-          { country: 'Spain', countryCode: 'ES', time: '2024-01', value: 3.4, indicator: selectedIndicator }
-        ],
-        metadata: { indicator: selectedIndicator, totalPoints: 5, countries: ['Greece', 'Germany', 'France', 'Italy', 'Spain'], timeRange: { from: '2024-01', to: '2024-01' } }
-      };
-
       setData({
-        greece: mockGreeceData,
-        euComparison: mockEUData,
+        greece: null,
+        euComparison: null,
         lastUpdated: new Date()
       });
     } finally {

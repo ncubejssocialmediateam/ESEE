@@ -150,45 +150,10 @@ class EurostatService {
       return data;
     } catch (error) {
       console.error('Eurostat API fetch error:', error);
-      // Return mock data if API fails (for development)
-      return this.getMockData(dataset, params);
+      throw error;
     }
   }
 
-  /**
-   * Get mock data for development when API is not available
-   */
-  getMockData(dataset, params) {
-    const mockData = {
-      value: {
-        '0,0': 3.2, // Greece, latest month
-        '1,0': 2.8, // Germany, latest month
-        '2,0': 3.1, // France, latest month
-        '3,0': 2.9, // Italy, latest month
-        '4,0': 3.4  // Spain, latest month
-      },
-      dimension: {
-        geo: {
-          category: {
-            index: { 'EL': 0, 'DE': 1, 'FR': 2, 'IT': 3, 'ES': 4 },
-            label: { 'EL': 'Greece', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain' }
-          }
-        },
-        time: {
-          category: {
-            index: { '2024-01': 0 },
-            label: { '2024-01': '2024-01' }
-          }
-        }
-      },
-      label: {
-        geo: { 'EL': 'Greece', 'DE': 'Germany', 'FR': 'France', 'IT': 'Italy', 'ES': 'Spain' },
-        time: { '2024-01': '2024-01' }
-      }
-    };
-
-    return mockData;
-  }
 
   /**
    * Get inflation data for EU countries

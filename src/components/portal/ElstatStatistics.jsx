@@ -199,17 +199,6 @@ const ElstatStatistics = () => {
     }
   };
 
-  const getMockValue = (indicator, region) => {
-    const values = {
-      'cpi': { 'EL': 3.1, 'EL-A': 3.2, 'EL-B': 3.0, 'EL-C': 2.9, 'EL-D': 2.8, 'EL-E': 3.1, 'EL-F': 2.7, 'EL-G': 3.0, 'EL-H': 2.9, 'EL-J': 3.2, 'EL-K': 2.8, 'EL-L': 3.3, 'EL-M': 3.4 },
-      'unemployment': { 'EL': 10.8, 'EL-A': 9.5, 'EL-B': 12.1, 'EL-C': 11.8, 'EL-D': 13.2, 'EL-E': 10.9, 'EL-F': 12.5, 'EL-G': 11.2, 'EL-H': 10.7, 'EL-J': 11.8, 'EL-K': 8.9, 'EL-L': 7.2, 'EL-M': 8.1 },
-      'retail_trade': { 'EL': 105.2, 'EL-A': 108.1, 'EL-B': 102.8, 'EL-C': 99.5, 'EL-D': 97.2, 'EL-E': 103.1, 'EL-F': 98.7, 'EL-G': 101.2, 'EL-H': 102.9, 'EL-J': 104.8, 'EL-K': 106.3, 'EL-L': 112.4, 'EL-M': 109.7 },
-      'business_confidence': { 'EL': 2.1, 'EL-A': 3.2, 'EL-B': 1.8, 'EL-C': 1.5, 'EL-D': 0.9, 'EL-E': 2.3, 'EL-F': 1.2, 'EL-G': 1.9, 'EL-H': 2.4, 'EL-J': 1.7, 'EL-K': 4.1, 'EL-L': 5.2, 'EL-M': 4.8 },
-      'gdp_growth': { 'EL': 2.3, 'EL-A': 2.8, 'EL-B': 1.9, 'EL-C': 1.7, 'EL-D': 1.4, 'EL-E': 2.1, 'EL-F': 1.6, 'EL-G': 2.0, 'EL-H': 2.2, 'EL-J': 1.8, 'EL-K': 3.1, 'EL-L': 3.8, 'EL-M': 3.5 },
-      'tourism_arrivals': { 'EL': 32000, 'EL-A': 15000, 'EL-B': 8000, 'EL-C': 2000, 'EL-D': 1500, 'EL-E': 3000, 'EL-F': 1000, 'EL-G': 2000, 'EL-H': 1500, 'EL-J': 2500, 'EL-K': 5000, 'EL-L': 8000, 'EL-M': 6000 }
-    };
-    return values[indicator]?.[region] || 0;
-  };
 
   useEffect(() => {
     fetchData();

@@ -21,6 +21,8 @@ import Circulars from "../pages/Circulars.jsx";
 import Publications from "../pages/Publications.jsx";
 import Competitions from "../pages/Competitions.jsx";
 import MemberSupport from "../pages/MemberSupport.jsx";
+import PortalDebug from "../components/debug/PortalDebug.jsx";
+import ErrorBoundary from "../components/debug/ErrorBoundary.jsx";
 import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
@@ -82,7 +84,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
             <Route path="/business" element={<Business />} />
             <Route path="/archive" element={<Archive />} />
             <Route path="/tax-calendar" element={<TaxCalendar />} />
-            <Route path="/portal" element={<Portal />} />
+            <Route path="/portal" element={<ErrorBoundary><Portal /></ErrorBoundary>} />
             <Route path="/news" element={<News />} />
             <Route path="/press-releases" element={<PressReleases />} />
             <Route path="/administration" element={<Administration />} />
@@ -94,6 +96,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/competitions" element={<Competitions />} />
                 <Route path="/member-support" element={<MemberSupport />} />
+                <Route path="/portal-debug" element={<PortalDebug />} />
         </Routes>
     );
 };

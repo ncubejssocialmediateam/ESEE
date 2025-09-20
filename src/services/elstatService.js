@@ -275,65 +275,11 @@ class ElstatService {
         return data;
       } catch (sdmxError) {
         console.error('ELSTAT SDMX also failed:', sdmxError.message);
-        // Return mock data if both APIs fail
-        return this.getMockData(dataset, params);
+        throw sdmxError;
       }
     }
   }
 
-  /**
-   * Get mock data for development when API is not available
-   */
-  getMockData(dataset, params) {
-    const mockData = {
-      value: {
-        '0,0': 3.1, // Greece, latest month
-        '0,1': 2.9, // Greece, previous month
-        '0,2': 3.3  // Greece, two months ago
-      },
-      dimension: {
-        geo: {
-          category: {
-            index: { 'EL': 0 },
-            label: { 'EL': 'Ελλάδα' }
-          }
-        },
-        time: {
-          category: {
-            index: { '2024-01': 0, '2023-12': 1, '2023-11': 2 },
-            label: { '2024-01': '2024-01', '2023-12': '2023-12', '2023-11': '2023-11' }
-          }
-        }
-      },
-      label: {
-        geo: { 'EL': 'Ελλάδα' },
-        time: { '2024-01': '2024-01', '2023-12': '2023-12', '2023-11': '2023-11' }
-      }
-    };
-
-    // Customize mock data based on dataset
-    switch (dataset) {
-      case ELSTAT_DATASETS.CONSUMER_PRICE_INDEX:
-        mockData.value = { '0,0': 3.1, '0,1': 2.9, '0,2': 3.3 };
-        break;
-      case ELSTAT_DATASETS.UNEMPLOYMENT_RATE:
-        mockData.value = { '0,0': 10.8, '0,1': 11.2, '0,2': 11.5 };
-        break;
-      case ELSTAT_DATASETS.RETAIL_TRADE_TURNOVER:
-        mockData.value = { '0,0': 105.2, '0,1': 104.8, '0,2': 103.9 };
-        break;
-      case ELSTAT_DATASETS.BUSINESS_CONFIDENCE:
-        mockData.value = { '0,0': 2.1, '0,1': 1.8, '0,2': 1.5 };
-        break;
-      case ELSTAT_DATASETS.GDP_GROWTH:
-        mockData.value = { '0,0': 2.3, '0,1': 2.1, '0,2': 1.9 };
-        break;
-      default:
-        mockData.value = { '0,0': 100.0, '0,1': 99.5, '0,2': 98.8 };
-    }
-
-    return mockData;
-  }
 
   /**
    * Get Consumer Price Index data

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, ExternalLink, AlertCircle, CheckCircle, XCircle, RefreshCw, Filter } from 'lucide-react';
-import { generateMockTaxEvents, fetchRSSFeed } from '../utils/rssParser';
+import { fetchRSSFeed } from '../utils/rssParser';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
 
@@ -37,17 +37,16 @@ const TaxCalendar = () => {
       const rssUrl = 'https://www.taxheaven.gr/bibliothiki/soft/xml/soft_dat.xml';
       let events = await fetchRSSFeed(rssUrl);
       
-      // If RSS fetch fails or returns empty, use mock data
+      // If RSS fetch fails or returns empty, set empty array
       if (events.length === 0) {
-        events = generateMockTaxEvents();
+        events = [];
       }
       
       setTaxEvents(events);
     } catch (err) {
       setError('Σφάλμα κατά την φόρτωση των φορολογικών γεγονότων');
       console.error('Error fetching tax events:', err);
-      // Fallback to mock data
-      setTaxEvents(generateMockTaxEvents());
+      setTaxEvents([]);
     } finally {
       setLoading(false);
     }

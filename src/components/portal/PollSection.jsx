@@ -7,53 +7,16 @@ const PollSection = () => {
   const [hasVoted, setHasVoted] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
-  // Mock poll data
-  const polls = [
-    {
-      id: 1,
-      title: "Ποια είναι η μεγαλύτερη πρόκληση για τις επιχειρήσεις σας το 2024;",
-      description: "Βοηθήστε μας να κατανοήσουμε τις κύριες ανησυχίες των μελών μας",
-      options: [
-        { id: 1, text: "Αύξηση κόστους λειτουργίας", votes: 45, percentage: 35 },
-        { id: 2, text: "Ψηφιακός μετασχηματισμός", votes: 32, percentage: 25 },
-        { id: 3, text: "Εύρεση εργαζομένων", votes: 28, percentage: 22 },
-        { id: 4, text: "Προσαρμογή σε νέους κανονισμούς", votes: 23, percentage: 18 }
-      ],
-      totalVotes: 128,
-      endDate: new Date('2024-12-31'),
-      category: "Επιχειρηματικότητα"
-    },
-    {
-      id: 2,
-      title: "Ποια υπηρεσία της ΕΣΕΕ θεωρείτε πιο χρήσιμη;",
-      description: "Η γνώμη σας μας βοηθά να βελτιώσουμε τις υπηρεσίες μας",
-      options: [
-        { id: 1, text: "Νομική υποστήριξη", votes: 67, percentage: 42 },
-        { id: 2, text: "Εκπαιδευτικά προγράμματα", votes: 45, percentage: 28 },
-        { id: 3, text: "Δικτύωση και εκδηλώσεις", votes: 32, percentage: 20 },
-        { id: 4, text: "Συμβουλευτική", votes: 16, percentage: 10 }
-      ],
-      totalVotes: 160,
-      endDate: new Date('2024-11-30'),
-      category: "Υπηρεσίες"
-    },
-    {
-      id: 3,
-      title: "Πώς αξιολογείτε την ψηφιακή παρουσία της ΕΣΕΕ;",
-      description: "Βοηθήστε μας να βελτιώσουμε την διαδικτυακή εμπειρία",
-      options: [
-        { id: 1, text: "Εξαιρετική", votes: 89, percentage: 48 },
-        { id: 2, text: "Καλή", votes: 67, percentage: 36 },
-        { id: 3, text: "Μέτρια", votes: 23, percentage: 12 },
-        { id: 4, text: "Χρειάζεται βελτίωση", votes: 7, percentage: 4 }
-      ],
-      totalVotes: 186,
-      endDate: new Date('2024-10-31'),
-      category: "Τεχνολογία"
-    }
-  ];
+  // Poll data will be fetched from API
+  const [polls, setPolls] = useState([]);
 
   const currentPoll = polls[activePoll];
+
+  useEffect(() => {
+    // TODO: Fetch polls from API
+    // For now, set empty array
+    setPolls([]);
+  }, []);
 
   const handleVote = (optionId) => {
     if (hasVoted) return;
@@ -104,6 +67,17 @@ const PollSection = () => {
   };
 
   const pollStatus = getPollStatus(currentPoll.endDate);
+
+  if (polls.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-8">
+          <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <p className="text-gray-600">Δεν υπάρχουν διαθέσιμες έρευνες γνώμης</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

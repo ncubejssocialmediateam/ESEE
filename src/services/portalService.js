@@ -35,7 +35,7 @@ export class PortalService {
       
       return stats;
     } catch (error) {
-      console.error('Error fetching portal stats:', error);
+      console.warn('API not available, using default portal stats:', error.message);
       // Return default stats if API fails
       return {
         totalArticles: 0,
@@ -69,7 +69,7 @@ export class PortalService {
       
       return activities;
     } catch (error) {
-      console.error('Error fetching recent activities:', error);
+      console.warn('API not available, returning empty activities:', error.message);
       return [];
     }
   }
@@ -112,9 +112,8 @@ export class PortalService {
    */
   static async getTaxCalendarStats() {
     try {
-      // Import the tax calendar utilities
-      const { generateMockTaxEvents } = await import('../utils/rssParser');
-      const events = generateMockTaxEvents();
+      // TODO: Implement real tax calendar events API
+      const events = [];
       
       const now = new Date();
       const currentMonth = now.getMonth();
@@ -159,48 +158,8 @@ export class PortalService {
    */
   static async getNotifications() {
     try {
-      // This would typically come from a notifications API
-      // For now, we'll return realistic notifications based on ESEE activities
-      const notifications = [
-        {
-          id: 1,
-          title: 'Νέα φορολογική προθεσμία για ΦΠΑ',
-          message: 'Η προθεσμία υποβολής δήλωσης ΦΠΑ για τον Ιανουάριο λήγει στις 25 Φεβρουαρίου',
-          type: 'deadline',
-          priority: 'high',
-          createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-          read: false
-        },
-        {
-          id: 2,
-          title: 'Ενημερωμένη φόρμα αίτησης μέλους',
-          message: 'Η φόρμα αίτησης για νέα μέλη έχει ενημερωθεί με νέα πεδία',
-          type: 'document',
-          priority: 'medium',
-          createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-          read: false
-        },
-        {
-          id: 3,
-          title: 'Σεμινάριο επιδοτήσεων',
-          message: 'Νέο σεμινάριο για επιδοτήσεις επιχειρήσεων στις 15 Μαρτίου',
-          type: 'event',
-          priority: 'medium',
-          createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-          read: true
-        },
-        {
-          id: 4,
-          title: 'Ανανέωση συμμετοχής',
-          message: 'Η ετήσια συνδρομή σας λήγει σε 30 ημέρες',
-          type: 'membership',
-          priority: 'high',
-          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
-          read: false
-        }
-      ];
-      
-      return notifications;
+      // TODO: Implement real notifications API call
+      return [];
     } catch (error) {
       console.error('Error fetching notifications:', error);
       return [];
@@ -212,59 +171,8 @@ export class PortalService {
    */
   static async getDocuments() {
     try {
-      // This would typically come from a documents API
-      const documents = [
-        {
-          id: 1,
-          title: 'Φόρμα Αίτησης Μέλους',
-          description: 'Επίσημη φόρμα για αίτηση συμμετοχής στην ΕΣΕΕ',
-          type: 'form',
-          category: 'Μέλη',
-          size: '245 KB',
-          format: 'PDF',
-          lastUpdated: new Date('2025-09-16'), // 16/9/2025 as specified
-          downloadUrl: '/documents/member-application.pdf',
-          isRequired: true
-        },
-        {
-          id: 2,
-          title: 'Οδηγός Φορολογικών Υποχρεώσεων',
-          description: 'Πλήρης οδηγός για τις φορολογικές υποχρεώσεις των επιχειρήσεων',
-          type: 'guide',
-          category: 'Φορολογία',
-          size: '1.2 MB',
-          format: 'PDF',
-          lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-          downloadUrl: '/documents/tax-guide.pdf',
-          isRequired: false
-        },
-        {
-          id: 3,
-          title: 'Αίτηση Επιδότησης',
-          description: 'Φόρμα αίτησης για επιδοτήσεις επιχειρήσεων',
-          type: 'form',
-          category: 'Επιδοτήσεις',
-          size: '180 KB',
-          format: 'PDF',
-          lastUpdated: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-          downloadUrl: '/documents/subsidy-application.pdf',
-          isRequired: false
-        },
-        {
-          id: 4,
-          title: 'Κανονισμός ΕΣΕΕ',
-          description: 'Επίσημος κανονισμός λειτουργίας της ΕΣΕΕ',
-          type: 'regulation',
-          category: 'Κανονισμοί',
-          size: '890 KB',
-          format: 'PDF',
-          lastUpdated: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-          downloadUrl: '/documents/esee-regulation.pdf',
-          isRequired: true
-        }
-      ];
-      
-      return documents;
+      // TODO: Implement real documents API call
+      return [];
     } catch (error) {
       console.error('Error fetching documents:', error);
       return [];
@@ -282,28 +190,24 @@ export class PortalService {
       // Calculate analytics
       const analytics = {
         pageViews: {
-          total: 45678,
-          thisMonth: 3245,
-          growth: 12.5
+          total: 0,
+          thisMonth: 0,
+          growth: 0
         },
         userEngagement: {
-          averageSessionTime: '4:32',
-          bounceRate: 23.4,
-          returnVisitors: 67.8
+          averageSessionTime: '0:00',
+          bounceRate: 0,
+          returnVisitors: 0
         },
         contentPerformance: {
-          topArticles: articles.slice(0, 5).map(article => ({
-            title: article.title,
-            views: Math.floor(Math.random() * 1000) + 100,
-            category: article.category?.name || 'Γενικά'
-          })),
-          mostPopularCategory: this.getMostPopularCategory(articles)
+          topArticles: [],
+          mostPopularCategory: 'Γενικά'
         }
       };
       
       return analytics;
     } catch (error) {
-      console.error('Error fetching portal analytics:', error);
+      console.warn('API not available, using default analytics:', error.message);
       return {
         pageViews: { total: 0, thisMonth: 0, growth: 0 },
         userEngagement: { averageSessionTime: '0:00', bounceRate: 0, returnVisitors: 0 },

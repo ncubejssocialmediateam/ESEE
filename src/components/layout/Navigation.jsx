@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ const NavItem = ({ item, isDark }) => {
   );
 };
 
-const DropdownNavItem = ({ isDark, title, items, onMouseEnter, onMouseLeave, isOpen }) => {
+const DropdownNavItem = ({ isDark, title, items, onMouseEnter, onMouseLeave, isOpen, setIsOpen }) => {
   return (
     <div 
       className="relative group"
@@ -43,31 +43,31 @@ const DropdownNavItem = ({ isDark, title, items, onMouseEnter, onMouseLeave, isO
       onMouseLeave={onMouseLeave}
     >
       <button
-        className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+        className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
           isDark
-            ? 'text-gray-200 hover:text-blue-400'
-            : 'text-gray-800 hover:text-blue-600'
-        } transition-colors`}
+            ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+            : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+        } ${isOpen ? (isDark ? 'bg-blue-900/20 text-blue-400' : 'bg-blue-50 text-blue-600') : ''}`}
       >
         {title}
-        <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-1 w-80 rounded-md shadow-lg z-50 ${
-          isDark ? 'bg-blue-950 border border-blue-800' : 'bg-white border border-gray-200'
-        }`}>
+        <div className={`absolute top-full left-0 mt-2 w-80 rounded-lg shadow-xl z-50 border ${
+          isDark ? 'bg-blue-950 border-blue-800' : 'bg-white border-gray-200'
+        } animate-in fade-in-0 zoom-in-95 duration-200`}>
           <div className="py-2">
             {items.map((item, index) => (
               <Link
                 key={index}
                 to={item.url}
-                className={`block px-4 py-3 text-sm ${
+                className={`block px-4 py-3 text-sm transition-all duration-150 ${
                   isDark
                     ? 'text-gray-200 hover:bg-blue-900 hover:text-blue-400'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-                } transition-colors`}
-                onClick={() => setIsOpen(false)}
+                }`}
+                onClick={() => setIsOpen && setIsOpen(false)}
               >
                 <div className="font-medium">{item.label}</div>
                 {item.description && (
@@ -100,6 +100,7 @@ const Navigation = ({ isDark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const stateNavItems = useSelector(state => state.navItems);
+  const hoverTimeoutRef = useRef(null);
 
   const eseeItems = [
     { label: 'ΠΟΙΟΙ ΕΙΜΑΣΤΕ', url: '/about', description: 'Υπεύθυνη φωνή του ελληνικού εμπορίου και της μικρομεσαίας επιχειρηματικότητας' },
@@ -118,6 +119,30 @@ const Navigation = ({ isDark }) => {
 
   // Competitions dropdown replaced with direct link to /competitions page
 
+  // Improved hover functions with timing
+  const handleMouseEnter = (dropdownName) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    setActiveDropdown(dropdownName);
+  };
+
+  const handleMouseLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150); // 150ms delay before closing
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
       <>
         <nav className={`fixed w-full ${
@@ -128,30 +153,31 @@ const Navigation = ({ isDark }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center space-x-8">
-                <a href="#" className="flex items-center">
+                <Link to="/" className="flex items-center">
                   <img 
                     src={ESEE_LOGO_WHITE} 
                     alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
                     className="h-12 w-auto hover:opacity-80 transition-opacity duration-300"
                   />
-                </a>
+                </Link>
 
                 <div className="hidden lg:flex space-x-2">
                   <DropdownNavItem 
                     isDark={isDark}
                     title="ΕΣΕΕ"
                     items={eseeItems}
-                    onMouseEnter={() => setActiveDropdown('esee')}
-                    onMouseLeave={() => setActiveDropdown(null)}
+                    onMouseEnter={() => handleMouseEnter('esee')}
+                    onMouseLeave={handleMouseLeave}
                     isOpen={activeDropdown === 'esee'}
+                    setIsOpen={setActiveDropdown}
                   />
                   <Link
                     to="/business"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
                       isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
+                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     ΕΠΙΧΕΙΡΗΣΕΙΣ
                   </Link>
@@ -159,47 +185,48 @@ const Navigation = ({ isDark }) => {
                     isDark={isDark}
                     title="ΓΡΑΦΕΙΟ ΤΥΠΟΥ"
                     items={pressOfficeItems}
-                    onMouseEnter={() => setActiveDropdown('press')}
-                    onMouseLeave={() => setActiveDropdown(null)}
+                    onMouseEnter={() => handleMouseEnter('press')}
+                    onMouseLeave={handleMouseLeave}
                     isOpen={activeDropdown === 'press'}
+                    setIsOpen={setActiveDropdown}
                   />
                   <Link
                     to="/positions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
                       isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
+                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     ΘΕΣΕΙΣ
                   </Link>
                   <Link
                     to="/projects"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
                       isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
+                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     ΕΡΓΑ
                   </Link>
                   <Link
                     to="/competitions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
                       isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
+                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ
                   </Link>
                   <Link
                     to="/contact"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
+                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
                       isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
+                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     ΕΠΙΚΟΙΝΩΝΙΑ
                   </Link>
