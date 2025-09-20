@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const News = () => {
   const [filteredArticles, setFilteredArticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const articles = useSelector(state => state.articles);
   const categories = useSelector(state => state.categories);
+  const { isDark } = useTheme();
 
   useEffect(() => {
     // Filter out redundant categories and press releases
@@ -35,7 +38,9 @@ const News = () => {
   }, [articles, selectedCategory, categories]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-24">
         <div className="absolute inset-0 bg-black opacity-20" />
@@ -143,7 +148,8 @@ const News = () => {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

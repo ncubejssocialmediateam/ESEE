@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Scale, Shield, FileText, Users, AlertTriangle, CheckCircle, ArrowRight, Search, Filter, Calendar, Mail, ExternalLink, Lock, Globe, BookOpen } from 'lucide-react';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const Legal = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeSection, setActiveSection] = useState('overview');
+  const { isDark } = useTheme();
 
   const legalSections = {
     overview: {
@@ -74,7 +77,9 @@ const Legal = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative overflow-hidden" style={{ backgroundColor: '#00B5F1' }}>
         <div className="absolute inset-0 bg-black/10"></div>
@@ -300,7 +305,8 @@ const Legal = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

@@ -6,6 +6,7 @@ import { useTheme } from "../context/ThemeContext.jsx";
 import { useSearchParams } from 'react-router-dom';
 import { getData } from '../api/apiClient.jsx';
 import { setArticles } from '../redux/Reducer.jsx';
+import Navigation from '../components/layout/Navigation';
 
 // Category translations for filtering (excluding redundant press release categories)
 const categoryTranslations = {
@@ -93,7 +94,9 @@ const Archive = () => {
 
     if (loading && page === 1) {
         return (
-            <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+            <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+                <Navigation isDark={isDark} />
+                <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className={`text-4xl md:text-5xl font-bold mb-12 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {categoryParam || 'Αρχείο Νέων'}
@@ -115,13 +118,16 @@ const Archive = () => {
                         ))}
                     </div>
                 </div>
-            </section>
+                </section>
+            </main>
         );
     }
 
     if (error) {
         return (
-            <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+            <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+                <Navigation isDark={isDark} />
+                <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {categoryParam || 'Αρχείο Νέων'}
@@ -130,12 +136,15 @@ const Archive = () => {
                         Failed to load articles. Please try again later.
                     </p>
                 </div>
-            </section>
+                </section>
+            </main>
         );
     }
 
     return (
-        <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+        <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+            <Navigation isDark={isDark} />
+            <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
             <div className="max-w-7xl mx-auto px-4">
                 <h2 className={`text-4xl md:text-5xl font-bold mb-12 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {categoryParam || 'Αρχείο Νέων'}
@@ -160,7 +169,8 @@ const Archive = () => {
                     </div>
                 )}
             </div>
-        </section>
+            </section>
+        </main>
     );
 };
 

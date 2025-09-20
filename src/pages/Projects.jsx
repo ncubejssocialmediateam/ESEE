@@ -1,6 +1,13 @@
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
+
 const Projects = () => {
+  const { isDark } = useTheme();
+  
   return (
-    <div className="min-h-screen bg-white py-16">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-white py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
           ΣΥΓΧΡΗΜΑΤΟΔΟΤΟΥΜΕΝΑ ΕΡΓΑ
@@ -212,7 +219,8 @@ const Projects = () => {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

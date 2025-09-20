@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, ExternalLink, AlertCircle, CheckCircle, XCircle, RefreshCw, Filter } from 'lucide-react';
 import { generateMockTaxEvents, fetchRSSFeed } from '../utils/rssParser';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const TaxCalendar = () => {
   const [taxEvents, setTaxEvents] = useState([]);
@@ -11,6 +13,7 @@ const TaxCalendar = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedType, setSelectedType] = useState('all');
   const [refreshing, setRefreshing] = useState(false);
+  const { isDark } = useTheme();
 
   const months = [
     'Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος',
@@ -158,7 +161,9 @@ const TaxCalendar = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -356,7 +361,8 @@ const TaxCalendar = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

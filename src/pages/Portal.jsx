@@ -26,10 +26,14 @@ import usePortalData from '../hooks/usePortalData';
 import ContactInfo from '../components/portal/ContactInfo';
 import FederationsAccordion from '../components/portal/FederationsAccordion';
 import EurostatStatistics from '../components/portal/EurostatStatistics';
+import PollSection from '../components/portal/PollSection';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const Portal = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [recentActivities, setRecentActivities] = useState([]);
+  const { isDark } = useTheme();
   
   // Use the custom hook for portal data
   const {
@@ -93,6 +97,14 @@ const Portal = () => {
       icon: Globe,
       color: 'bg-indigo-500',
       href: '#eurostat'
+    },
+    {
+      id: 'polls',
+      title: 'Έρευνες Γνώμης',
+      description: 'Συμμετέχετε σε έρευνες και δώστε τη γνώμη σας',
+      icon: TrendingUp,
+      color: 'bg-pink-500',
+      href: '#polls'
     },
     {
       id: 'settings',
@@ -568,6 +580,8 @@ const Portal = () => {
         return <FederationsAccordion />;
       case 'eurostat':
         return <EurostatStatistics />;
+      case 'polls':
+        return <PollSection />;
       case 'settings':
         return (
           <div className="space-y-6">
@@ -670,8 +684,10 @@ const Portal = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-4 mb-4">
@@ -683,7 +699,7 @@ const Portal = () => {
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Κεντρικό σημείο πρόσβασης σε όλες τις υπηρεσίες της Ελληνικής Συνομοσπονδίας Εμπορίου & Επιχειρηματικότητας
           </p>
-          <div className="mt-4 flex items-center justify-center gap-8 text-sm text-gray-500">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               <span>225.000 επιχειρήσεις</span>
@@ -702,10 +718,10 @@ const Portal = () => {
         {/* Navigation Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-8">
           <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-6">
+            <nav className="flex flex-wrap space-x-2 sm:space-x-4 lg:space-x-8 px-4 sm:px-6 overflow-x-auto">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'overview'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -715,7 +731,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('tax-calendar')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'tax-calendar'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -725,7 +741,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('documents')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'documents'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -735,7 +751,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('members')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'members'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -745,7 +761,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('notifications')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'notifications'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -755,7 +771,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('federations')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'federations'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -765,7 +781,7 @@ const Portal = () => {
               </button>
               <button
                 onClick={() => setActiveTab('eurostat')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'eurostat'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -774,8 +790,18 @@ const Portal = () => {
                 Ευρωπαϊκά Στατιστικά
               </button>
               <button
+                onClick={() => setActiveTab('polls')}
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'polls'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Έρευνες Γνώμης
+              </button>
+              <button
                 onClick={() => setActiveTab('settings')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'settings'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -807,8 +833,9 @@ const Portal = () => {
             </div>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

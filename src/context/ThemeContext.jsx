@@ -1,17 +1,14 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(true);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
+  // Always dark theme - no toggle functionality
+  const isDark = true;
 
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDark }}>
       {children}
     </ThemeContext.Provider>
   );

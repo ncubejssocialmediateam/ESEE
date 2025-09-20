@@ -1,12 +1,17 @@
 import ShareButton from '../components/common/ShareButton';
 import SharePopup from '../components/common/SharePopup';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
+import { useState } from 'react';
 
 const Newspaper = () => {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
   const [isShareOpen, setIsShareOpen] = useState(false);
 
   return (
-    <div className="flex justify-center mt-12">
+    <main className="bg-gray-900 text-white transition-colors duration-300">
+      <Navigation isDark={isDark} />
+      <div className="flex justify-center mt-12">
       <ShareButton onClick={() => setIsShareOpen(true)} />
       <SharePopup 
         isOpen={isShareOpen}
@@ -15,7 +20,8 @@ const Newspaper = () => {
         title="Εφημερίδα"
         url={window.location.href}
       />
-    </div>
+      </div>
+    </main>
   );
 };
 

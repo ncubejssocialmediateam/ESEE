@@ -1,8 +1,11 @@
 import { Building2, Users, Shield, CheckCircle, UserCheck, Crown, Award, Briefcase, FileText, Scale, Settings, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const Administration = () => {
   const [expandedSections, setExpandedSections] = useState({});
+  const { isDark } = useTheme();
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -48,7 +51,9 @@ const Administration = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -325,7 +330,8 @@ const Administration = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

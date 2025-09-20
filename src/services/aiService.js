@@ -1,4 +1,5 @@
 import axios from 'axios';
+import contentService from './contentService';
 
 // OpenRouter API configuration
 const OPENROUTER_API_URL = import.meta.env.VITE_OPENROUTER_API_URL || 'https://openrouter.ai/api/v1';
@@ -94,17 +95,29 @@ class AIService {
     });
   }
 
-  async sendMessage(userMessage, conversationHistory = []) {
+  async sendMessage(userMessage, conversationHistory = [], includeExternalContent = true) {
     if (!OPENROUTER_API_KEY) {
       throw new Error('OpenRouter API key is not configured. Please add VITE_OPENROUTER_API_KEY to your .env file.');
     }
 
     try {
-      // Prepare messages array with system prompt and conversation history
+      // Get additional content from external sources if requested
+      let enhancedSystemPrompt = SYSTEM_PROMPT;
+      if (includeExternalContent) {
+        try {
+          const externalContent = await contentService.getContentForAI();
+          enhancedSystemPrompt += externalContent;
+        } catch (error) {
+          console.warn('Could not load external content:', error.message);
+          // Continue with base system prompt if external content fails
+        }
+      }
+
+      // Prepare messages array with enhanced system prompt and conversation history
       const messages = [
         {
           role: 'system',
-          content: SYSTEM_PROMPT
+          content: enhancedSystemPrompt
         },
         ...conversationHistory,
         {
@@ -185,6 +198,32 @@ class AIService {
         timestamp: new Date()
       };
     }
+  }
+
+  // Method to refresh external content sources
+  async refreshExternalContent(sources = []) {
+    try {
+      console.log('Refreshing external content sources...');
+      const freshContent = await contentService.refreshContent(sources);
+      return {
+        success: true,
+        message: "External content refreshed successfully",
+        contentLength: freshContent.length,
+        timestamp: new Date()
+      };
+    } catch (error) {
+      console.error('External content refresh error:', error);
+      return {
+        success: false,
+        error: error.message,
+        timestamp: new Date()
+      };
+    }
+  }
+
+  // Method to get content statistics
+  getContentStats() {
+    return contentService.getContentStats();
   }
 
   // Method to get current system information

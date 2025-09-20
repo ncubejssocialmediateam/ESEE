@@ -241,23 +241,44 @@ const AIChat = ({ aiStatus }) => {
   };
 
   const handleRefreshMemory = async () => {
-    if (!aiStatus?.refreshMemory) return;
-    
     setIsRefreshing(true);
     try {
-      const result = await aiStatus.refreshMemory();
+      const result = await aiService.refreshMemory();
       if (result.success) {
-        // Add a system message to show memory was refreshed
-        const refreshMessage = {
+        setMessages(prev => [...prev, {
           id: Date.now(),
           type: 'ai',
-          content: '✅ Η μνήμη μου ανανεώθηκε επιτυχώς! Έχω πρόσβαση σε όλες τις πιο ενημερωμένες πληροφορίες της ΕΣΕΕ και είμαι έτοιμος να σας βοηθήσω.',
+          content: 'Η μνήμη μου ανανεώθηκε επιτυχώς! Έχω πρόσβαση σε όλες τις πιο πρόσφατες πληροφορίες της ΕΣΕΕ.',
           timestamp: new Date()
-        };
-        setMessages(prev => [...prev, refreshMessage]);
+        }]);
+      } else {
+        setError(result.error);
       }
     } catch (error) {
-      console.error('Memory refresh failed:', error);
+      console.error('Memory refresh error:', error);
+      setError('Αποτυχία ανανέωσης μνήμης');
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const handleRefreshContent = async () => {
+    setIsRefreshing(true);
+    try {
+      const result = await aiService.refreshExternalContent();
+      if (result.success) {
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          type: 'ai',
+          content: `Το περιεχόμενο από εξωτερικές πηγές ανανεώθηκε επιτυχώς! Φορτώθηκαν ${result.contentLength} χαρακτήρες νέων πληροφοριών.`,
+          timestamp: new Date()
+        }]);
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      console.error('Content refresh error:', error);
+      setError('Αποτυχία ανανέωσης περιεχομένου');
     } finally {
       setIsRefreshing(false);
     }
@@ -352,20 +373,38 @@ const AIChat = ({ aiStatus }) => {
             </div>
             <div className="flex items-center space-x-1">
               {isConfigured && (
-                <button
-                  onClick={handleRefreshMemory}
-                  disabled={isRefreshing}
-                  className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
-                    isRefreshing
-                      ? 'opacity-50 cursor-not-allowed'
-                      : isDark 
-                        ? 'hover:bg-blue-500/20 text-slate-400 hover:text-blue-400' 
-                        : 'hover:bg-blue-50 text-gray-500 hover:text-blue-500'
-                  }`}
-                  aria-label="Ανάνεωση μνήμης AI"
-                >
-                  <FiRefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
-                </button>
+                <>
+                  <button
+                    onClick={handleRefreshMemory}
+                    disabled={isRefreshing}
+                    className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                      isRefreshing
+                        ? 'opacity-50 cursor-not-allowed'
+                        : isDark 
+                          ? 'hover:bg-blue-500/20 text-slate-400 hover:text-blue-400' 
+                          : 'hover:bg-blue-50 text-gray-500 hover:text-blue-500'
+                    }`}
+                    aria-label="Ανάνεωση μνήμης AI"
+                    title="Ανάνεωση μνήμης AI"
+                  >
+                    <FiRefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
+                  </button>
+                  <button
+                    onClick={handleRefreshContent}
+                    disabled={isRefreshing}
+                    className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                      isRefreshing
+                        ? 'opacity-50 cursor-not-allowed'
+                        : isDark 
+                          ? 'hover:bg-green-500/20 text-slate-400 hover:text-green-400' 
+                          : 'hover:bg-green-50 text-gray-500 hover:text-green-500'
+                    }`}
+                    aria-label="Ανάνεωση περιεχομένου από εξωτερικές πηγές"
+                    title="Ανάνεωση περιεχομένου από PDF και ιστότοπους"
+                  >
+                    <FiBookOpen size={16} className={isRefreshing ? 'animate-pulse' : ''} />
+                  </button>
+                </>
               )}
               <button
                 onClick={() => setIsMinimized(!isMinimized)}

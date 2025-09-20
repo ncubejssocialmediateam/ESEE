@@ -1,8 +1,14 @@
 import { Shield, Lock, Eye, Database, Users, Mail, CheckCircle, AlertTriangle, FileText, Globe, ArrowRight, ExternalLink } from 'lucide-react';
+import Navigation from '../components/layout/Navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const Privacy = () => {
+  const { isDark } = useTheme();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <Navigation isDark={isDark} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
       <div className="relative overflow-hidden" style={{ backgroundColor: '#00B5F1' }}>
         <div className="absolute inset-0 bg-black/10"></div>
@@ -225,7 +231,8 @@ const Privacy = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 

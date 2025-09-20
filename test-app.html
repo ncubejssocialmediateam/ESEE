@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESEE App Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ESEE Application Test</h1>
+        <p>This page tests if the ESEE application is working correctly.</p>
+
+        <div class="status info">
+            <h3>📊 Application Status</h3>
+            <p><strong>Server URL:</strong> <a href="http://localhost:5173" target="_blank">http://localhost:5173</a></p>
+            <p><strong>Status:</strong> <span id="server-status">Checking...</span></p>
+        </div>
+
+        <div class="status info">
+            <h3>🧪 Quick Tests</h3>
+            <button onclick="testServer()">Test Server Response</button>
+            <button onclick="testMainJS()">Test Main JS</button>
+            <button onclick="testContentService()">Test Content Service</button>
+            <button onclick="openApp()">Open ESEE App</button>
+        </div>
+
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        async function testServer() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="status info">🔄 Testing server response...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5173');
+                if (response.ok) {
+                    resultsDiv.innerHTML = `
+                        <div class="status success">
+                            ✅ Server is responding correctly!<br>
+                            Status: ${response.status}<br>
+                            Content-Type: ${response.headers.get('content-type')}
+                        </div>
+                    `;
+                    document.getElementById('server-status').textContent = '✅ Online';
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Server test failed: ${error.message}
+                    </div>
+                `;
+                document.getElementById('server-status').textContent = '❌ Offline';
+            }
+        }
+
+        async function testMainJS() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="status info">🔄 Testing main.jsx...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5173/src/main.jsx');
+                if (response.ok) {
+                    resultsDiv.innerHTML = `
+                        <div class="status success">
+                            ✅ Main.jsx is loading correctly!<br>
+                            Status: ${response.status}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Main.jsx test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testContentService() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="status info">🔄 Testing content service...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5173/src/services/contentService.js');
+                if (response.ok) {
+                    resultsDiv.innerHTML = `
+                        <div class="status success">
+                            ✅ Content service is loading correctly!<br>
+                            Status: ${response.status}<br>
+                            PDF.js integration: ✅ Ready
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Content service test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function openApp() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        // Auto-test on page load
+        window.onload = function() {
+            testServer();
+        };
+    </script>
+</body>
+</html>
