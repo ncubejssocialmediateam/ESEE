@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { BarChart3, Building2, Euro, UserCheck, Percent, Users, TrendingUp, Award } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import Button from '../shared/Button';
 
 const StatisticsSection = ({ isDark }) => {
   const [activeStatCategory, setActiveStatCategory] = useState('businesses');
@@ -413,6 +415,14 @@ const StatisticsSection = ({ isDark }) => {
               </p>
             </div>
           </div>
+        </div>
+        
+        <div className="mt-12 text-center">
+          <Link to="/inemy-kaele">
+            <Button isDark={isDark} onClick={() => {}}>
+              Περισσότερες Στατιστικές
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

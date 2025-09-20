@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { gsap } from '../../utils/gsap';
 import ParticleBackground from '../shared/ParticleBackground';
 import ESEE_LOGO from '../../assets/ESEE-LOGO_white.png';
@@ -179,17 +180,19 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
             >
               Υποστηρίζουμε την ανάπτυξη του ελληνικού εμπορίου και της επιχειρηματικότητας
             </p>
-            <button 
-              ref={buttonRef}
-              data-cursor="pointer"
-              className={`px-12 py-4 rounded-full font-medium text-lg transform-gpu custom-transition hover:shadow-2xl hover:scale-105 ${
-                isDark 
-                  ? 'bg-gradient-to-r from-blue-400 to-indigo-400 text-blue-950 hover:shadow-blue-500/25' 
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-blue-600/25'
-              }`}
-            >
-              Μάθετε περισσότερα
-            </button>
+            <Link to="/about">
+              <button 
+                ref={buttonRef}
+                data-cursor="pointer"
+                className={`px-12 py-4 rounded-full font-medium text-lg transform-gpu custom-transition hover:shadow-2xl hover:scale-105 ${
+                  isDark 
+                    ? 'bg-gradient-to-r from-blue-400 to-indigo-400 text-blue-950 hover:shadow-blue-500/25' 
+                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-blue-600/25'
+                }`}
+              >
+                Μάθετε περισσότερα
+              </button>
+            </Link>
           </div>
         </div>
       </div>

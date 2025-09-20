@@ -21,6 +21,7 @@ import Circulars from "../pages/Circulars.jsx";
 import Publications from "../pages/Publications.jsx";
 import Competitions from "../pages/Competitions.jsx";
 import MemberSupport from "../pages/MemberSupport.jsx";
+import Newspaper from "../pages/Newspaper.jsx";
 import PortalDebug from "../components/debug/PortalDebug.jsx";
 import ErrorBoundary from "../components/debug/ErrorBoundary.jsx";
 import {useEffect} from "react";
@@ -96,6 +97,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/competitions" element={<Competitions />} />
                 <Route path="/member-support" element={<MemberSupport />} />
+                <Route path="/newspaper" element={<Newspaper />} />
                 <Route path="/portal-debug" element={<PortalDebug />} />
         </Routes>
     );

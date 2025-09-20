@@ -18,8 +18,7 @@ const Publications = () => {
     date: '2024-12-15',
     size: '2.5 MB',
     format: 'PDF',
-    downloadUrl: '/assets/publications/annual-report-2024.pdf',
-    heroImage: '/assets/publications/hero-business.jpg'
+    downloadUrl: '/assets/publications/annual-report-2024.pdf'
   };
 
   const publications = [
@@ -31,8 +30,7 @@ const Publications = () => {
       date: '2024-11-20',
       size: '1.8 MB',
       format: 'PDF',
-      downloadUrl: '/assets/publications/tech-strategies-2024.pdf',
-      coverImage: '/assets/publications/tech-cover.jpg'
+      downloadUrl: '/assets/publications/tech-strategies-2024.pdf'
     },
     {
       id: 2,
@@ -42,8 +40,7 @@ const Publications = () => {
       date: '2024-10-30',
       size: '3.2 MB',
       format: 'PDF',
-      downloadUrl: '/assets/publications/tourism-growth-2024.pdf',
-      coverImage: '/assets/publications/tourism-cover.jpg'
+      downloadUrl: '/assets/publications/tourism-growth-2024.pdf'
     },
     {
       id: 3,
@@ -53,8 +50,7 @@ const Publications = () => {
       date: '2024-09-15',
       size: '2.1 MB',
       format: 'PDF',
-      downloadUrl: '/assets/publications/fintech-future-2024.pdf',
-      coverImage: '/assets/publications/fintech-cover.jpg'
+      downloadUrl: '/assets/publications/fintech-future-2024.pdf'
     },
     {
       id: 4,
@@ -64,8 +60,7 @@ const Publications = () => {
       date: '2024-08-25',
       size: '1.5 MB',
       format: 'PDF',
-      downloadUrl: '/assets/publications/energy-transition-2024.pdf',
-      coverImage: '/assets/publications/energy-cover.jpg'
+      downloadUrl: '/assets/publications/energy-transition-2024.pdf'
     },
     {
       id: 5,
@@ -75,8 +70,7 @@ const Publications = () => {
       date: '2024-07-10',
       size: '1.9 MB',
       format: 'PDF',
-      downloadUrl: '/assets/publications/entrepreneurship-guide-2024.pdf',
-      coverImage: '/assets/publications/entrepreneurship-cover.jpg'
+      downloadUrl: '/assets/publications/entrepreneurship-guide-2024.pdf'
     }
   ];
 
@@ -98,22 +92,13 @@ const Publications = () => {
   };
 
   return (
-    <main className="bg-black text-white min-h-screen">
-      <Navigation isDark={true} />
+    <main className="bg-gray-50 text-gray-900 min-h-screen">
+      <Navigation isDark={false} />
       
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${featuredPublication.heroImage})`,
-            filter: 'blur(2px) brightness(0.3)'
-          }}
-        />
-        
-        {/* Content Overlay */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-800">
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center text-white">
           <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
             {featuredPublication.title}
           </h1>
@@ -143,10 +128,10 @@ const Publications = () => {
       </section>
 
       {/* Featured Publications Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
               Επιλεγμένες δημοσιεύσεις:
             </h2>
             
@@ -154,17 +139,17 @@ const Publications = () => {
             <div className="flex gap-2">
               <button
                 onClick={prevSlide}
-                className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                 aria-label="Προηγούμενη σελίδα"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-6 h-6 text-gray-700" />
               </button>
               <button
                 onClick={nextSlide}
-                className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                 aria-label="Επόμενη σελίδα"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-6 h-6 text-gray-700" />
               </button>
             </div>
           </div>
@@ -181,42 +166,38 @@ const Publications = () => {
                     {publications.slice(slideIndex * 3, (slideIndex + 1) * 3).map((publication) => (
                       <div
                         key={publication.id}
-                        className="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105"
+                        className="group relative bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                       >
                         {/* Document Corner Icon */}
                         <div className="absolute top-4 right-4 w-6 h-6 bg-black rounded-sm opacity-60">
                           <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 rounded-sm"></div>
                         </div>
                         
-                        {/* Cover Image */}
-                        <div className="relative mb-6 h-48 rounded-xl overflow-hidden">
-                          <div 
-                            className="w-full h-full bg-cover bg-center"
-                            style={{
-                              backgroundImage: `url(${publication.coverImage})`,
-                              backgroundSize: 'cover'
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        {/* Document Icon */}
+                        <div className="relative mb-6 h-48 rounded-xl overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                          <div className="text-center">
+                            <FileText className="w-16 h-16 text-blue-600 mx-auto mb-2" />
+                            <div className="text-sm font-medium text-blue-800">PDF Document</div>
+                          </div>
                         </div>
 
                         {/* Category */}
-                        <div className="text-sm font-medium text-white/80 mb-2 uppercase tracking-wide">
+                        <div className="text-sm font-medium text-blue-600 mb-2 uppercase tracking-wide">
                           {publication.category}
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-xl font-bold mb-3 leading-tight">
+                        <h3 className="text-xl font-bold mb-3 leading-tight text-gray-900">
                           {publication.title}
                         </h3>
 
                         {/* Description */}
-                        <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3">
+                        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
                           {publication.description}
                         </p>
 
                         {/* Date */}
-                        <div className="text-sm text-white/60 mb-6">
+                        <div className="text-sm text-gray-500 mb-6">
                           {new Date(publication.date).toLocaleDateString('el-GR', { 
                             year: 'numeric', 
                             month: 'short', 
@@ -228,7 +209,7 @@ const Publications = () => {
                         <a
                           href={publication.downloadUrl}
                           download
-                          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                         >
                           <Download className="w-4 h-4" />
                           Λήψη PDF
@@ -248,7 +229,7 @@ const Publications = () => {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-white' : 'bg-white/30'
+                  index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
                 aria-label={`Σελίδα ${index + 1}`}
               />
@@ -258,32 +239,32 @@ const Publications = () => {
       </section>
 
       {/* Search Section */}
-      <section className="py-16 px-6 bg-white/5">
+      <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Αναζήτηση Δημοσιεύσεων</h2>
-            <p className="text-white/70">Βρείτε τις δημοσιεύσεις που σας ενδιαφέρουν</p>
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Αναζήτηση Δημοσιεύσεων</h2>
+            <p className="text-gray-600">Βρείτε τις δημοσιεύσεις που σας ενδιαφέρουν</p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Αναζήτηση δημοσιεύσεων..."
-                className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white placeholder-white/50"
+                className="w-full pl-12 pr-4 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div className="relative">
               <select
-                className="block w-full md:w-48 pl-4 pr-10 py-4 bg-white/10 border border-white/20 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-white/30 text-white"
+                className="block w-full md:w-48 pl-4 pr-10 py-4 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
                 {categories.map(category => (
-                  <option key={category} value={category} className="bg-gray-800">{category}</option>
+                  <option key={category} value={category} className="bg-white">{category}</option>
                 ))}
               </select>
             </div>
@@ -295,24 +276,24 @@ const Publications = () => {
               {filteredPublications.map(publication => (
                 <div
                   key={publication.id}
-                  className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300"
+                  className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <div className="text-sm font-medium text-white/80 mb-2 uppercase tracking-wide">
+                  <div className="text-sm font-medium text-blue-600 mb-2 uppercase tracking-wide">
                     {publication.category}
                   </div>
-                  <h3 className="text-lg font-bold mb-3 leading-tight">
+                  <h3 className="text-lg font-bold mb-3 leading-tight text-gray-900">
                     {publication.title}
                   </h3>
-                  <p className="text-white/70 text-sm leading-relaxed mb-4">
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
                     {publication.description}
                   </p>
-                  <div className="text-sm text-white/60 mb-4">
+                  <div className="text-sm text-gray-500 mb-4">
                     {new Date(publication.date).toLocaleDateString('el-GR')}
                   </div>
                   <a
                     href={publication.downloadUrl}
                     download
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
                   >
                     <Download className="w-4 h-4" />
                     Λήψη
@@ -324,7 +305,7 @@ const Publications = () => {
         </div>
       </section>
       
-      <Footer isDark={true} />
+      <Footer isDark={false} />
     </main>
   );
 };

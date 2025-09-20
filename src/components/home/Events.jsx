@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Button from '../shared/Button';
 
 const Events = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
@@ -129,6 +130,14 @@ const Events = ({ isDark }) => {
               </div>
             ))}
           </div>
+        </div>
+        
+        <div className="mt-12 text-center">
+          <Link to="/archive?category=Εκδηλώσεις">
+            <Button isDark={isDark} onClick={() => {}}>
+              Όλες οι Εκδηλώσεις
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

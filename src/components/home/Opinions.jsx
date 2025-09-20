@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {useEffect} from "react";
+import Button from '../shared/Button';
 
 const Opinions = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
@@ -94,6 +95,14 @@ const Opinions = ({ isDark }) => {
               </div>
             </article>
           ))}
+        </div>
+        
+        <div className="mt-12 text-center">
+          <Link to="/archive?category=Απόψεις">
+            <Button isDark={isDark} onClick={() => {}}>
+              Όλες οι Απόψεις
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -10,39 +10,54 @@ const PressReleases = () => {
   const { isDark } = useTheme();
 
   useEffect(() => {
-    // Filter articles that are press releases
+    // Debug: Log articles to understand data structure
+    console.log('Total articles loaded:', articles.length);
+    console.log('Sample article structure:', articles[0]);
+    
+    // Filter articles that are press releases based on category ID
     const pressReleases = articles.filter(article => 
-      article.category && (
-        article.category.title.toLowerCase().includes('ανακοινώσεις') ||
-        article.category.title.toLowerCase().includes('δελτία') ||
-        article.category.title.toLowerCase().includes('τύπου') ||
-        article.category.title.toLowerCase().includes('press') ||
-        article.category.slug === 'press-releases' || 
-        article.category.slug === 'announcements' ||
-        article.tags?.some(tag => tag.toLowerCase().includes('δελτίο') || tag.toLowerCase().includes('ανακοίνωση'))
+      article.categories && article.categories.some(category => 
+        category.id === 4 || // Δελτία Τύπου
+        category.id === 5 || // Ανακοινώσεις
+        category.title?.toLowerCase().includes('ανακοινώσεις') ||
+        category.title?.toLowerCase().includes('δελτία') ||
+        category.title?.toLowerCase().includes('τύπου') ||
+        category.title?.toLowerCase().includes('press')
       )
     );
+    
+    console.log('Press releases found:', pressReleases.length);
 
     if (selectedYear === 'all') {
       setFilteredArticles(pressReleases);
     } else {
       const filtered = pressReleases.filter(article => {
-        const articleYear = new Date(article.createdAt).getFullYear().toString();
+        const articleYear = new Date(article.publishedAt || article.createdAt).getFullYear().toString();
         return articleYear === selectedYear;
       });
       setFilteredArticles(filtered);
     }
   }, [articles, selectedYear]);
 
-  // Get unique years from articles
-  const years = [...new Set(articles.map(article => 
-    new Date(article.createdAt).getFullYear().toString()
+  // Get unique years from press release articles
+  const pressReleaseYears = articles.filter(article => 
+    article.categories && article.categories.some(category => 
+      category.id === 4 || category.id === 5 ||
+      category.title?.toLowerCase().includes('ανακοινώσεις') ||
+      category.title?.toLowerCase().includes('δελτία') ||
+      category.title?.toLowerCase().includes('τύπου') ||
+      category.title?.toLowerCase().includes('press')
+    )
+  );
+  
+  const years = [...new Set(pressReleaseYears.map(article => 
+    new Date(article.publishedAt || article.createdAt).getFullYear().toString()
   ))].sort((a, b) => b - a);
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
       <Navigation isDark={isDark} />
-      <div className="min-h-screen bg-gray-50">
+      <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-24">
         <div className="absolute inset-0 bg-black opacity-20" />
@@ -59,7 +74,7 @@ const PressReleases = () => {
       </div>
 
       {/* Filter Section */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
+      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} shadow-sm border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-wrap gap-4">
             <button
@@ -67,7 +82,9 @@ const PressReleases = () => {
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedYear === 'all'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : isDark 
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               Όλα τα Έτη
@@ -79,7 +96,9 @@ const PressReleases = () => {
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedYear === year
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : isDark 
+                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {year}
@@ -94,26 +113,30 @@ const PressReleases = () => {
         {filteredArticles.length > 0 ? (
           <div className="space-y-6">
             {filteredArticles.map((article) => (
-              <article key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+              <article key={article.id} className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow duration-200`}>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-4 mb-3">
-                      <span className="inline-block px-3 py-1 text-xs font-medium text-red-600 bg-red-100 rounded-full">
+                      <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                        isDark 
+                          ? 'text-red-400 bg-red-900/30' 
+                          : 'text-red-600 bg-red-100'
+                      }`}>
                         Δελτίο Τύπου
                       </span>
-                      <time className="text-sm text-gray-500">
-                        {new Date(article.createdAt).toLocaleDateString('el-GR', {
+                      <time className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {new Date(article.publishedAt || article.createdAt).toLocaleDateString('el-GR', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric'
                         })}
                       </time>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                    <h2 className={`text-2xl font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {article.title}
                     </h2>
-                    <p className="text-gray-600 mb-4 line-clamp-3">
-                      {article.excerpt || article.content?.substring(0, 200) + '...'}
+                    <p className={`mb-4 line-clamp-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {article.excerpt || (article.content?.root?.children?.[1]?.children?.[0]?.text || 'Δεν υπάρχει περίληψη διαθέσιμη')}
                     </p>
                   </div>
                   <div className="flex-shrink-0 lg:ml-6">
@@ -133,13 +156,33 @@ const PressReleases = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <div className="text-gray-400 mb-4">
+            <div className={`mb-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
               <svg className="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Δεν βρέθηκαν δελτία τύπου</h3>
-            <p className="text-gray-500">Δεν υπάρχουν δελτία τύπου για την επιλεγμένη χρονιά.</p>
+            <h3 className={`text-lg font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Δεν βρέθηκαν δελτία τύπου</h3>
+            <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>Δεν υπάρχουν δελτία τύπου για την επιλεγμένη χρονιά.</p>
+            
+            {/* Debug info */}
+            {articles.length > 0 && (
+              <div className={`mt-8 p-4 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Debug: Βρέθηκαν {articles.length} συνολικά άρθρα. 
+                  Ελέγξτε την κονσόλα για περισσότερες λεπτομέρειες.
+                </p>
+                <div className={`mt-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p>Διαθέσιμες κατηγορίες:</p>
+                  <ul className="list-disc list-inside mt-1">
+                    {[...new Set(articles.flatMap(article => 
+                      article.categories?.map(cat => `${cat.id}: ${cat.title}`) || []
+                    ))].slice(0, 5).map((cat, index) => (
+                      <li key={index}>{cat}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

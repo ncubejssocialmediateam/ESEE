@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FileText, Download, Filter, ChevronRight, TrendingUp, Users, Building2, Euro } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import inemyDataService from '../../services/inemyDataService';
 
 const ResearchHub = ({ isDark }) => {
@@ -351,10 +352,12 @@ const ResearchHub = ({ isDark }) => {
               </div>
 
               <div className="mt-6 text-center">
-                <button className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center">
-                  Δείτε όλες τις εκθέσεις
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </button>
+                <Link to="/inemy-kaele">
+                  <button className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center">
+                    Δείτε όλες τις εκθέσεις
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

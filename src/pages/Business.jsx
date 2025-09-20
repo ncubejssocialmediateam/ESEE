@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Building2, Scale, Globe, Rocket, Users, Heart, ArrowRight, CheckCircle, TrendingUp, Shield, Lightbulb, Target, Search, Filter, FileText, ExternalLink, Calendar, Award, Briefcase, Zap } from 'lucide-react';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
+import { Link } from 'react-router-dom';
 
 const Business = () => {
   const [activeTab, setActiveTab] = useState('formation');
@@ -380,12 +381,16 @@ const Business = () => {
                 Ανακαλύψτε όλες τις υπηρεσίες και τα εργαλεία που χρειάζεστε για την επιχείρησή σας
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white hover:bg-gray-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg" style={{ color: '#00B5F1' }}>
-                  Εξερευνήστε Υπηρεσίες
-                </button>
-                <button className="border-2 border-white text-white hover:bg-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105" style={{ '--hover-color': '#00B5F1' }} onMouseEnter={(e) => e.target.style.color = '#00B5F1'} onMouseLeave={(e) => e.target.style.color = 'white'}>
-                  Επικοινωνήστε μαζί μας
-                </button>
+                <Link to="/portal">
+                  <button className="bg-white hover:bg-gray-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg" style={{ color: '#00B5F1' }}>
+                    Εξερευνήστε Υπηρεσίες
+                  </button>
+                </Link>
+                <Link to="/contact">
+                  <button className="border-2 border-white text-white hover:bg-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105" style={{ '--hover-color': '#00B5F1' }} onMouseEnter={(e) => e.target.style.color = '#00B5F1'} onMouseLeave={(e) => e.target.style.color = 'white'}>
+                    Επικοινωνήστε μαζί μας
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
