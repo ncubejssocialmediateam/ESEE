@@ -11,6 +11,7 @@ import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { useEffect } from "react";
 import ResearchHub from "../components/home/Research.jsx";
+import StatisticsSection from "../components/home/StatisticsSection.jsx";
 
 const Home = ({ isLoaded, setIsLoaded }) => {
   const { isDark } = useTheme();
@@ -25,6 +26,7 @@ const Home = ({ isLoaded, setIsLoaded }) => {
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
       <Newspaper isDark={isDark} />
       <News isDark={isDark} />
+      <StatisticsSection isDark={isDark} />
       <ResearchHub isDark={isDark} />
       {/*<InnovationShowcase isDark={isDark} />*/}
       <Opinions isDark={isDark} />

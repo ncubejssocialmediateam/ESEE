@@ -1,0 +1,219 @@
+{
+  "metadata": {
+    "source": "INEMY Εμπόριο Δεδομένα",
+    "extraction_date": "2025-01-28",
+    "description": "Complete trade and economy data from INEMY CSV file",
+    "total_records": 43,
+    "data_periods": {
+      "businesses": "2017-2022",
+      "turnover": "2019-2024", 
+      "employees": "2020-2025",
+      "employers": "2020-2025",
+      "gva": "2018-2023",
+      "women_employment": "2019-2024"
+    }
+  },
+  "businesses": {
+    "trade": {
+      "2017": 234733,
+      "2018": 227461,
+      "2019": 230782,
+      "2020": 224729,
+      "2021": 227192,
+      "2022": 228725
+    },
+    "economy_total": {
+      "2017": 886738,
+      "2018": 870493,
+      "2019": 890361,
+      "2020": 873506,
+      "2021": 909474,
+      "2022": 946926
+    },
+    "trade_percentage": 24.2,
+    "note": "Μερίδο εμπορικών επιχειρήσεων στο σύνολο των επιχειρήσεων: 24,2%"
+  },
+  "turnover": {
+    "trade": {
+      "2019": 123998009,
+      "2020": 118408288,
+      "2021": 139829511,
+      "2022": 171698358,
+      "2023": 176395470,
+      "2024": 179531084
+    },
+    "economy_total": {
+      "2019": 310289265,
+      "2020": 279688050,
+      "2021": 341965556,
+      "2022": 472517899,
+      "2023": 465241177,
+      "2024": 484461030
+    },
+    "trade_percentage": 37.1,
+    "note": "Μερίδιο κύκλου εργασιών εμπορικών επιχειρήσεων στο σύνολο της οικονομίας: 37,1%",
+    "unit": "thousands_euros"
+  },
+  "employees": {
+    "trade": {
+      "2020": 704.7,
+      "2021": 700.2,
+      "2022": 724.4,
+      "2023": 699.3,
+      "2024": 706.3,
+      "2025": 759.9
+    },
+    "economy_total": {
+      "2020": 3844.0,
+      "2021": 3915.3,
+      "2022": 4167.2,
+      "2023": 4236.5,
+      "2024": 4327.8,
+      "2025": 4386.8
+    },
+    "trade_percentage": 17.3,
+    "note": "Ο μεγαλύτερος εργοδότης της χώρας: 17,3%",
+    "unit": "thousands_people"
+  },
+  "employers": {
+    "trade": {
+      "2020": 80.2,
+      "2021": 93.4,
+      "2022": 90.6,
+      "2023": 79.3,
+      "2024": 86.2,
+      "2025": 87.0
+    },
+    "economy_total": {
+      "2020": 288.8,
+      "2021": 312.5,
+      "2022": 313.0,
+      "2023": 304.8,
+      "2024": 325.0,
+      "2025": 318.8
+    },
+    "trade_percentage": 27.3,
+    "note": "Το 27,3% των εργοδοτών της οικονομίας δραστηριοποιείται στο εμπόριο",
+    "unit": "thousands_people"
+  },
+  "gross_value_added": {
+    "trade": {
+      "2018": 19773,
+      "2019": 18882,
+      "2020": 17384,
+      "2021": 19138,
+      "2022": 22400,
+      "2023": 22756
+    },
+    "economy_total": {
+      "2018": 156635,
+      "2019": 160733,
+      "2020": 147236,
+      "2021": 161015,
+      "2022": 183409,
+      "2023": 196528
+    },
+    "trade_percentage": 11.6,
+    "note": "Το εμπόριο συνεισφέρει το 11,6% του ΑΕΠ",
+    "unit": "millions_euros"
+  },
+  "women_employment": {
+    "retail_trade": {
+      "2019": 50.9,
+      "2020": 51.0,
+      "2021": 48.7,
+      "2022": 50.2,
+      "2023": 53.4,
+      "2024": 55.3
+    },
+    "economy_total": {
+      "2019": 42.2,
+      "2020": 42.4,
+      "2021": 42.4,
+      "2022": 42.3,
+      "2023": 43.0,
+      "2024": 43.3
+    },
+    "note": "Το εμπόριο προωθεί ενεργά και ουσιαστικά τη γυναικεία απασχόληση",
+    "unit": "percentage"
+  },
+  "detailed_employment": {
+    "trade_employees": {
+      "2019": 258336,
+      "2020": 260938,
+      "2021": 241994,
+      "2022": 249104,
+      "2023": 263247,
+      "2024": 291973
+    },
+    "economy_employees": {
+      "2019": 508009,
+      "2020": 511301,
+      "2021": 496398,
+      "2022": 496637,
+      "2023": 493145,
+      "2024": 528026
+    },
+    "trade_employees_extended": {
+      "2019": 1670788,
+      "2020": 1631520,
+      "2021": 1658283,
+      "2022": 1760799,
+      "2023": 1819968,
+      "2024": 1873580
+    },
+    "economy_employees_extended": {
+      "2019": 3956424,
+      "2020": 3844034,
+      "2021": 3915269,
+      "2022": 4167240,
+      "2023": 4236525,
+      "2024": 4327830
+    }
+  },
+  "summary_statistics": {
+    "latest_year": "2024",
+    "key_metrics": {
+      "total_trade_businesses": 228725,
+      "total_trade_turnover_billions": 179.531,
+      "total_trade_employees_thousands": 706.3,
+      "total_trade_employers_thousands": 86.2,
+      "trade_gva_billions": 22.756,
+      "women_in_retail_percentage": 55.3
+    },
+    "economic_impact": {
+      "businesses_share": "24.2% of total economy",
+      "turnover_share": "37.1% of total economy", 
+      "employment_share": "17.3% of total economy",
+      "employers_share": "27.3% of total economy",
+      "gdp_contribution": "11.6% of GDP",
+      "largest_employer": true,
+      "promotes_women_employment": true
+    }
+  },
+  "growth_analysis": {
+    "businesses": {
+      "trend": "recovery from 2020 low",
+      "peak_year": "2017",
+      "low_year": "2020",
+      "recovery_rate": "1.8% from 2020 to 2022"
+    },
+    "turnover": {
+      "trend": "strong growth post-2020",
+      "peak_year": "2024",
+      "low_year": "2020", 
+      "growth_rate": "51.6% from 2020 to 2024"
+    },
+    "employment": {
+      "trend": "projected strong growth",
+      "peak_year": "2025 (projected)",
+      "low_year": "2023",
+      "projected_growth": "8.7% from 2024 to 2025"
+    },
+    "women_employment": {
+      "trend": "consistently above economy average",
+      "advantage_over_economy": "12 percentage points in 2024",
+      "growth_trend": "increasing from 2021 low"
+    }
+  }
+}

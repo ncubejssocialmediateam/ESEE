@@ -1,0 +1,38 @@
+
+error when starting dev server:
+Error: Port 5173 is already in use
+    at Server.onError (file:///Users/ioannisnikolakopoulos/Documents/Programs/ESEE-FRONT/ESEE/node_modules/vite/
+    at Server.onError (file:///Users/ioannisnikolakopoulos/Documents/Programs/ESEE-FRONT/ESEE/node_modules/vite/dist/node/chunks/dep-Bu492Fnd.js:25023:18)
+    at Server.emit (node:events:508:28)
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)ioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
+zsh: command not found: devioannisnikolakopoulos@Mac ESEE % > esee-website@1.0.0 dev
