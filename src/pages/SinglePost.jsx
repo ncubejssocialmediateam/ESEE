@@ -62,9 +62,9 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
   return (
       <div className={`relative min-h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} transition-colors duration-300`}>
         {isDark && <ParticleBackground color="#ffffff" count={100} />}
-        <button onClick={toggleTheme} className="fixed top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 z-50">
+        {/* <button onClick={toggleTheme} className="fixed top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 z-50">
           {isDark ? <FiSun size={24} /> : <FiMoon size={24} />}
-        </button>
+        </button> */}
 
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">

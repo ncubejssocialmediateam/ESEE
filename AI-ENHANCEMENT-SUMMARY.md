@@ -140,3 +140,4 @@ The AI chatbot is now equipped with:
 - **Comprehensive member support** across all service areas
 
 The chatbot can now provide expert-level assistance to ESEE members with detailed, accurate, and contextually relevant information about all aspects of the organization's services and support programs.
+
