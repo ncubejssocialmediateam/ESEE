@@ -101,11 +101,11 @@ const News = () => {
             {filteredArticles.map((article) => (
               <article key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200">
                 {article.featuredImage && (
-                  <div className="aspect-w-16 aspect-h-9">
+                  <div className="aspect-video">
                     <img
                       src={article.featuredImage.url}
                       alt={article.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 )}

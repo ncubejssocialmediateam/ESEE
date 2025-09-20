@@ -34,7 +34,7 @@ const Opinions = ({ isDark }) => {
               } opacity-0 transition-all duration-300 ease-in-out group-hover:scale-100 group-hover:opacity-100 group-hover:shadow-lg sm:-inset-x-6 sm:rounded-2xl`} />
 
               <div className="relative z-10 p-2">
-                <div className="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
+                <div className="aspect-video mb-6 overflow-hidden rounded-xl">
                   <img
                     src={`https://back.socialmediateam.gr/${opinion.heroImage?.url}` || 'https://back.socialmediateam.gr/api/media/file/PATS8575-1024x576-300x169.jpg'}
                     alt={opinion.title}
