@@ -221,7 +221,8 @@ const AIChat = ({ aiStatus }) => {
     if (savedTopic) {
       setCurrentTopic(savedTopic);
     }
-  }, [messages, smartTypewriterEffect]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   // Save conversation state to localStorage
   useEffect(() => {
