@@ -66,7 +66,7 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
       <main className="bg-gray-900 text-white transition-colors duration-300">
         <Navigation isDark={isDark} />
         <div className="relative min-h-screen bg-gray-900 text-white transition-colors duration-300">
-          {isDark && <ParticleBackground color="#ffffff" count={100} />}
+          {isDark && <ParticleBackground color="#00d4ff" count={100} />}
 
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">

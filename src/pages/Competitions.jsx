@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
+import ParticleBackground from '../components/shared/ParticleBackground';
 import { 
   Search, 
   Download, 
@@ -36,7 +37,6 @@ const Competitions = () => {
     deadline: '2025-03-31',
     budget: '50.000.000€',
     participants: '500+',
-    heroImage: '/assets/competitions/digital-transformation-hero.jpg',
     downloadUrl: '/assets/competitions/digital-transformation-2021-2027.pdf'
   };
 
@@ -51,7 +51,6 @@ const Competitions = () => {
       budget: '30.000.000€',
       participants: '300+',
       location: 'Εθνικό',
-      coverImage: '/assets/competitions/human-resources-cover.jpg',
       downloadUrl: '/assets/competitions/human-resources-2021-2027.pdf'
     },
     {
@@ -64,7 +63,6 @@ const Competitions = () => {
       budget: '25.000.000€',
       participants: '250+',
       location: 'Εθνικό',
-      coverImage: '/assets/competitions/education-lifelong-learning-cover.jpg',
       downloadUrl: '/assets/competitions/education-lifelong-learning-2014-20.pdf'
     },
     {
@@ -77,7 +75,6 @@ const Competitions = () => {
       budget: '40.000.000€',
       participants: '400+',
       location: 'Εθνικό',
-      coverImage: '/assets/competitions/competitiveness-innovation-cover.jpg',
       downloadUrl: '/assets/competitions/competitiveness-innovation-2014-2020.pdf'
     },
     {
@@ -90,7 +87,6 @@ const Competitions = () => {
       budget: '20.000.000€',
       participants: '200+',
       location: 'Εθνικό',
-      coverImage: '/assets/competitions/human-development-cover.jpg',
       downloadUrl: '/assets/competitions/human-development.pdf'
     },
     {
@@ -103,7 +99,6 @@ const Competitions = () => {
       budget: '15.000.000€',
       participants: '150+',
       location: 'Ιόνια Νησιά',
-      coverImage: '/assets/competitions/ionian-islands-cover.jpg',
       downloadUrl: '/assets/competitions/ionian-islands.pdf'
     },
     {
@@ -116,7 +111,6 @@ const Competitions = () => {
       budget: '35.000.000€',
       participants: '350+',
       location: 'Εθνικό',
-      coverImage: '/assets/competitions/competitiveness-entrepreneurship-cover.jpg',
       downloadUrl: '/assets/competitions/competitiveness-entrepreneurship.pdf'
     },
     {
@@ -129,7 +123,6 @@ const Competitions = () => {
       budget: '45.000.000€',
       participants: '450+',
       location: 'Ευρωπαϊκό',
-      coverImage: '/assets/competitions/european-adjustment-fund-cover.jpg',
       downloadUrl: '/assets/competitions/european-adjustment-fund.pdf'
     }
   ];
@@ -176,16 +169,10 @@ const Competitions = () => {
       
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${featuredCompetition.heroImage})`,
-            filter: 'blur(2px) brightness(0.3)'
-          }}
-        />
+        {/* Particle Background */}
+        {isDark && <ParticleBackground color="#00d4ff" count={100} />}
         
-        {/* Content Overlay */}
+        {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 mb-6">
             <Award className="w-6 h-6 text-yellow-400" />
@@ -279,15 +266,10 @@ const Competitions = () => {
                         </div>
                         
                         {/* Cover Image */}
-                        <div className="relative mb-6 h-48 rounded-xl overflow-hidden">
-                          <div 
-                            className="w-full h-full bg-cover bg-center"
-                            style={{
-                              backgroundImage: `url(${competition.coverImage})`,
-                              backgroundSize: 'cover'
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div className="relative mb-6 h-48 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10">
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Award className="w-16 h-16 text-white/30" />
+                          </div>
                         </div>
 
                         {/* Category */}

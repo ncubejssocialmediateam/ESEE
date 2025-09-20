@@ -154,7 +154,7 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
           ? 'bg-gradient-to-r from-blue-950 to-indigo-950' 
           : 'bg-gradient-to-r from-blue-50 to-indigo-50'
         } flex items-center overflow-hidden transition-colors duration-300`}>
-        {isDark && <ParticleBackground color="#ffffff" count={100} />}
+        {isDark && <ParticleBackground color="#00d4ff" count={100} />}
         
         <div 
           ref={containerRef}
