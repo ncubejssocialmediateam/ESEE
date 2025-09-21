@@ -175,51 +175,71 @@ const AIChat = ({ aiStatus }) => {
 
   // Initialize conversation ID and load saved conversation
   useEffect(() => {
-    const savedConversationId = localStorage.getItem('esee-chat-conversation-id');
-    const savedMessages = localStorage.getItem('esee-chat-messages');
-    const savedTopic = localStorage.getItem('esee-chat-current-topic');
-    
-    if (savedConversationId) {
-      setConversationId(savedConversationId);
-    } else {
-      const newConversationId = `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      setConversationId(newConversationId);
-      localStorage.setItem('esee-chat-conversation-id', newConversationId);
-    }
-    
-    if (savedMessages && savedMessages.length > 1) {
-      try {
-        const parsedMessages = JSON.parse(savedMessages);
-        // Convert timestamp strings back to Date objects
-        const messagesWithDateTimestamps = parsedMessages.map(msg => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp)
-        }));
-        setMessages(messagesWithDateTimestamps);
-        
-        // Initialize displayed messages for all AI messages
-        const newDisplayedMessages = new Map();
-        messagesWithDateTimestamps.forEach(msg => {
-          if (msg.type === 'ai') {
-            newDisplayedMessages.set(msg.id, msg.content);
-          }
-        });
-        setDisplayedMessages(newDisplayedMessages);
-      } catch (error) {
-        console.warn('Could not parse saved messages:', error);
+    try {
+      const navEntries = typeof performance !== 'undefined' && performance.getEntriesByType
+        ? performance.getEntriesByType('navigation')
+        : [];
+      const isReload = Array.isArray(navEntries) && navEntries.length > 0 && navEntries[0].type === 'reload';
+
+      if (isReload) {
+        // Clear persisted chat on browser refresh
+        localStorage.removeItem('esee-chat-messages');
+        localStorage.removeItem('esee-chat-current-topic');
+        localStorage.removeItem('esee-chat-conversation-id');
+        setCurrentTopic(null);
+        setShowFollowUpSuggestions(false);
+        setDisplayedMessages(new Map());
+        setInputValue('');
       }
-    } else {
-      // Initialize the first AI message with typewriter effect
-      setTimeout(() => {
-        const firstMessage = messages[0];
-        if (firstMessage && firstMessage.type === 'ai') {
-          smartTypewriterEffect(firstMessage.id, firstMessage.content);
+
+      const savedConversationId = localStorage.getItem('esee-chat-conversation-id');
+      const savedMessages = localStorage.getItem('esee-chat-messages');
+      const savedTopic = localStorage.getItem('esee-chat-current-topic');
+
+      if (savedConversationId) {
+        setConversationId(savedConversationId);
+      } else {
+        const newConversationId = `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        setConversationId(newConversationId);
+        localStorage.setItem('esee-chat-conversation-id', newConversationId);
+      }
+
+      if (!isReload && savedMessages && savedMessages.length > 1) {
+        try {
+          const parsedMessages = JSON.parse(savedMessages);
+          // Convert timestamp strings back to Date objects
+          const messagesWithDateTimestamps = parsedMessages.map(msg => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp)
+          }));
+          setMessages(messagesWithDateTimestamps);
+
+          // Initialize displayed messages for all AI messages
+          const newDisplayedMessages = new Map();
+          messagesWithDateTimestamps.forEach(msg => {
+            if (msg.type === 'ai') {
+              newDisplayedMessages.set(msg.id, msg.content);
+            }
+          });
+          setDisplayedMessages(newDisplayedMessages);
+        } catch (error) {
+          console.warn('Could not parse saved messages:', error);
         }
-      }, 500);
-    }
-    
-    if (savedTopic) {
-      setCurrentTopic(savedTopic);
+      } else {
+        // Initialize the first AI message with typewriter effect
+        setTimeout(() => {
+          const firstMessage = messages[0];
+          if (firstMessage && firstMessage.type === 'ai') {
+            smartTypewriterEffect(firstMessage.id, firstMessage.content);
+          }
+        }, 500);
+      }
+
+      if (!isReload && savedTopic) {
+        setCurrentTopic(savedTopic);
+      }
+    } catch (e) {
+      console.warn('AIChat init error:', e);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
