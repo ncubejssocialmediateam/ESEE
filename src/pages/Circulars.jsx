@@ -193,7 +193,7 @@ const Circulars = () => {
             <p className={`text-sm ${
               isDark ? 'text-gray-400' : 'text-gray-600'
             }`}>
-              Εμφανίζονται {filteredCirculars.length} από {circulars.length} εγκύκλια
+              Εμφανίζονται {filteredCirculars.length} από {circulars.length} ΕΓΚΥΚΛΙΟΙ
             </p>
           </div>
 
