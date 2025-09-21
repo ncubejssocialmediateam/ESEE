@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
@@ -15,137 +15,45 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import { parseWordPressExport } from '../utils/rssParser';
 
 const Circulars = () => {
   const { isDark } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [expandedCircular, setExpandedCircular] = useState(null);
+  const [circulars, setCirculars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Circulars data from ESEE website
-  const circulars = [
-    {
-      id: 1,
-      title: 'Διενέργεια Προσφορών μετά τις θερινές Εκπτώσεις',
-      excerpt: 'Δεδομένου ότι, πολλά μέλη μας έχουν δηλώσει στην σχετική έρευνα του ΙΝΕΜΥ για τις εκπτώσεις την πρόθεσή τους να συνεχίσουν...',
-      content: 'Δεδομένου ότι, πολλά μέλη μας έχουν δηλώσει στην σχετική έρευνα του ΙΝΕΜΥ για τις εκπτώσεις την πρόθεσή τους να συνεχίσουν με προσφορές και εκπτώσεις, σας ενημερώνουμε για τις βασικές αρχές που πρέπει να τηρούνται σύμφωνα με το νόμο.',
-      category: 'Εμπόριο',
-      date: '2025-01-15',
-      priority: 'medium',
-      attachments: ['circular-2025-01.pdf']
-    },
-    {
-      id: 2,
-      title: 'Κατάργηση/Μείωση χρεώσεων για Ατομικές επιχειρήσεις, Ελεύθερους επαγγελματίες & Ιδιώτες',
-      excerpt: 'Με τη ψήφιση του νέου Εθνικού τελωνειακού Κώδικα (επισυναπτόμενος νόμος 5222/2025) και ειδικότερα με το άρθρο 271 αυτού, επέρχονται σημαντικές...',
-      content: 'Με τη ψήφιση του νέου Εθνικού τελωνειακού Κώδικα (επισυναπτόμενος νόμος 5222/2025) και ειδικότερα με το άρθρο 271 αυτού, επέρχονται σημαντικές αλλαγές στις χρεώσεις για ατομικές επιχειρήσεις, ελεύθερους επαγγελματίες και ιδιώτες.',
-      category: 'Φορολογία',
-      date: '2025-01-10',
-      priority: 'high',
-      attachments: ['customs-law-5222-2025.pdf']
-    },
-    {
-      id: 3,
-      title: 'Δυνατότητα επανένταξης αλληλεγγύως ευθυνόμενων προσώπων Εταιρειών σε απολεσθείσα ρύθμιση τμηματικής',
-      excerpt: 'Όπως είναι γνωστό τα φυσικά πρόσωπα που εκτελούν χρέη διευθυντών, γενικών διευθυντών, εκτελεστικών προέδρων, διαχειριστών, διευθυνόντων συμβούλων...',
-      content: 'Όπως είναι γνωστό τα φυσικά πρόσωπα που εκτελούν χρέη διευθυντών, γενικών διευθυντών, εκτελεστικών προέδρων, διαχειριστών, διευθυνόντων συμβούλων, εντεταλμένων στη διοίκηση έχουν τη δυνατότητα επανένταξης σε απολεσθείσα ρύθμιση τμηματικής.',
-      category: 'Νομικά',
-      date: '2025-01-08',
-      priority: 'medium',
-      attachments: ['reintegration-regulation.pdf']
-    },
-    {
-      id: 4,
-      title: 'Κυριότερες Υποχρεώσεις των Εμπορικών Επιχειρήσεων για το μήνα Ιούλιο 2025',
-      excerpt: 'Αναλυτική καταγραφή των υποχρεώσεων των εμπορικών επιχειρήσεων ανά θεματικές κατηγορίες προς: ΑΑΔΕ, ΕΦΚΑ, ΟΑΕΕ και άλλους φορείς...',
-      content: 'Αναλυτική καταγραφή των υποχρεώσεων των εμπορικών επιχειρήσεων ανά θεματικές κατηγορίες προς: ΑΑΔΕ, ΕΦΚΑ, ΟΑΕΕ και άλλους φορείς για τον μήνα Ιούλιο 2025.',
-      category: 'Υποχρεώσεις',
-      date: '2025-01-05',
-      priority: 'high',
-      attachments: ['obligations-july-2025.pdf']
-    },
-    {
-      id: 5,
-      title: 'Αλλαγές στο πλαίσιο υποβολής περιοδικών δηλώσεων ΦΠΑ από τρίμηνο σε μήνα',
-      excerpt: 'Με την επισυναπτόμενη απόφαση της ΑΑΔΕ (Α. 1049/2025) επέρχονται σημαντικές αλλαγές στο μέχρι πρότινος ισχύον πλαίσιο υποβολής περιοδικών δηλώσεων ΦΠΑ...',
-      content: 'Με την επισυναπτόμενη απόφαση της ΑΑΔΕ (Α. 1049/2025) επέρχονται σημαντικές αλλαγές στο μέχρι πρότινος ισχύον πλαίσιο υποβολής περιοδικών δηλώσεων ΦΠΑ από τρίμηνο σε μήνα.',
-      category: 'Φορολογία',
-      date: '2025-01-03',
-      priority: 'high',
-      attachments: ['aade-decision-1049-2025.pdf']
-    },
-    {
-      id: 6,
-      title: 'Δημοσίευση Απόφασης για την εξαίρεση από την υποχρεωτική ασφάλιση',
-      excerpt: 'Όπως γνωρίζετε, από 1ης Ιουνίου 2025, τέθηκε σε εφαρμογή η υποχρέωση ασφάλισης για επιχειρήσεις με ακαθάριστα έσοδα για το προηγούμενο...',
-      content: 'Όπως γνωρίζετε, από 1ης Ιουνίου 2025, τέθηκε σε εφαρμογή η υποχρέωση ασφάλισης για επιχειρήσεις με ακαθάριστα έσοδα για το προηγούμενο έτος άνω των 10.000€.',
-      category: 'Ασφάλιση',
-      date: '2025-01-01',
-      priority: 'medium',
-      attachments: ['insurance-exemption.pdf']
-    },
-    {
-      id: 7,
-      title: 'Δημοσίευση Υπουργικής Απόφασης για παρατάσεις δηλώσεων σε περίπτωση αδυναμίας του συστήματος',
-      excerpt: 'Μετά από προσπάθειες της ΕΣΕΕ, εκδόθηκε και δημοσιεύτηκε στην Εφημερίδα της Κυβερνήσεως, η Υπουργική Απόφαση A1065/2025...',
-      content: 'Μετά από προσπάθειες της ΕΣΕΕ, εκδόθηκε και δημοσιεύτηκε στην Εφημερίδα της Κυβερνήσεως, η Υπουργική Απόφαση A1065/2025 (ΦΕΚ 2584Β΄) για παρατάσεις δηλώσεων σε περίπτωση αδυναμίας του συστήματος.',
-      category: 'Δηλώσεις',
-      date: '2024-12-28',
-      priority: 'high',
-      attachments: ['ministerial-decision-a1065-2025.pdf']
-    },
-    {
-      id: 8,
-      title: 'Έναρξη υποβολής ηλεκτρονικών αιτήσεων από επιχειρήσεις για τη λήψη της αναδρομικής επιδότησης',
-      excerpt: 'Σε συνέχεια της Εγκυκλίου που σας αποστείλαμε την Παρασκευή 2 Μαΐου του τρέχοντος, αναφορικά με την αναδρομική επιδότηση μέρους του...',
-      content: 'Σε συνέχεια της Εγκυκλίου που σας αποστείλαμε την Παρασκευή 2 Μαΐου του τρέχοντος, αναφορικά με την αναδρομική επιδότηση μέρους του κόστους ηλεκτρικής ενέργειας, ανακοινώνουμε την έναρξη υποβολής ηλεκτρονικών αιτήσεων.',
-      category: 'Επιδοτήσεις',
-      date: '2024-12-25',
-      priority: 'medium',
-      attachments: ['subsidy-application-guide.pdf']
-    },
-    {
-      id: 9,
-      title: 'Αναδρομική επιδότηση τιμολογίων ηλεκτρικής ενέργειας για επιχειρήσεις',
-      excerpt: 'Σε συνέχεια της ανακοίνωσης του Υπουργείου Περιβάλλοντος & Ενέργειας την προηγούμενη Παρασκευή 25 Απριλίου, αναφορικά με την αναδρομική επιδότηση των...',
-      content: 'Σε συνέχεια της ανακοίνωσης του Υπουργείου Περιβάλλοντος & Ενέργειας την προηγούμενη Παρασκευή 25 Απριλίου, αναφορικά με την αναδρομική επιδότηση των τιμολογίων ηλεκτρικής ενέργειας για επιχειρήσεις.',
-      category: 'Επιδοτήσεις',
-      date: '2024-12-20',
-      priority: 'medium',
-      attachments: ['energy-subsidy-circular.pdf']
-    },
-    {
-      id: 10,
-      title: 'Αύξηση του ονομαστικού μεικτού Κατώτατου μισθού στα 880€',
-      excerpt: 'Όπως έχει γίνει γνωστό από χθες, Τρίτη 1 Απριλίου του τρέχοντος έτους, έχει τεθεί σε ισχύ ο αυξημένος κατά περίπου...',
-      content: 'Όπως έχει γίνει γνωστό από χθες, Τρίτη 1 Απριλίου του τρέχοντος έτους, έχει τεθεί σε ισχύ ο αυξημένος κατά περίπου 6,4% ονομαστικός μεικτός κατώτατος μισθός στα 880€.',
-      category: 'Εργασία',
-      date: '2024-12-15',
-      priority: 'high',
-      attachments: ['minimum-wage-increase-2025.pdf']
-    },
-    {
-      id: 11,
-      title: 'Ορθός τρόπος διενέργειας Προσφορών μετά τις Εκπτώσεις',
-      excerpt: 'Μία πάγια πρακτική των μελών μας είναι, μετά την λήξη της περιόδου των τακτικών εκπτώσεων, να προχωρούν στη διενέργεια προσφορών...',
-      content: 'Μία πάγια πρακτική των μελών μας είναι, μετά την λήξη της περιόδου των τακτικών εκπτώσεων, να προχωρούν στη διενέργεια προσφορών. Σας ενημερώνουμε για τον ορθό τρόπο διενέργειας προσφορών σύμφωνα με το νόμο.',
-      category: 'Εμπόριο',
-      date: '2024-12-10',
-      priority: 'medium',
-      attachments: ['sales-promotion-guidelines.pdf']
-    }
-  ];
+  useEffect(() => {
+    const loadCirculars = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        // Encoded path to handle space and dash characters under dist
+        const encodedPath = '/OLD%20SITE/-amp.WordPress.2025-09-21.xml';
+        let res = await fetch(encodedPath);
+        if (!res.ok) {
+          // fallback to raw path in dev
+          res = await fetch('/OLD SITE/-amp.WordPress.2025-09-21.xml');
+        }
+        const xmlText = await res.text();
+        const parsed = parseWordPressExport(xmlText);
+        setCirculars(parsed);
+      } catch (err) {
+        console.error('Failed to load circulars:', err);
+        setError('Αποτυχία φόρτωσης εγκυκλίων');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCirculars();
+  }, []);
 
   const categories = [
     { value: 'all', label: 'Όλες οι κατηγορίες' },
-    { value: 'Εμπόριο', label: 'Εμπόριο' },
-    { value: 'Φορολογία', label: 'Φορολογία' },
-    { value: 'Νομικά', label: 'Νομικά' },
-    { value: 'Υποχρεώσεις', label: 'Υποχρεώσεις' },
-    { value: 'Ασφάλιση', label: 'Ασφάλιση' },
-    { value: 'Δηλώσεις', label: 'Δηλώσεις' },
-    { value: 'Επιδοτήσεις', label: 'Επιδοτήσεις' },
-    { value: 'Εργασία', label: 'Εργασία' }
+    { value: 'Εγκύκλιοι ΕΣΕΕ', label: 'Εγκύκλιοι ΕΣΕΕ' }
   ];
 
   const filteredCirculars = circulars.filter(circular => {
@@ -255,6 +163,18 @@ const Circulars = () => {
             </div>
           </div>
 
+          {/* Loading / Error */}
+          {loading && (
+            <div className="mb-6">
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Φόρτωση εγκυκλίων…</p>
+            </div>
+          )}
+          {error && (
+            <div className="mb-6">
+              <p className={`${isDark ? 'text-red-400' : 'text-red-600'}`}>{error}</p>
+            </div>
+          )}
+
           {/* Results Count */}
           <div className="mb-6">
             <p className={`text-sm ${
@@ -356,7 +276,7 @@ const Circulars = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      {circular.attachments.map((attachment, index) => (
+                      {circular.attachments?.map((attachment, index) => (
                         <button
                           key={index}
                           className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
@@ -369,14 +289,19 @@ const Circulars = () => {
                           Λήψη
                         </button>
                       ))}
-                      <button className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                        isDark 
-                          ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
-                      }`}>
+                      <a
+                        href={circular.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+                          isDark 
+                            ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white' 
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
+                        }`}
+                      >
                         <Eye className="w-4 h-4" />
                         Προβολή
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
