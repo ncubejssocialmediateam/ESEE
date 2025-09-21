@@ -31,12 +31,12 @@ const Circulars = () => {
       try {
         setLoading(true);
         setError(null);
-        // Encoded path to handle space and dash characters under dist
-        const encodedPath = '/OLD%20SITE/-amp.WordPress.2025-09-21.xml';
-        let res = await fetch(encodedPath);
+        // Prefer simple path without spaces; fallback to encoded old path
+        const primary = '/wp/esee-export.xml';
+        let res = await fetch(primary);
         if (!res.ok) {
-          // fallback to raw path in dev
-          res = await fetch('/OLD SITE/-amp.WordPress.2025-09-21.xml');
+          const encodedPath = '/OLD%20SITE/-amp.WordPress.2025-09-21.xml';
+          res = await fetch(encodedPath);
         }
         const xmlText = await res.text();
         const parsed = parseWordPressExport(xmlText);
