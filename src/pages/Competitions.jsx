@@ -3,6 +3,7 @@ import { useTheme } from '../context/ThemeContext';
 import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
 import ParticleBackground from '../components/shared/ParticleBackground';
+import ESEE_LOGO_WHITE from '../assets/ESEE-LOGO_white.png';
 import { 
   Search, 
   Download, 
@@ -268,7 +269,7 @@ const Competitions = () => {
                         {/* Cover Image */}
                         <div className="relative mb-6 h-48 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10">
                           <div className="w-full h-full flex items-center justify-center">
-                            <Award className="w-16 h-16 text-white/30" />
+                            <img src={ESEE_LOGO_WHITE} alt="ESEE Logo" className="w-24 h-auto opacity-30" />
                           </div>
                         </div>
 
