@@ -238,13 +238,13 @@ const Navigation = ({ isDark }) => {
                       {/* <div className="relative z-50">
                         <AccessibilityMenu isDark={isDark} />
                       </div> */}
-                  <Link to="/contact">
+                  <Link to="/portal">
                     <button className={`px-4 py-1.5 text-sm ${
                         isDark
                             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                             : 'bg-blue-600 hover:bg-blue-700 text-white'
                     } rounded-lg transition-colors`}>
-                      Επικοινωνία
+                      PORTAL
                     </button>
                   </Link>
                 </div>
@@ -401,13 +401,13 @@ const Navigation = ({ isDark }) => {
                       {/* <div className="relative z-50">
                         <AccessibilityMenu isDark={isDark} />
                       </div> */}
-                  <Link to="/contact">
+                  <Link to="/portal">
                     <button className={`w-full px-4 py-1.5 text-sm ${
                         isDark
                             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                             : 'bg-blue-600 hover:bg-blue-700 text-white'
                     } rounded-lg transition-colors`}>
-                      Επικοινωνία
+                      PORTAL
                     </button>
                   </Link>
                 </div>
