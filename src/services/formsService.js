@@ -1,6 +1,7 @@
 import { supabase } from '../config/supabase'
 
 export const submitContact = async ({ name, email, subject, message }) => {
+  if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase
     .from('contact_messages')
     .insert([{ name, email, subject, message }])
@@ -18,6 +19,7 @@ export const submitMemberSupport = async ({
   phone,
   question
 }) => {
+  if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase
     .from('member_support_requests')
     .insert([
@@ -37,6 +39,7 @@ export const submitMemberSupport = async ({
 }
 
 export const submitNewsletter = async ({ email }) => {
+  if (!supabase) throw new Error('Supabase not configured')
   const { data, error } = await supabase
     .from('newsletter_subscribers')
     .insert([{ email }])
