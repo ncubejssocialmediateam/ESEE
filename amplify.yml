@@ -4,6 +4,9 @@ frontend:
     preBuild:
       commands:
         - echo "Using Node $(node -v) and npm $(npm -v)"
+        - echo "OPENROUTER_API_KEY present? ${OPENROUTER_API_KEY:+yes}" && echo "VITE_OPENROUTER_API_KEY present? ${VITE_OPENROUTER_API_KEY:+yes}"
+        - if [ -n "$OPENROUTER_API_KEY" ] && [ -z "$VITE_OPENROUTER_API_KEY" ]; then export VITE_OPENROUTER_API_KEY="$OPENROUTER_API_KEY"; fi
+        - if [ -n "$OPENROUTER_API_URL" ] && [ -z "$VITE_OPENROUTER_API_URL" ]; then export VITE_OPENROUTER_API_URL="$OPENROUTER_API_URL"; fi
         - npm ci --prefer-offline || npm install --prefer-offline
     build:
       commands:
