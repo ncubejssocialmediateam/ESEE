@@ -3,15 +3,27 @@ import { useState } from 'react';
 import { Phone, Mail, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ESEE_LOGO_WHITE from '../../assets/ESEE-LOGO_white.png';
+import formsService from '../../services/formsService';
 
 const Footer = ({ isDark }) => {
   const [email, setEmail] = useState('');
 
-  const handleNewsletterSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    // Handle newsletter subscription
-    console.log('Newsletter subscription:', email);
-    setEmail('');
+    setIsSubmitting(true);
+    setStatus(null);
+    try {
+      await formsService.submitNewsletter({ email });
+      setStatus('success');
+      setEmail('');
+    } catch (err) {
+      setStatus(err.message || 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -92,14 +104,21 @@ const Footer = ({ isDark }) => {
               </div>
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className={`w-full px-6 py-3 rounded-lg font-medium transition-colors ${
                   isDark 
-                    ? 'bg-blue-400 hover:bg-blue-500 text-blue-950' 
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    ? `bg-blue-400 ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-500'} text-blue-950` 
+                    : `bg-blue-600 ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-700'} text-white`
                 }`}
               >
-                Εγγραφή
+                {isSubmitting ? 'Εγγραφή...' : 'Εγγραφή'}
               </button>
+              {status === 'success' && (
+                <p className={`mt-2 text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>Εγγραφήκατε με επιτυχία.</p>
+              )}
+              {status && status !== 'success' && (
+                <p className={`mt-2 text-sm ${isDark ? 'text-red-400' : 'text-red-600'}`}>Αποτυχία εγγραφής: {status}</p>
+              )}
             </form>
           </div>
 
@@ -114,7 +133,8 @@ const Footer = ({ isDark }) => {
             </h3>
             <div className="flex space-x-4">
               <a 
-                href="#" 
+                href="https://www.facebook.com/ESEE.HELLAS/" 
+                target="_blank" rel="noopener noreferrer"
                 className={`p-3 rounded-full transition-colors ${
                   isDark 
                     ? 'bg-blue-900/50 hover:bg-blue-800 text-blue-400 hover:text-blue-300' 
@@ -125,7 +145,8 @@ const Footer = ({ isDark }) => {
                 <Facebook className="w-6 h-6" />
               </a>
               <a 
-                href="#" 
+                href="https://www.linkedin.com/company/hellenic-confederation-of-commerce&-entrepreneurship-esee-/" 
+                target="_blank" rel="noopener noreferrer"
                 className={`p-3 rounded-full transition-colors ${
                   isDark 
                     ? 'bg-blue-900/50 hover:bg-blue-800 text-blue-400 hover:text-blue-300' 
@@ -136,18 +157,20 @@ const Footer = ({ isDark }) => {
                 <Linkedin className="w-6 h-6" />
               </a>
               <a 
-                href="#" 
+                href="https://x.com/ESEE_GR" 
+                target="_blank" rel="noopener noreferrer"
                 className={`p-3 rounded-full transition-colors ${
                   isDark 
                     ? 'bg-blue-900/50 hover:bg-blue-800 text-blue-400 hover:text-blue-300' 
                     : 'bg-white hover:bg-gray-100 text-blue-600 hover:text-blue-700'
                 }`}
-                aria-label="Twitter"
+                aria-label="X (Twitter)"
               >
                 <Twitter className="w-6 h-6" />
               </a>
               <a 
-                href="#" 
+                href="https://www.youtube.com/user/eseegr" 
+                target="_blank" rel="noopener noreferrer"
                 className={`p-3 rounded-full transition-colors ${
                   isDark 
                     ? 'bg-blue-900/50 hover:bg-blue-800 text-blue-400 hover:text-blue-300' 

@@ -2,9 +2,34 @@ import { useTheme } from '../context/ThemeContext';
 import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { useState } from 'react';
+import formsService from '../services/formsService';
 
 const Contact = () => {
   const { isDark } = useTheme();
+  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus(null);
+    try {
+      await formsService.submitContact(contactForm);
+      setStatus('success');
+      setContactForm({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      setStatus(err.message || 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
@@ -118,7 +143,7 @@ const Contact = () => {
               Στείλτε μας μήνυμα
             </h2>
             
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -126,6 +151,9 @@ const Contact = () => {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={contactForm.name}
+                    onChange={handleChange}
                     required
                     className={`w-full px-4 py-3 rounded-lg border transition-colors ${
                       isDark 
@@ -142,6 +170,9 @@ const Contact = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={contactForm.email}
+                    onChange={handleChange}
                     required
                     className={`w-full px-4 py-3 rounded-lg border transition-colors ${
                       isDark 
@@ -159,6 +190,9 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
+                  name="subject"
+                  value={contactForm.subject}
+                  onChange={handleChange}
                   className={`w-full px-4 py-3 rounded-lg border transition-colors ${
                     isDark 
                       ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400' 
@@ -174,6 +208,9 @@ const Contact = () => {
                 </label>
                 <textarea
                   rows={6}
+                  name="message"
+                  value={contactForm.message}
+                  onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg border transition-colors ${
                     isDark 
@@ -187,15 +224,27 @@ const Contact = () => {
               <div className="text-center">
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className={`px-8 py-3 rounded-lg font-medium transition-colors ${
                     isDark 
-                      ? 'bg-blue-400 hover:bg-blue-500 text-blue-950' 
-                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? `bg-blue-400 ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-500'} text-blue-950` 
+                      : `bg-blue-600 ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-700'} text-white`
                   }`}
                 >
-                  Αποστολή Μηνύματος
+                  {isSubmitting ? 'Αποστολή...' : 'Αποστολή Μηνύματος'}
                 </button>
               </div>
+
+              {status === 'success' && (
+                <div className={`${isDark ? 'text-green-400' : 'text-green-700'} text-center`}>
+                  Το μήνυμα στάλθηκε επιτυχώς.
+                </div>
+              )}
+              {status && status !== 'success' && (
+                <div className={`${isDark ? 'text-red-400' : 'text-red-600'} text-center`}>
+                  Αποτυχία αποστολής: {status}
+                </div>
+              )}
             </form>
           </div>
         </div>

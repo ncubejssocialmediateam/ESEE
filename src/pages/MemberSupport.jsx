@@ -21,6 +21,7 @@ import {
   AlertCircle,
   HelpCircle
 } from 'lucide-react';
+import formsService from '../services/formsService';
 
 const MemberSupport = () => {
   const { isDark } = useTheme();
@@ -210,10 +211,9 @@ const MemberSupport = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitStatus(null);
+    try {
+      await formsService.submitMemberSupport(formData);
       setSubmitStatus('success');
       setFormData({
         category: '',
@@ -223,10 +223,12 @@ const MemberSupport = () => {
         phone: '',
         question: ''
       });
-      
-      // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 2000);
+    } catch (err) {
+      setSubmitStatus(err.message || 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
