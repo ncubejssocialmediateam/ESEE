@@ -13,10 +13,8 @@ export const submitContact = async ({ name, email, subject, message }) => {
   const { data, error } = await supabase
     .from('contact_messages')
     .insert([{ name, email, subject, message }])
-    .select()
-    .single()
   if (error) throw error
-  return data
+  return data?.[0] ?? { success: true }
 }
 
 export const submitMemberSupport = async ({
@@ -52,10 +50,8 @@ export const submitMemberSupport = async ({
         question
       }
     ])
-    .select()
-    .single()
   if (error) throw error
-  return data
+  return data?.[0] ?? { success: true }
 }
 
 export const submitNewsletter = async ({ email }) => {
@@ -67,10 +63,8 @@ export const submitNewsletter = async ({ email }) => {
   const { data, error } = await supabase
     .from('newsletter_subscribers')
     .insert([{ email }])
-    .select()
-    .single()
   if (error) throw error
-  return data
+  return data?.[0] ?? { success: true }
 }
 
 export default {
