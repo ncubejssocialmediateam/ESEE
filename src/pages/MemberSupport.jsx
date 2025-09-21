@@ -253,39 +253,6 @@ const MemberSupport = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Κατηγορίες Υποστήριξης</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:scale-105 cursor-pointer ${
-                  selectedCategory === category.id 
-                    ? 'bg-white/10 border-2 border-white/30' 
-                    : 'bg-white/5 border border-white/10 hover:border-white/20'
-                }`}
-                onClick={() => setSelectedCategory(selectedCategory === category.id ? 'all' : category.id)}
-              >
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-gradient-to-br ${category.color} text-white shadow-lg`}>
-                  {category.icon}
-                </div>
-                
-                <h3 className="text-xl font-bold mb-4">
-                  {category.name}
-                </h3>
-                
-                <p className="text-white/70 text-sm">
-                  {faqs.filter(faq => faq.category === category.id).length} ερωτήσεις διαθέσιμες
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Search Section */}
       <section className="py-16 px-6 bg-white/5">
         <div className="max-w-4xl mx-auto">
@@ -317,6 +284,39 @@ const MemberSupport = () => {
                 ))}
               </select>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section */}
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Κατηγορίες Υποστήριξης</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:scale-105 cursor-pointer ${
+                  selectedCategory === category.id 
+                    ? 'bg-white/10 border-2 border-white/30' 
+                    : 'bg-white/5 border border-white/10 hover:border-white/20'
+                }`}
+                onClick={() => setSelectedCategory(selectedCategory === category.id ? 'all' : category.id)}
+              >
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-gradient-to-br ${category.color} text-white shadow-lg`}>
+                  {category.icon}
+                </div>
+                
+                <h3 className="text-xl font-bold mb-4">
+                  {category.name}
+                </h3>
+                
+                <p className="text-white/70 text-sm">
+                  {faqs.filter(faq => faq.category === category.id).length} ερωτήσεις διαθέσιμες
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
