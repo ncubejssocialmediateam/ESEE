@@ -5,7 +5,6 @@ import Footer from '../components/layout/Footer';
 import { 
   FileText, 
   Calendar, 
-  ArrowRight, 
   Search, 
   Filter,
   Download,
@@ -40,7 +39,9 @@ const Circulars = () => {
             const jd = await rj.json();
             items = Array.isArray(jd.items) ? jd.items : [];
           }
-        } catch {}
+        } catch (err) {
+          console.debug('Circulars: failed to fetch JSON', err);
+        }
 
         if (!items.length) {
           const primary = '/wp/esee-export.xml';
