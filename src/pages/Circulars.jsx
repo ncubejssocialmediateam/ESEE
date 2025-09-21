@@ -31,16 +31,29 @@ const Circulars = () => {
       try {
         setLoading(true);
         setError(null);
-        // Prefer simple path without spaces; fallback to encoded old path
-        const primary = '/wp/esee-export.xml';
-        let res = await fetch(primary);
-        if (!res.ok) {
-          const encodedPath = '/OLD%20SITE/-amp.WordPress.2025-09-21.xml';
-          res = await fetch(encodedPath);
+        // Try JSON first (generated at build time), then XML
+        const jsonUrl = '/wp/circulars.json';
+        let items = [];
+        try {
+          const rj = await fetch(jsonUrl);
+          if (rj.ok) {
+            const jd = await rj.json();
+            items = Array.isArray(jd.items) ? jd.items : [];
+          }
+        } catch {}
+
+        if (!items.length) {
+          const primary = '/wp/esee-export.xml';
+          let res = await fetch(primary);
+          if (!res.ok) {
+            const encodedPath = '/OLD%20SITE/-amp.WordPress.2025-09-21.xml';
+            res = await fetch(encodedPath);
+          }
+          const xmlText = await res.text();
+          items = parseWordPressExport(xmlText);
         }
-        const xmlText = await res.text();
-        const parsed = parseWordPressExport(xmlText);
-        setCirculars(parsed);
+
+        setCirculars(items);
       } catch (err) {
         console.error('Failed to load circulars:', err);
         setError('Αποτυχία φόρτωσης εγκυκλίων');
@@ -102,7 +115,7 @@ const Circulars = () => {
               ΕΓΚΥΚΛΙΟΙ ΕΣΕΕ
             </h1>
             
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6 rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to purple-500 mx-auto mb-6 rounded-full"></div>
             
             <p className={`text-lg md:text-xl leading-relaxed max-w-3xl mx-auto ${
               isDark ? 'text-gray-300' : 'text-gray-700'
