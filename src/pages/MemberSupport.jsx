@@ -72,6 +72,29 @@ const MemberSupport = () => {
     }
   ];
 
+  // Helper: normalize Greek text (lowercase, remove diacritics) for robust matching
+  const normalize = (text) =>
+    (text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      // Remove diacritics (combining marks)
+      .replace(/[\u0300-\u036f]+/g, '')
+      // Keep greek/latin letters, numbers and spaces
+      .replace(/[^a-zA-Zα-ωΑ-Ω0-9\s]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // Category synonyms to improve reasoning-based search
+  const categorySynonyms = {
+    accounting: ['λογιστικ', 'φπα', 'φορολ', 'βιβλια', 'δηλωσ', 'mydata'],
+    financial: ['χρηματο', 'δανει', 'εσπα', 'επιδοτ', 'ταμειο', 'προγραμμα'],
+    labor: ['εργασ', 'μισθ', 'υπερωρ', 'ωραριο', 'αδει', 'συμβασ'],
+    pension: ['συνταξ', 'εφαπαξ', 'ασφαλιστικα ετη', 'ηλικια'],
+    insurance: ['ασφαλ', 'εισφορ', 'εφκα', 'ταμειο υγειας']
+  };
+
+  const searchTokens = normalize(searchTerm).split(' ').filter(Boolean);
+
   const faqs = [
     // ΛΟΓΙΣΤΙΚΑ
     {
@@ -189,11 +212,24 @@ const MemberSupport = () => {
     'Άλλος Εμπορικός Σύλλογος'
   ];
 
-  const filteredFAQs = faqs.filter(faq => {
-    const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredFAQs = faqs.filter((faq) => {
     const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    if (!matchesCategory) return false;
+
+    if (searchTokens.length === 0) return true;
+
+    const q = normalize(faq.question);
+    const a = normalize(faq.answer);
+    const catObj = categories.find((c) => c.id === faq.category);
+    const catName = normalize(catObj?.name || '');
+    const synonyms = categorySynonyms[faq.category] || [];
+
+    // token-based AND match across question, answer, category name, or synonyms
+    return searchTokens.every((tok) => {
+      if (q.includes(tok) || a.includes(tok) || catName.includes(tok)) return true;
+      // match against synonyms
+      return synonyms.some((syn) => normalize(syn).includes(tok) || tok.includes(normalize(syn)));
+    });
   });
 
   const toggleFAQ = (id) => {
@@ -268,7 +304,7 @@ const MemberSupport = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
               <input
                 type="text"
-                placeholder="Αναζήτηση ερωτήσεων..."
+                placeholder="Αναζήτηση ερωτήσεων, λέξεων-κλειδιών ή κατηγοριών..."
                 className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white placeholder-white/50"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -334,6 +370,14 @@ const MemberSupport = () => {
               </span>
             )}
           </h2>
+
+          {/* Results meta */}
+          <div className="text-center text-white/60 mb-6">
+            Εμφανίζονται {filteredFAQs.length} αποτελέσματα
+            {searchTokens.length > 0 && (
+              <span> για: "{searchTokens.join(' ')}"</span>
+            )}
+          </div>
 
           <div className="space-y-4">
             {filteredFAQs.length === 0 ? (

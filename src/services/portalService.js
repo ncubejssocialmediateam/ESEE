@@ -11,7 +11,8 @@ export class PortalService {
   static async getPortalStats() {
     try {
       // Fetch articles to calculate stats
-      const articlesResponse = await getData('/api/posts?limit=10000');
+      // Reduce payload for faster initial load
+      const articlesResponse = await getData('/api/posts?limit=200');
       const articles = articlesResponse.data.docs || [];
       
       // Fetch categories
@@ -184,7 +185,8 @@ export class PortalService {
    */
   static async getPortalAnalytics() {
     try {
-      const articlesResponse = await getData('/api/posts?limit=10000');
+      // Load fewer records and compute lazily
+      const articlesResponse = await getData('/api/posts?limit=200');
       const articles = articlesResponse.data.docs || [];
       
       // Calculate analytics

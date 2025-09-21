@@ -32,38 +32,41 @@ export const usePortalData = () => {
       setLoading(true);
       setError(null);
       
-      // Load all data in parallel
-      const [
-        portalStatsData,
-        memberStatsData,
-        taxStatsData,
-        activitiesData,
-        notificationsData,
-        documentsData,
-        analyticsData
-      ] = await Promise.all([
-        PortalService.getPortalStats(),
+      // Stage 1: Load essential data first (fast)
+      const [memberStatsData, taxStatsData, notificationsData, documentsData] = await Promise.all([
         PortalService.getMemberStats(),
         PortalService.getTaxCalendarStats(),
-        PortalService.getRecentActivities(),
         PortalService.getNotifications(),
-        PortalService.getDocuments(),
-        PortalService.getPortalAnalytics()
+        PortalService.getDocuments()
       ]);
 
-      // Update Redux store
-      dispatch(setPortalStats(portalStatsData));
+      // Update Redux store with essential data and render immediately
       dispatch(setMemberStats(memberStatsData));
       dispatch(setTaxStats(taxStatsData));
       dispatch(setNotifications(notificationsData));
       dispatch(setDocuments(documentsData));
-      dispatch(setAnalytics(analyticsData));
-      
       setLastUpdated(new Date());
+
+      // End loading state to let the page render
+      setLoading(false);
+
+      // Stage 2: Load heavy data in the background (non-blocking)
+      Promise.all([
+        PortalService.getPortalStats(),
+        PortalService.getPortalAnalytics()
+      ])
+        .then(([portalStatsData, analyticsData]) => {
+          dispatch(setPortalStats(portalStatsData));
+          dispatch(setAnalytics(analyticsData));
+        })
+        .catch((bgErr) => {
+          console.warn('Background portal data fetch failed:', bgErr?.message || bgErr);
+        });
     } catch (err) {
       setError(err.message || 'Σφάλμα κατά τη φόρτωση των δεδομένων');
       console.error('Error loading portal data:', err);
     } finally {
+      // loading already set to false after essential data; ensure it is false on hard errors
       setLoading(false);
     }
   };
