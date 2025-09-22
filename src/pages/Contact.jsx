@@ -18,6 +18,15 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      console.info('[Contact] Submit clicked', {
+        useRest: import.meta?.env?.VITE_FORMS_USE_REST,
+        hasSupabaseUrl: Boolean(import.meta?.env?.VITE_SUPABASE_URL),
+        hasAnonKey: Boolean(import.meta?.env?.VITE_SUPABASE_ANON_KEY)
+      });
+    } catch {
+      // ignore if import.meta.env not available in some contexts
+    }
     setIsSubmitting(true);
     setStatus(null);
     try {
@@ -224,6 +233,7 @@ const Contact = () => {
               <div className="text-center">
                 <button
                   type="submit"
+                  onClick={handleSubmit}
                   disabled={isSubmitting}
                   className={`px-8 py-3 rounded-lg font-medium transition-colors ${
                     isDark 
