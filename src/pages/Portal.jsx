@@ -294,7 +294,7 @@ const Portal = () => {
       case 'newspaper':
         return <ESEENewspaper />;
       case 'tax-calendar':
-        return <TaxCalendar />;
+        return <TaxCalendar embedded={true} />;
       case 'documents':
         return (
           <div className="space-y-6">

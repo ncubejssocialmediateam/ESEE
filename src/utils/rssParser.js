@@ -50,23 +50,52 @@ export const parseRSSFeed = (xmlText) => {
 
 // Alternative method using a CORS proxy for development
 export const fetchRSSFeed = async (rssUrl) => {
-  try {
-    // For development, we'll use a CORS proxy
-    // In production, you should implement this on your backend
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
-    
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    
-    if (data.contents) {
-      return parseRSSFeed(data.contents);
+  // Try multiple strategies to bypass CORS and increase reliability
+  const strategies = [
+    // AllOrigins (JSON response with contents)
+    async () => {
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`AllOrigins failed: ${res.status}`);
+      const data = await res.json();
+      if (data?.contents) return parseRSSFeed(data.contents);
+      throw new Error('AllOrigins returned no contents');
+    },
+    // ThingProxy (direct passthrough)
+    async () => {
+      const url = `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(rssUrl)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`ThingProxy failed: ${res.status}`);
+      const text = await res.text();
+      return parseRSSFeed(text);
+    },
+    // Nicky API CORS proxy
+    async () => {
+      const url = `https://cors.isomorphic-git.org/${rssUrl}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`isomorphic-git proxy failed: ${res.status}`);
+      const text = await res.text();
+      return parseRSSFeed(text);
+    },
+    // Direct fetch (will usually fail in browser due to CORS but keep as last)
+    async () => {
+      const res = await fetch(rssUrl, { mode: 'cors' });
+      if (!res.ok) throw new Error(`Direct fetch failed: ${res.status}`);
+      const text = await res.text();
+      return parseRSSFeed(text);
     }
-    
-    return [];
-  } catch (error) {
-    console.error('Error fetching RSS feed:', error);
-    return [];
+  ];
+
+  for (const attempt of strategies) {
+    try {
+      const events = await attempt();
+      if (Array.isArray(events)) return events;
+    } catch (err) {
+      // continue to next strategy
+      console.warn('[RSS] strategy failed:', err?.message || err);
+    }
   }
+  return [];
 };
 
 // Parse WordPress WXR (export) file to a simplified list of circulars

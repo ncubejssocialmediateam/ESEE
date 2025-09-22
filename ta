@@ -1,0 +1,6 @@
+url -i 'https://ohilbvmoozeygfregggy.supabase.co/rest/v1/contact_messages' \
+  -H 'apikey: <ANON_KEY>' \
+  -H 'Authorization: Bearer <ANON_KEY>' \
+  -H 'Content-Type: application/json' \
+  -H 'Prefer: return=representation' \
+  --data '[{"name":"Test","email":"test@example.com","subject":"Hi","message":"Hello"}]'

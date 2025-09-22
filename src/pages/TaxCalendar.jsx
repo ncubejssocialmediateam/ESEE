@@ -4,7 +4,7 @@ import { fetchRSSFeed } from '../utils/rssParser';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
 
-const TaxCalendar = () => {
+const TaxCalendar = ({ embedded = false }) => {
   const [taxEvents, setTaxEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -139,7 +139,7 @@ const TaxCalendar = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className={`${embedded ? '' : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'} flex items-center justify-center`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Φόρτωση φορολογικού ημερολογίου...</p>
@@ -150,7 +150,7 @@ const TaxCalendar = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className={`${embedded ? '' : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'} flex items-center justify-center`}>
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <p className="text-red-600">{error}</p>
@@ -160,14 +160,14 @@ const TaxCalendar = () => {
   }
 
   return (
-    <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
-      <Navigation isDark={isDark} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
+    <main className={`${embedded ? '' : (isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900')} transition-colors duration-300`}>
+      {!embedded && <Navigation isDark={isDark} />}
+      <div className={`${embedded ? '' : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}`}>
+      <div className={`container mx-auto px-4 ${embedded ? 'py-4' : 'py-8'}`}>
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className={`text-center ${embedded ? 'mb-4' : 'mb-8'}`}>
           <div className="flex items-center justify-center gap-4 mb-4">
-            <h1 className="text-4xl font-bold text-gray-800">
+            <h1 className={`${embedded ? 'text-2xl' : 'text-4xl'} font-bold text-gray-800`}>
               Φορολογικό Ημερολόγιο
             </h1>
             <button
@@ -179,7 +179,7 @@ const TaxCalendar = () => {
               <RefreshCw className={`w-6 h-6 ${refreshing ? 'animate-spin' : ''}`} />
             </button>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className={`${embedded ? 'text-sm' : 'text-lg'} text-gray-600 max-w-2xl mx-auto`}>
             Ενημερωθείτε για όλες τις φορολογικές υποχρεώσεις και προθεσμίες
           </p>
         </div>

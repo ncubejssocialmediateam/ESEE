@@ -113,8 +113,11 @@ export class PortalService {
    */
   static async getTaxCalendarStats() {
     try {
-      // TODO: Implement real tax calendar events API
-      const events = [];
+      // Pull live events from Taxheaven RSS via the same parser as the TaxCalendar page
+      const rssUrl = 'https://www.taxheaven.gr/bibliothiki/soft/xml/soft_dat.xml';
+      // Lazy import to avoid circular deps on load
+      const { fetchRSSFeed } = await import('../utils/rssParser');
+      const events = await fetchRSSFeed(rssUrl);
       
       const now = new Date();
       const currentMonth = now.getMonth();
