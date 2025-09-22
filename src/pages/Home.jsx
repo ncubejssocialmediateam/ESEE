@@ -19,7 +19,7 @@ const Home = ({ isLoaded, setIsLoaded }) => {
   }, [setIsLoaded]);
 
   return (
-    <main className="bg-gray-900 text-white transition-colors duration-300">
+    <main className="bg-gray-900 text-white transition-colors duration-300 overflow-x-hidden">
       <Navigation isDark={isDark} />
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
       <News isDark={isDark} />

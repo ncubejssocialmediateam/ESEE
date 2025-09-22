@@ -26,19 +26,19 @@ const Events = ({ isDark }) => {
           {/* Timeline line */}
           <div className={`absolute left-1/2 top-0 w-0.5 h-full ${
             isDark ? 'bg-blue-900' : 'bg-blue-200'
-          } transform -translate-x-1/2`} />
+          } transform -translate-x-1/2 hidden md:block`} />
 
           <div className="relative">
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className={`flex items-center mb-16 ${
-                  index % 2 === 0 ? 'justify-start' : 'justify-end'
+                className={`flex flex-col md:flex-row items-stretch md:items-center mb-16 ${
+                  index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'
                 }`}
               >
                 {/* Event card */}
-                <div className={`relative w-5/12 group ${
-                  index % 2 === 0 ? 'pr-12' : 'pl-12'
+                <div className={`relative w-full md:w-5/12 group ${
+                  index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'
                 }`}>
                   <div className={`${
                     isDark ? 'bg-gray-800' : 'bg-white'
@@ -119,7 +119,7 @@ const Events = ({ isDark }) => {
                   </div>
 
                   {/* Timeline dot */}
-                  <div className={`absolute top-1/2 w-4 h-4 rounded-full ${
+                  <div className={`absolute top-1/2 w-4 h-4 rounded-full hidden md:block ${
                     isDark ? 'bg-blue-600' : 'bg-blue-500'
                   } border-4 ${
                     isDark ? 'border-gray-800' : 'border-white'

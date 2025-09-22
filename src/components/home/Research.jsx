@@ -92,9 +92,9 @@ const ResearchHub = ({ isDark }) => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-8 py-12">
-        <div className="grid grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Sidebar */}
-          <div className="col-span-3">
+          <div className="md:col-span-3 order-2 md:order-1">
             <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6`}>
               <h3 className={`font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Κατηγορίες Έρευνας</h3>
               <div className="space-y-2">
@@ -144,7 +144,7 @@ const ResearchHub = ({ isDark }) => {
           </div>
 
           {/* Main Content Area */}
-          <div className="col-span-9">
+          <div className="md:col-span-9 order-1 md:order-2">
             {/* Market Overview Chart */}
             <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6 mb-8`}>
               <div className="flex justify-between items-center mb-6">
