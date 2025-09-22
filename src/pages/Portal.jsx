@@ -3,29 +3,23 @@ import {
   Calendar, 
   FileText, 
   Users, 
-  Settings, 
   Bell, 
-  Search,
   ArrowRight,
   Shield,
   Clock,
   TrendingUp,
-  BookOpen,
   MessageSquare,
   Download,
   Eye,
   AlertCircle,
   CheckCircle,
   XCircle,
-  RefreshCw,
-  Globe
+  RefreshCw
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import TaxCalendar from './TaxCalendar';
 import usePortalData from '../hooks/usePortalData';
 import ContactInfo from '../components/portal/ContactInfo';
 import FederationsAccordion from '../components/portal/FederationsAccordion';
-import EurostatStatistics from '../components/portal/EurostatStatistics';
 import PollSection from '../components/portal/PollSection';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
@@ -44,7 +38,6 @@ const Portal = () => {
     taxStats,
     notifications,
     documents,
-    analytics,
     loading,
     error,
     lastUpdated,
@@ -93,14 +86,6 @@ const Portal = () => {
       href: '#federations'
     },
     {
-      id: 'eurostat',
-      title: 'Ευρωπαϊκά Στατιστικά',
-      description: 'Οικονομικά δεδομένα από το Eurostat',
-      icon: Globe,
-      color: 'bg-indigo-500',
-      href: '#eurostat'
-    },
-    {
       id: 'polls',
       title: 'Έρευνες Γνώμης',
       description: 'Συμμετέχετε σε έρευνες και δώστε τη γνώμη σας',
@@ -115,14 +100,6 @@ const Portal = () => {
       icon: MessageSquare,
       color: 'bg-rose-500',
       href: '#helpdesk'
-    },
-    {
-      id: 'settings',
-      title: 'Ρυθμίσεις',
-      description: 'Προσωπικές ρυθμίσεις και προτιμήσεις',
-      icon: Settings,
-      color: 'bg-gray-500',
-      href: '#settings'
     }
   ];
 
@@ -592,77 +569,8 @@ const Portal = () => {
         );
       case 'federations':
         return <FederationsAccordion />;
-      case 'eurostat':
-        return <EurostatStatistics />;
       case 'polls':
         return <PollSection />;
-      case 'settings':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Ρυθμίσεις Portal</h2>
-            
-            {analytics && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Αναλυτικά Στοιχεία</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Συνολικές Προβολές</span>
-                      <span className="font-semibold">{analytics.pageViews.total.toLocaleString()}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Προβολές (Μήνας)</span>
-                      <span className="font-semibold">{analytics.pageViews.thisMonth.toLocaleString()}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Αύξηση</span>
-                      <span className="font-semibold text-green-600">+{analytics.pageViews.growth}%</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Επικοινωνία Χρήστη</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Μέσος Χρόνος Σύνδεσης</span>
-                      <span className="font-semibold">{analytics.userEngagement.averageSessionTime}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Ποσοστό Αναπήδησης</span>
-                      <span className="font-semibold">{analytics.userEngagement.bounceRate}%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Επιστροφές</span>
-                      <span className="font-semibold">{analytics.userEngagement.returnVisitors}%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Δημοφιλή Περιεχόμενο</h3>
-              {analytics && analytics.contentPerformance.topArticles.length > 0 ? (
-                <div className="space-y-3">
-                  {analytics.contentPerformance.topArticles.map((article, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div>
-                        <h4 className="font-medium text-gray-900">{article.title}</h4>
-                        <p className="text-sm text-gray-600">{article.category}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-blue-600">{article.views} προβολές</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-600">Δεν υπάρχουν διαθέσιμα στοιχεία</p>
-              )}
-            </div>
-          </div>
-        );
       default:
         return renderOverview();
     }
@@ -814,16 +722,6 @@ const Portal = () => {
                 Ομοσπονδίες
               </button>
               <button
-                onClick={() => setActiveTab('eurostat')}
-                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'eurostat'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Ευρωπαϊκά Στατιστικά
-              </button>
-              <button
                 onClick={() => setActiveTab('polls')}
                 className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'polls'
@@ -832,16 +730,6 @@ const Portal = () => {
                 }`}
               >
                 Έρευνες Γνώμης
-              </button>
-              <button
-                onClick={() => setActiveTab('settings')}
-                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'settings'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Ρυθμίσεις
               </button>
             </nav>
           </div>
