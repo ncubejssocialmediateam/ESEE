@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useTheme } from '../context/ThemeContext';
 import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
@@ -23,7 +24,7 @@ import {
 } from 'lucide-react';
 import formsService from '../services/formsService';
 
-const MemberSupport = () => {
+const MemberSupport = ({ embedded = false }) => {
   const { isDark } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -267,9 +268,11 @@ const MemberSupport = () => {
     }
   };
 
+  const Wrapper = embedded ? 'div' : 'main';
+
   return (
-    <main className="bg-black text-white min-h-screen">
-      <Navigation isDark={true} />
+    <Wrapper className={`bg-black text-white ${embedded ? '' : 'min-h-screen'}`}>
+      {!embedded && <Navigation isDark={true} />}
       
       {/* Hero Section */}
       <section className="relative py-20 px-6">
@@ -583,9 +586,13 @@ const MemberSupport = () => {
         </div>
       </section>
       
-      <Footer isDark={true} />
-    </main>
+      {!embedded && <Footer isDark={true} />}
+    </Wrapper>
   );
+};
+
+MemberSupport.propTypes = {
+  embedded: PropTypes.bool
 };
 
 export default MemberSupport;

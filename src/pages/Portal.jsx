@@ -30,6 +30,7 @@ import PollSection from '../components/portal/PollSection';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
 import ESEENewspaper from '../components/home/Newspaper';
+import MemberSupport from './MemberSupport';
 
 const Portal = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -106,6 +107,14 @@ const Portal = () => {
       icon: TrendingUp,
       color: 'bg-pink-500',
       href: '#polls'
+    },
+    {
+      id: 'helpdesk',
+      title: 'Helpdesk ΕΣΕΕ',
+      description: 'Ερωτοαπαντήσεις και υποστήριξη μελών',
+      icon: MessageSquare,
+      color: 'bg-rose-500',
+      href: '#helpdesk'
     },
     {
       id: 'settings',
@@ -303,6 +312,8 @@ const Portal = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'helpdesk':
+        return <MemberSupport embedded={true} />;
       case 'newspaper':
         return <ESEENewspaper />;
       case 'tax-calendar':
@@ -731,6 +742,16 @@ const Portal = () => {
                 }`}
               >
                 Επισκόπηση
+              </button>
+              <button
+                onClick={() => setActiveTab('helpdesk')}
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'helpdesk'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Helpdesk
               </button>
               <button
                 onClick={() => setActiveTab('newspaper')}
