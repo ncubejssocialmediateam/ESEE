@@ -3,10 +3,19 @@ import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer';
 import { BookOpen, Users, TrendingUp, Award, Target, Lightbulb, BarChart3, Building2, Euro, UserCheck, Percent, Calendar } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const InemyKaele = () => {
   const { isDark } = useTheme();
   const [activeStatCategory, setActiveStatCategory] = useState('businesses');
+  const navigate = useNavigate();
+
+  const handleViewProgramsClick = () => {
+    const el = document.getElementById('programs-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // INEMY Statistics Data
   const statisticsData = {
@@ -653,7 +662,7 @@ const InemyKaele = () => {
           </div>
 
           {/* Programs Section */}
-          <div className={`${
+          <div id="programs-section" className={`${
             isDark 
               ? 'bg-gray-800 border-gray-700' 
               : 'bg-white border-gray-200'
@@ -730,14 +739,14 @@ const InemyKaele = () => {
               Για περισσότερες πληροφορίες σχετικά με τα προγράμματά μας
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className={`px-8 py-4 rounded-lg font-medium text-lg transition-colors ${
+              <button onClick={() => navigate('/contact')} className={`px-8 py-4 rounded-lg font-medium text-lg transition-colors ${
                 isDark 
                   ? 'bg-blue-400 hover:bg-blue-500 text-blue-950' 
                   : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}>
                 Επικοινωνήστε μαζί μας
               </button>
-              <button className={`px-8 py-4 rounded-lg font-medium text-lg border-2 transition-colors ${
+              <button onClick={handleViewProgramsClick} className={`px-8 py-4 rounded-lg font-medium text-lg border-2 transition-colors ${
                 isDark 
                   ? 'border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-blue-950' 
                   : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
