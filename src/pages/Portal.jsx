@@ -29,6 +29,7 @@ import EurostatStatistics from '../components/portal/EurostatStatistics';
 import PollSection from '../components/portal/PollSection';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
+import ESEENewspaper from '../components/home/Newspaper';
 
 const Portal = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -302,6 +303,8 @@ const Portal = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'newspaper':
+        return <ESEENewspaper />;
       case 'tax-calendar':
         return <TaxCalendar />;
       case 'documents':
@@ -728,6 +731,16 @@ const Portal = () => {
                 }`}
               >
                 Επισκόπηση
+              </button>
+              <button
+                onClick={() => setActiveTab('newspaper')}
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'newspaper'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Εφημερίδα ΕΣΕΕ
               </button>
               <button
                 onClick={() => setActiveTab('tax-calendar')}

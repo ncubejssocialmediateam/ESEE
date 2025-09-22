@@ -5,8 +5,6 @@ import News from '../components/home/News';
 import Opinions from '../components/home/Opinions';
 import Competitions from '../components/home/Competitions';
 import Events from '../components/home/Events';
-import Newspaper from '../components/home/Newspaper';
-import Features from '../components/home/Features';
 import Footer from '../components/layout/Footer';
 import { useTheme } from '../context/ThemeContext';
 import { useEffect } from "react";
@@ -18,13 +16,12 @@ const Home = ({ isLoaded, setIsLoaded }) => {
 
   useEffect(() => {
     setIsLoaded(false);
-  }, []);
+  }, [setIsLoaded]);
 
   return (
     <main className="bg-gray-900 text-white transition-colors duration-300">
       <Navigation isDark={isDark} />
       <Hero isLoaded={isLoaded} setIsLoaded={setIsLoaded} isDark={isDark} />
-      <Newspaper isDark={isDark} />
       <News isDark={isDark} />
       <StatisticsSection isDark={isDark} />
       <ResearchHub isDark={isDark} />
