@@ -65,7 +65,7 @@ export const submitContact = async ({ name, email, subject, message }) => {
             await delay(300)
             return { id: 'mock-contact', name, email, subject, message }
           }
-          throw new Error('Failed to submit: check Supabase URL, key, table and CORS settings.')
+          throw new Error('Η αποστολή δεν ολοκληρώθηκε. Παρακαλούμε δοκιμάστε ξανά ή επικοινωνήστε στο info@esee.gr.')
         }
       }
       if (shouldMock) {

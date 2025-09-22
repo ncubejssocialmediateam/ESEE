@@ -233,7 +233,6 @@ const Contact = () => {
               <div className="text-center">
                 <button
                   type="submit"
-                  onClick={handleSubmit}
                   disabled={isSubmitting}
                   className={`px-8 py-3 rounded-lg font-medium transition-colors ${
                     isDark 
@@ -252,7 +251,7 @@ const Contact = () => {
               )}
               {status && status !== 'success' && (
                 <div className={`${isDark ? 'text-red-400' : 'text-red-600'} text-center`}>
-                  Αποτυχία αποστολής: {status}
+                  Η αποστολή δεν ολοκληρώθηκε. Παρακαλούμε δοκιμάστε ξανά.
                 </div>
               )}
             </form>
