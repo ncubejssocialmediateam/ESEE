@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FileText, Download, Filter, ChevronRight, TrendingUp, Users, Building2, Euro } from 'lucide-react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+ 
 import inemyDataService from '../../services/inemyDataService';
 
 const ResearchHub = ({ isDark }) => {
@@ -23,8 +23,8 @@ const ResearchHub = ({ isDark }) => {
       setIsLoading(true);
       setError(null);
       
-      // Fetch CSV data
-      const response = await fetch('/src/assets/ΙΝΕΜΥ_Εμπόριο_Δεδομένα_2 (1).csv');
+      // Fetch CSV data from GitHub (raw content)
+      const response = await fetch('https://raw.githubusercontent.com/ncubejssocialmediateam/ESEE/main/src/assets/%CE%99%CE%9D%CE%95%CE%9C%CE%A5_%CE%95%CE%BC%CF%80%CF%8C%CF%81%CE%B9%CE%BF_%CE%94%CE%B5%CE%B4%CE%BF%CE%BC%CE%AD%CE%BD%CE%B1_2%20(1).csv');
       const csvContent = await response.text();
       
       // Parse the data
@@ -352,12 +352,17 @@ const ResearchHub = ({ isDark }) => {
               </div>
 
               <div className="mt-6 text-center">
-                <Link to="/inemy-kaele">
+                <a 
+                  href="https://github.com/ncubejssocialmediateam/ESEE/blob/main/src/assets/%CE%99%CE%9D%CE%95%CE%9C%CE%A5_%CE%95%CE%BC%CF%80%CF%8C%CF%81%CE%B9%CE%BF_%CE%94%CE%B5%CE%B4%CE%BF%CE%BC%CE%AD%CE%BD%CE%B1_2%20(1).csv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex"
+                >
                   <button className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center">
                     Δείτε όλες τις εκθέσεις
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
