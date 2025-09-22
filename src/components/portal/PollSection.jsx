@@ -53,8 +53,11 @@ const PollSection = () => {
   };
 
   const getDaysRemaining = (endDate) => {
+    const end = endDate instanceof Date ? endDate : new Date(endDate);
+    const endMs = end.getTime();
+    if (Number.isNaN(endMs)) return 0;
     const now = new Date();
-    const diffTime = endDate - now;
+    const diffTime = endMs - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays > 0 ? diffDays : 0;
   };
@@ -66,8 +69,6 @@ const PollSection = () => {
     return { status: 'active', text: `${daysRemaining} ημέρες`, color: 'text-green-500' };
   };
 
-  const pollStatus = getPollStatus(currentPoll.endDate);
-
   if (polls.length === 0) {
     return (
       <div className="space-y-6">
@@ -78,6 +79,8 @@ const PollSection = () => {
       </div>
     );
   }
+
+  const pollStatus = getPollStatus(currentPoll.endDate);
 
   return (
     <div className="space-y-6">
@@ -226,7 +229,7 @@ const PollSection = () => {
               </div>
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                <span>Λήγει στις {currentPoll.endDate.toLocaleDateString('el-GR')}</span>
+            <span>Λήγει στις {new Date(currentPoll.endDate).toLocaleDateString('el-GR')}</span>
               </div>
             </div>
             
