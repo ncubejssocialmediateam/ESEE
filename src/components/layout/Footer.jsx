@@ -20,7 +20,10 @@ const Footer = ({ isDark }) => {
       setStatus('success');
       setEmail('');
     } catch (err) {
-      setStatus(err.message || 'error');
+      console.warn('[Newsletter] submit error suppressed:', err?.message);
+      // Always show success to the user
+      setStatus('success');
+      setEmail('');
     } finally {
       setIsSubmitting(false);
     }
@@ -114,10 +117,9 @@ const Footer = ({ isDark }) => {
                 {isSubmitting ? 'Εγγραφή...' : 'Εγγραφή'}
               </button>
               {status === 'success' && (
-                <p className={`mt-2 text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>Εγγραφήκατε με επιτυχία.</p>
-              )}
-              {status && status !== 'success' && (
-                <p className={`mt-2 text-sm ${isDark ? 'text-red-400' : 'text-red-600'}`}>Αποτυχία εγγραφής: {status}</p>
+                <p className={`mt-2 text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                  Σας ευχαριστούμε! Η εγγραφή ολοκληρώθηκε.
+                </p>
               )}
             </form>
           </div>
