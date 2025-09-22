@@ -732,7 +732,7 @@ const AIChat = ({ aiStatus }) => {
       <>
         {/* Floating Chat Button */}
         {!isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
+        <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] sm:bottom-6 sm:right-6 z-50">
           <button
             onClick={() => setIsOpen(true)}
             className={`group relative p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-3xl ${
@@ -784,8 +784,8 @@ const AIChat = ({ aiStatus }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-1rem)] sm:w-80 md:w-96 max-w-[calc(100vw-1rem)] ${
-          isMinimized ? 'h-14' : 'h-[calc(100vh-2rem)] sm:h-[500px] md:h-[600px] max-h-[600px]'
+        <div className={`fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-1rem)] sm:w-80 md:w-96 max-w-[calc(100vw-1rem)] ${
+          isMinimized ? 'h-14' : 'h-[calc(100svh-2rem)] sm:h-[500px] md:h-[600px] max-h-[calc(100svh-2rem)]'
         } transition-all duration-500 flex flex-col ${
           isDark 
             ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border border-slate-700/50' 
@@ -946,7 +946,7 @@ const AIChat = ({ aiStatus }) => {
               )}
 
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 transition-all duration-300">
+              <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 transition-all duration-300 overscroll-contain">
                 {messages.length <= 1 && (
                   <div className={`pb-3 border-b ${isDark ? 'border-slate-700/50' : 'border-gray-200/50'}`}>
                     <p className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
@@ -1190,7 +1190,7 @@ const AIChat = ({ aiStatus }) => {
               </div>
 
               {/* Enhanced Input Area */}
-              <div className={`p-4 border-t flex-shrink-0 ${
+              <div className={`p-4 border-t flex-shrink-0 pb-[max(1rem,env(safe-area-inset-bottom))] ${
                 isDark ? 'border-slate-700/50 bg-slate-800/30' : 'border-gray-200/50 bg-gray-50/30'
               }`}>
                 <div className="flex items-end space-x-3">
@@ -1206,7 +1206,7 @@ const AIChat = ({ aiStatus }) => {
                         isDark
                           ? 'bg-gradient-to-r from-slate-800/90 to-slate-700/90 border-slate-600/50 text-white placeholder-slate-400 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20'
                           : 'bg-gradient-to-r from-white/90 to-gray-50/90 border-gray-300/50 text-gray-900 placeholder-gray-500 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20'
-                      } backdrop-blur-sm focus:outline-none text-sm min-h-[44px] max-h-32`}
+                      } backdrop-blur-sm focus:outline-none text-sm min-h-[44px] max-h-32 sm:max-h-40`}
                       style={{ 
                         height: 'auto',
                         minHeight: '44px'
