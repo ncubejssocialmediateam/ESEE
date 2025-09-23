@@ -99,8 +99,27 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
               <div className="prose max-w-none">
                 {post.content?.root?.children?.map((block, index) => {
-                  if (block.type === 'paragraph' && block.children?.[0]?.text) {
-                    return <p key={index}>{block.children[0].text}</p>;
+                  // Helper function to extract all text from a block's children
+                  const extractText = (children) => {
+                    if (!children) return '';
+                    return children.map(child => {
+                      if (child.text) {
+                        // Handle text formatting
+                        let text = child.text;
+                        if (child.format === 1) text = <strong key={Math.random()}>{text}</strong>;
+                        if (child.format === 2) text = <em key={Math.random()}>{text}</em>;
+                        return text;
+                      }
+                      if (child.children) return extractText(child.children);
+                      return '';
+                    }).filter(Boolean);
+                  };
+
+                  if (block.type === 'paragraph' && block.children) {
+                    const textContent = extractText(block.children);
+                    if (textContent.length > 0) {
+                      return <p key={index} className="mb-4 leading-relaxed">{textContent}</p>;
+                    }
                   }
 
                   if (block.type === 'horizontalrule') {
