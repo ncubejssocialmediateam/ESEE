@@ -9,6 +9,7 @@ import ShareButton from '../components/common/ShareButton';
 import SharePopup from '../components/common/SharePopup';
 import ArticleCard from '../components/article/articleCard';
 import Navigation from '../components/layout/Navigation';
+import ESEELogo from '../assets/ESEE-LOGO_white.png';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();
@@ -81,12 +82,18 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
 
               <div className="post-image h-[400px] rounded-2xl overflow-hidden">
                 <img
-                    src={post?.heroImage?.filename
-                        ? `https://back.socialmediateam.gr/api/media/file/${post?.heroImage?.filename}`
-                        : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    src={post?.heroImage?.url
+                        ? `https://back.socialmediateam.gr${post.heroImage.url}`
+                        : (post?.heroImage?.filename
+                            ? `https://back.socialmediateam.gr/api/media/file/${encodeURIComponent(post.heroImage.filename)}`
+                            : 'https://via.placeholder.com/400x300?text=No+Image')}
                     alt={post?.heroImage?.alt || 'Default Image'}
                     className="w-full h-full object-cover"
                     onLoad={() => setImgLoaded(true)}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = ESEELogo;
+                    }}
                 />
               </div>
 
@@ -132,6 +139,56 @@ const SinglePost = ({ isLoaded, setIsLoaded }) => {
                       );
                     }
                     // Handle other media types if needed
+                  }
+
+                  // Payload rich-text upload node
+                  if (block.type === 'upload' && (block.value || block.fields)) {
+                    const media = block.value || block.fields?.media;
+                    if (!media) return null;
+
+                    const isPdf = media?.mimeType?.includes('pdf');
+                    const src = media?.url
+                      ? `https://back.socialmediateam.gr${media.url}`
+                      : (media?.filename
+                          ? `https://back.socialmediateam.gr/api/media/file/${encodeURIComponent(media.filename)}`
+                          : null);
+
+                    if (!src) return null;
+
+                    if (isPdf) {
+                      return (
+                        <div key={index} className="my-6">
+                          <a
+                            href={src}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                          >
+                            Download {media.filename || 'attachment'}
+                          </a>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div key={index} className="my-6">
+                        <img
+                          src={src}
+                          alt={media?.alt || ''}
+                          className="w-full h-auto rounded-xl"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = ESEELogo;
+                          }}
+                        />
+                        {media?.caption?.root?.children?.[1]?.children?.[0]?.text && (
+                          <p className="mt-2 text-center text-sm text-gray-400">
+                            {media.caption.root.children[1].children[0].text}
+                          </p>
+                        )}
+                      </div>
+                    );
                   }
 
                   return null;
