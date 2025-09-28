@@ -116,7 +116,7 @@ const Projects = () => {
 
             {/* Competitiveness */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/competitiveness-entrepreneurship.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-purple-100 rounded flex items-center justify-center">
                     <span className="text-purple-600 font-bold text-sm">Ανταγωνιστικότητα & Επιχειρηματικότητα</span>
@@ -128,7 +128,7 @@ const Projects = () => {
 
             {/* Human Resources */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/human-resources-development-2014-2020.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-orange-100 rounded flex items-center justify-center">
                     <span className="text-orange-600 font-bold text-sm">Ανάπτυξη Ανθρώπινου Δυναμικού</span>
@@ -140,7 +140,7 @@ const Projects = () => {
 
             {/* Administrative Reform */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/administrative-reform.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-red-100 rounded flex items-center justify-center">
                     <span className="text-red-600 font-bold text-sm">Διοικητική Μεταρρύθμιση</span>
@@ -152,7 +152,7 @@ const Projects = () => {
 
             {/* Education & Training */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/education-lifelong-learning.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-indigo-100 rounded flex items-center justify-center">
                     <span className="text-indigo-600 font-bold text-sm">Εκπαίδευση & Δια Βίου Μάθηση</span>
@@ -164,7 +164,7 @@ const Projects = () => {
 
             {/* European Fund */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/european-fund.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-yellow-100 rounded flex items-center justify-center">
                     <span className="text-yellow-600 font-bold text-sm">Ευρωπαϊκό Ταμείο</span>
@@ -176,7 +176,7 @@ const Projects = () => {
 
             {/* Ionian Islands */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/ionian-islands.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-teal-100 rounded flex items-center justify-center">
                     <span className="text-teal-600 font-bold text-sm">Ιόνια Νησιά</span>
@@ -188,7 +188,7 @@ const Projects = () => {
 
             {/* Erasmus */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/erasmus-plus.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-pink-100 rounded flex items-center justify-center">
                     <span className="text-pink-600 font-bold text-sm">Erasmus+</span>
@@ -200,7 +200,7 @@ const Projects = () => {
 
             {/* Additional Partner */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="#" className="block">
+              <a href="/assets/projects/partner-organizations.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-gray-100 rounded flex items-center justify-center">
                     <span className="text-gray-600 font-bold text-sm">Συνεργαζόμενοι Φορείς</span>
@@ -209,6 +209,90 @@ const Projects = () => {
                 <p className="text-xs text-gray-600">Συνεργαζόμενοι</p>
               </a>
             </div>
+          </div>
+        </div>
+
+        {/* Competitions and Invitations Section */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+            Διαγωνισμοί & Προσκλήσεις
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Competition Card 1 */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 hover:shadow-lg transition-shadow border border-blue-200">
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                  Διαγωνισμός
+                </span>
+                <span className="text-sm text-gray-600">Ενεργό</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Ψηφιακός Μετασχηματισμός 2021-2027
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Το πρόγραμμα στοχεύει στην ενίσχυση της ψηφιακής ωρίμανσης των επιχειρήσεων και στην προώθηση της καινοτομίας μέσω της τεχνολογίας.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Λήξη: 31/03/2025</span>
+                <a href="/assets/competitions/digital-transformation-2021-2027.pdf" download className="text-blue-600 hover:text-blue-800 font-medium">
+                  Λήψη →
+                </a>
+              </div>
+            </div>
+
+            {/* Competition Card 2 */}
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 hover:shadow-lg transition-shadow border border-green-200">
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 bg-green-600 text-white text-xs font-medium rounded-full">
+                  Πρόσκληση
+                </span>
+                <span className="text-sm text-gray-600">Ενεργό</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Ε.Π. Ανάπτυξη Ανθρώπινου Δυναμικού – Εκπαίδευση & Δια Βίου Μάθηση 2014-20
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Πρόγραμμα για την ανάπτυξη του ανθρώπινου δυναμικού και την προώθηση της δια βίου μάθησης.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Λήξη: 15/12/2024</span>
+                <a href="/assets/competitions/human-resources-development.pdf" download className="text-green-600 hover:text-green-800 font-medium">
+                  Λήψη →
+                </a>
+              </div>
+            </div>
+
+            {/* Competition Card 3 */}
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 hover:shadow-lg transition-shadow border border-purple-200">
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full">
+                  Διαγωνισμός
+                </span>
+                <span className="text-sm text-gray-600">Ενεργό</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Πράσινη Επιχειρηματικότητα & Αειφόρος Ανάπτυξη
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Προγράμματα για την ενίσχυση της πράσινης επιχειρηματικότητας και την προώθηση της αειφόρου ανάπτυξης.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Λήξη: 20/01/2025</span>
+                <a href="/assets/competitions/green-entrepreneurship.pdf" download className="text-purple-600 hover:text-purple-800 font-medium">
+                  Λήψη →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <a href="/competitions" className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              Όλοι οι Διαγωνισμοί & Προσκλήσεις
+              <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
         </div>
 

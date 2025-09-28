@@ -26,14 +26,21 @@ const ArticleCard = ({ article, isDark }) => {
         content?.root?.children?.[1]?.children?.[0]?.text ||
         "No excerpt available";
 
-    // Format the date using publishedAt
-    const formattedDate = publishedAt
-        ? new Date(publishedAt).toLocaleDateString('el-GR', {
+    // Format the date using publishedAt or createdAt as fallback
+    const formatDate = (dateString) => {
+        if (!dateString) return 'Ημερομηνία μη διαθέσιμη';
+        
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Ημερομηνία μη διαθέσιμη';
+        
+        return date.toLocaleDateString('el-GR', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-        })
-        : 'Ημερομηνία μη διαθέσιμη';
+        });
+    };
+    
+    const formattedDate = formatDate(publishedAt || article.createdAt);
 
     // Use the first category in the array (if available)
     const primaryCategory =

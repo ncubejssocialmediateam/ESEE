@@ -160,7 +160,7 @@ const Portal = () => {
         icon: FileText,
         color: 'text-green-600',
         bgColor: 'bg-green-100',
-        subtitle: '340 Συλλόγοι'
+        subtitle: '354 Συλλόγοι'
       },
       {
         title: 'Ειδοποιήσεις',
@@ -632,7 +632,7 @@ const Portal = () => {
             </div>
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span>340 Εμπορικοί Σύλλογοι</span>
+              <span>354 Εμπορικοί Σύλλογοι</span>
             </div>
           </div>
         </div>

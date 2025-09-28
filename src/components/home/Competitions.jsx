@@ -7,9 +7,11 @@ const Competitions = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
 
   // Filter articles for both 'Διαγωνισμός' (ID: 2) and 'Πρόσκλησεις' (ID: 3) categories
+  // Sort by publication date (newest first) to show latest posts
   const items = stateArticles.filter(article =>
     article.categories.some(category => category.id === 2 || category.id === 3)
-  ).slice(0, 3); // Show only the 3 most recent items
+  ).sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt))
+  .slice(0, 3); // Show only the 3 most recent items
 
   if (!items.length) return null;
 
@@ -81,7 +83,7 @@ const Competitions = ({ isDark }) => {
 
                   <div className="flex items-center justify-between">
                     <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                      <span className="font-medium">Ημερομηνία:</span> {new Date(item.date).toLocaleDateString('el-GR')}
+                      <span className="font-medium">Ημερομηνία:</span> {new Date(item.publishedAt || item.createdAt).toLocaleDateString('el-GR')}
                     </div>
                     <Link
                       to={`/post/${item.slug}`}

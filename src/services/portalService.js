@@ -84,8 +84,8 @@ export class PortalService {
       return {
         totalMembers: 225000, // 225.000 επιχειρήσεις από ολόκληρη τη χώρα
         federations: 17, // 17 Ομοσπονδίες
-        tradeAssociations: 340, // 340 Εμπορικούς Συλλόγους
-        tradeRepresentatives: 5, // 5 Συνδέσμους Εμπορικών Αντιπροσώπων
+        tradeAssociations: 354, // 354 Εμπορικούς Συλλόγους
+        tradeRepresentatives: 11, // 11 Συνδέσμους Εμπορικών Αντιπροσώπων
         newMembersThisMonth: 45,
         activeMembers: 198000, // ~88% of total members
         pendingApplications: 8,

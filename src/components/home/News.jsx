@@ -11,9 +11,31 @@ const News = ({ isDark }) => {
 
     const stateArticles = useSelector(state => state.articles);
 
-    // Filter articles that have a category with id: 8
+    // Filter articles that have a category with id: 8 and sort by publication date (newest first)
     const filteredArticles = stateArticles
         .filter(article => article.categories.some(category => category.id === 8))
+        .sort((a, b) => {
+            // Use createdAt as fallback if publishedAt is not available or invalid
+            const dateA = a.publishedAt || a.createdAt;
+            const dateB = b.publishedAt || b.createdAt;
+            
+            // Parse dates and handle invalid dates
+            const parsedDateA = new Date(dateA);
+            const parsedDateB = new Date(dateB);
+            
+            // If dates are invalid, use createdAt as fallback
+            if (isNaN(parsedDateA.getTime())) {
+                const fallbackA = new Date(a.createdAt);
+                return isNaN(fallbackA.getTime()) ? 0 : fallbackA.getTime();
+            }
+            if (isNaN(parsedDateB.getTime())) {
+                const fallbackB = new Date(b.createdAt);
+                return isNaN(fallbackB.getTime()) ? 0 : fallbackB.getTime();
+            }
+            
+            // Sort by newest first
+            return parsedDateB.getTime() - parsedDateA.getTime();
+        })
         .slice(0, 6);
 
     useEffect(() => {

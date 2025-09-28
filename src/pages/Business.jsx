@@ -20,7 +20,7 @@ const Business = () => {
           title: "Νόμος 4919/2022",
           subtitle: "ΦΕΚ Α' 71/07-04-2022",
           description: "Σύσταση εταιρειών μέσω των Υπηρεσιών Μιας Στάσης (Υ.Μ.Σ.) και τήρηση του Γενικού Εμπορικού Μητρώου (Γ.Ε.ΜΗ.)",
-          link: "https://esee.gr/wp-content/uploads/2022/07/4919.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/4919.pdf",
           type: "legal"
         },
         {
@@ -28,7 +28,7 @@ const Business = () => {
           title: "Υ.Α. 80016/2022",
           subtitle: "ΦΕΚ Β' 4629/1-9-2022",
           description: "Κώδικας Δεοντολογίας περί ανακοινώσεων μείωσης της τιμής (ιδίως σε προσφορές/εκπτώσεις)",
-          link: "https://esee.gr/wp-content/uploads/2023/05/FEK-2022-Tefxos-B-04629.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/80016-2022.pdf",
           type: "legal"
         },
         {
@@ -98,7 +98,7 @@ const Business = () => {
           title: "Προστασία Δεδομένων",
           subtitle: "GDPR",
           description: "Ποια δεδομένα θεωρούνται «προσωπικά δεδομένα» και ποιες είναι οι ευθύνες",
-          link: "https://esee.gr/wp-content/uploads/2022/09/Προστασία-Δεδομένων.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Προστασία-Δεδομένων.pdf",
           type: "privacy"
         },
         {
@@ -106,7 +106,7 @@ const Business = () => {
           title: "ΦΕΚ 969/22-3-2017",
           subtitle: "e-commerce",
           description: "Κώδικας Καταναλωτικής Δεοντολογίας για το Ηλεκτρονικό Εμπόριο",
-          link: "https://esee.gr/wp-content/uploads/2022/09/Νομοθεσία-Κώδικας-καταναλωτικής-Δοεντολογίας-για-το-Ηλεκτρονικό-εμποριο.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/ΦΕΚ-969-2017.pdf",
           type: "ecommerce"
         },
         {
@@ -114,7 +114,7 @@ const Business = () => {
           title: "Νομοθεσία",
           subtitle: "Καταναλωτές",
           description: "Αρμοδιότητας Γενικής Διεύθυνσης Προστασίας Καταναλωτή",
-          link: "https://esee.gr/wp-content/uploads/2022/09/Νομοθεσία_21_1_2021.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Νομοθεσία-Καταναλωτών.pdf",
           type: "legal"
         }
       ]
@@ -129,7 +129,7 @@ const Business = () => {
           title: "Σεξουαλική Παρενόχληση",
           subtitle: "Ποια είναι τα όρια στη σεξουαλική παρενόχληση στον χώρο εργασίας",
           description: "Νομικό και θεσμικό πλαίσιο. Διατάξεις για την προστασία του θύματος",
-          link: "https://esee.gr/wp-content/uploads/2022/09/Σεξουαλική-Παρενόχληση.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Σεξουαλική-Παρενόχληση.pdf",
           type: "workplace"
         },
         {

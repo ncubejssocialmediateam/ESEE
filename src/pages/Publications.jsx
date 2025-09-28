@@ -71,6 +71,76 @@ const Publications = () => {
       size: '1.9 MB',
       format: 'PDF',
       downloadUrl: '/assets/publications/entrepreneurship-guide-2024.pdf'
+    },
+    {
+      id: 6,
+      title: 'Ετήσια Έκθεση ΕΣΕΕ 2023',
+      description: 'Η Ετήσια Έκθεση ΕΣΕΕ 2023 παρουσιάζει τα αποτελέσματα και τις επιτεύξεις της οργάνωσης',
+      category: 'ΕΚΘΕΣΕΙΣ',
+      date: '2023-12-15',
+      size: '2.8 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/annual-report-2023.pdf'
+    },
+    {
+      id: 7,
+      title: 'Ετήσια Έκθεση ΕΣΕΕ 2022',
+      description: 'Η Ετήσια Έκθεση ΕΣΕΕ 2022 εξερευνά τις προκλήσεις και τις ευκαιρίες του ελληνικού εμπορίου',
+      category: 'ΕΚΘΕΣΕΙΣ',
+      date: '2022-12-15',
+      size: '2.3 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/annual-report-2022.pdf'
+    },
+    {
+      id: 8,
+      title: 'Euro Brief - Οκτώβριος 2024',
+      description: 'Μηνιαίο ενημερωτικό δελτίο για τις ευρωπαϊκές εξελίξεις που επηρεάζουν το ελληνικό εμπόριο',
+      category: 'EURO BRIEFS',
+      date: '2024-10-01',
+      size: '1.2 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/euro-brief-october-2024.pdf'
+    },
+    {
+      id: 9,
+      title: 'Euro Brief - Σεπτέμβριος 2024',
+      description: 'Μηνιαίο ενημερωτικό δελτίο για τις ευρωπαϊκές εξελίξεις που επηρεάζουν το ελληνικό εμπόριο',
+      category: 'EURO BRIEFS',
+      date: '2024-09-01',
+      size: '1.1 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/euro-brief-september-2024.pdf'
+    },
+    {
+      id: 10,
+      title: 'Euro Brief - Αύγουστος 2024',
+      description: 'Μηνιαίο ενημερωτικό δελτίο για τις ευρωπαϊκές εξελίξεις που επηρεάζουν το ελληνικό εμπόριο',
+      category: 'EURO BRIEFS',
+      date: '2024-08-01',
+      size: '1.3 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/euro-brief-august-2024.pdf'
+    },
+    {
+      id: 11,
+      title: 'Ετήσια Έκθεση ΕΣΕΕ 2021',
+      description: 'Η Ετήσια Έκθεση ΕΣΕΕ 2021 παρουσιάζει την ανάκαμψη του ελληνικού εμπορίου μετά την πανδημία',
+      category: 'ΕΚΘΕΣΕΙΣ',
+      date: '2021-12-15',
+      size: '2.1 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/annual-report-2021.pdf'
+    },
+    {
+      id: 12,
+      title: 'Euro Brief - Ιούλιος 2024',
+      description: 'Μηνιαίο ενημερωτικό δελτίο για τις ευρωπαϊκές εξελίξεις που επηρεάζουν το ελληνικό εμπόριο',
+      category: 'EURO BRIEFS',
+      date: '2024-07-01',
+      size: '1.0 MB',
+      format: 'PDF',
+      downloadUrl: '/assets/publications/euro-brief-july-2024.pdf'
     }
   ];
 

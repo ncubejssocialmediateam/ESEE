@@ -90,10 +90,6 @@ const VisionMission = () => {
             </div>
             
             <div className="max-w-4xl mx-auto">
-              <p className={`text-xl leading-relaxed text-center mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                Η ΕΣΕΕ έχει ως αποστολή να:
-              </p>
-              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className={`p-6 rounded-lg ${
                   isDark ? 'bg-gray-700' : 'bg-gray-50'

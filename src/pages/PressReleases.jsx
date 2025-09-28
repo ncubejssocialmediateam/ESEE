@@ -28,13 +28,34 @@ const PressReleases = () => {
     
     console.log('Press releases found:', pressReleases.length);
 
+    // Helper function for robust date sorting
+    const sortByDate = (a, b) => {
+      const dateA = a.publishedAt || a.createdAt;
+      const dateB = b.publishedAt || b.createdAt;
+      
+      const parsedDateA = new Date(dateA);
+      const parsedDateB = new Date(dateB);
+      
+      // Handle invalid dates
+      if (isNaN(parsedDateA.getTime()) && isNaN(parsedDateB.getTime())) return 0;
+      if (isNaN(parsedDateA.getTime())) return 1;
+      if (isNaN(parsedDateB.getTime())) return -1;
+      
+      return parsedDateB.getTime() - parsedDateA.getTime();
+    };
+
     if (selectedYear === 'all') {
-      setFilteredArticles(pressReleases);
+      // Sort by publication date (newest first)
+      const sortedReleases = pressReleases.sort(sortByDate);
+      setFilteredArticles(sortedReleases);
     } else {
       const filtered = pressReleases.filter(article => {
-        const articleYear = new Date(article.publishedAt || article.createdAt).getFullYear().toString();
+        const dateString = article.publishedAt || article.createdAt;
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return false;
+        const articleYear = date.getFullYear().toString();
         return articleYear === selectedYear;
-      });
+      }).sort(sortByDate);
       setFilteredArticles(filtered);
     }
   }, [articles, selectedYear]);
