@@ -128,7 +128,7 @@ const Projects = () => {
 
             {/* Human Resources */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="/assets/projects/human-resources-development-2014-2020.pdf" download className="block">
+              <a href="/assets/competitions/human-resources-2021-2027.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-orange-100 rounded flex items-center justify-center">
                     <span className="text-orange-600 font-bold text-sm">Ανάπτυξη Ανθρώπινου Δυναμικού</span>
@@ -152,7 +152,7 @@ const Projects = () => {
 
             {/* Education & Training */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="/assets/projects/education-lifelong-learning.pdf" download className="block">
+              <a href="/assets/competitions/education-lifelong-learning-2014-20.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-indigo-100 rounded flex items-center justify-center">
                     <span className="text-indigo-600 font-bold text-sm">Εκπαίδευση & Δια Βίου Μάθηση</span>
@@ -164,7 +164,7 @@ const Projects = () => {
 
             {/* European Fund */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="/assets/projects/european-fund.pdf" download className="block">
+              <a href="/assets/competitions/european-adjustment-fund.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-yellow-100 rounded flex items-center justify-center">
                     <span className="text-yellow-600 font-bold text-sm">Ευρωπαϊκό Ταμείο</span>
@@ -176,7 +176,7 @@ const Projects = () => {
 
             {/* Ionian Islands */}
             <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <a href="/assets/projects/ionian-islands.pdf" download className="block">
+              <a href="/assets/competitions/ionian-islands.pdf" download className="block">
                 <div className="h-20 flex items-center justify-center mb-4">
                   <div className="w-full h-full bg-teal-100 rounded flex items-center justify-center">
                     <span className="text-teal-600 font-bold text-sm">Ιόνια Νησιά</span>
@@ -257,7 +257,7 @@ const Projects = () => {
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Λήξη: 15/12/2024</span>
-                <a href="/assets/competitions/human-resources-development.pdf" download className="text-green-600 hover:text-green-800 font-medium">
+                <a href="/assets/competitions/education-lifelong-learning-2014-20.pdf" download className="text-green-600 hover:text-green-800 font-medium">
                   Λήψη →
                 </a>
               </div>
