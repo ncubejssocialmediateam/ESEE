@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { BarChart3, Building2, Euro, UserCheck, Percent, Users, TrendingUp, Award } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart3, Building2, Euro, UserCheck, Percent, Users, TrendingUp } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Button from '../shared/Button';
@@ -153,11 +153,6 @@ const StatisticsSection = ({ isDark }) => {
     return num.toString();
   };
 
-  const formatChange = (change) => {
-    if (change === null) return '-';
-    const sign = change > 0 ? '+' : '';
-    return `${sign}${change}`;
-  };
 
   // Prepare chart data
   const prepareChartData = () => {

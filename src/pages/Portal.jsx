@@ -571,6 +571,46 @@ const Portal = () => {
         return <FederationsAccordion />;
       case 'polls':
         return <PollSection />;
+      case 'statistics':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Στατιστικά Dashboard</h2>
+              <button
+                onClick={refreshData}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Ανανέωση
+              </button>
+            </div>
+            
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Διαδραστικό Dashboard Εμπορίου
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Εξερευνήστε τα στατιστικά δεδομένα του εμπορίου με διαδραστικά γραφήματα και αναλύσεις από το ΙΝΕΜΥ
+              </p>
+              
+              <div className="relative w-full" style={{ height: '804px' }}>
+                <iframe 
+                  title="Report Section" 
+                  width="100%" 
+                  height="100%" 
+                  src="https://app.powerbi.com/view?r=eyJrIjoiM2JhMGJhNzctZGFhYi00YmJlLWJiODktY2ViNDQ1NDE3NjcyIiwidCI6IjEwMDgzMzM3LTIyZTYtNDI4NS04MDUwLWZiMTBjOTI5ODA4OCIsImMiOjh9&pageName=ReportSection5da2c8c039acde92ccde&language=el&locale=el-gr" 
+                  frameBorder="0" 
+                  allowFullScreen=""
+                  className="rounded-lg shadow-lg"
+                  style={{ 
+                    border: '1px solid #e5e7eb',
+                    backgroundColor: '#ffffff'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        );
       default:
         return renderOverview();
     }
@@ -730,6 +770,16 @@ const Portal = () => {
                 }`}
               >
                 Έρευνες Γνώμης
+              </button>
+              <button
+                onClick={() => setActiveTab('statistics')}
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'statistics'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Στατιστικά Dashboard
               </button>
             </nav>
           </div>
