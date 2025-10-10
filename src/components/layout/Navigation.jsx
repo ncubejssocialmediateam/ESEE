@@ -43,7 +43,7 @@ const DropdownNavItem = ({ isDark, title, items, onMouseEnter, onMouseLeave, isO
       onMouseLeave={onMouseLeave}
     >
       <button
-        className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+        className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
           isDark
             ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
             : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -143,6 +143,48 @@ const Navigation = ({ isDark }) => {
     };
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMenuOpen]);
+
+  // Focus management for mobile menu
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Focus the first link in the mobile menu
+      const firstLink = document.querySelector('.mobile-menu-content a');
+      if (firstLink) {
+        firstLink.focus();
+      }
+    }
+  }, [isMenuOpen]);
+
   return (
       <>
         <nav className={`fixed w-full ${
@@ -152,7 +194,7 @@ const Navigation = ({ isDark }) => {
         } backdrop-blur-sm shadow-lg z-40 transition-colors duration-300`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-6">
                 <Link to="/" className="flex items-center">
                   <img 
                     src={ESEE_LOGO_WHITE} 
@@ -161,7 +203,7 @@ const Navigation = ({ isDark }) => {
                   />
                 </Link>
 
-                <div className="hidden lg:flex space-x-2">
+                <div className="hidden lg:flex items-center space-x-1 flex-nowrap">
                   <DropdownNavItem 
                     isDark={isDark}
                     title="ΕΣΕΕ"
@@ -173,7 +215,7 @@ const Navigation = ({ isDark }) => {
                   />
                   <Link
                     to="/business"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -192,7 +234,7 @@ const Navigation = ({ isDark }) => {
                   />
                   <Link
                     to="/positions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -202,7 +244,7 @@ const Navigation = ({ isDark }) => {
                   </Link>
                   <Link
                     to="/projects"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -212,7 +254,7 @@ const Navigation = ({ isDark }) => {
                   </Link>
                   <Link
                     to="/competitions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -222,7 +264,7 @@ const Navigation = ({ isDark }) => {
                   </Link>
                   <Link
                     to="/contact"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
@@ -251,10 +293,27 @@ const Navigation = ({ isDark }) => {
 
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className={`lg:hidden ${isDark ? 'text-white' : 'text-gray-900'}`}
+                    className={`lg:hidden p-2 rounded-lg transition-all duration-200 ${
+                      isDark 
+                        ? 'text-white hover:bg-blue-900/20' 
+                        : 'text-gray-900 hover:bg-gray-100'
+                    }`}
                     aria-label="Μενού πλοήγησης"
                 >
-                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  <div className="relative w-6 h-6">
+                    <Menu 
+                      size={24} 
+                      className={`absolute inset-0 transition-all duration-300 ${
+                        isMenuOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'
+                      }`}
+                    />
+                    <X 
+                      size={24} 
+                      className={`absolute inset-0 transition-all duration-300 ${
+                        isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'
+                      }`}
+                    />
+                  </div>
                 </button>
               </div>
             </div>
@@ -263,156 +322,173 @@ const Navigation = ({ isDark }) => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-            <div className={`fixed inset-0 ${
+            <>
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+                onClick={() => setIsMenuOpen(false)}
+              />
+              
+              {/* Menu Panel */}
+              <div className={`fixed top-16 left-0 right-0 bottom-0 ${
                 isDark ? 'bg-blue-950' : 'bg-white'
-            } z-30 lg:hidden pt-16 transition-colors duration-300`}>
-              <div className="p-4">
-                {/* ΕΣΕΕ Dropdown */}
-                <div className="mb-4">
-                  <div className={`px-3 py-1.5 text-sm font-medium ${
-                    isDark ? 'text-gray-300' : 'text-gray-600'
-                  }`}>
-                    ΕΣΕΕ
-                  </div>
-                  <div className="ml-3 space-y-1">
-                    {eseeItems.map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.url}
-                        className={`block px-3 py-2 text-sm ${
-                          isDark
-                            ? 'text-gray-200 hover:text-blue-400'
-                            : 'text-gray-700 hover:text-blue-600'
-                        } transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="font-medium">{item.label}</div>
-                        <div className={`text-xs mt-1 ${
-                          isDark ? 'text-gray-400' : 'text-gray-500'
-                        }`}>
-                          {item.description}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ΕΠΙΧΕΙΡΗΣΕΙΣ */}
-                <div className="mb-2">
-                  <Link
-                    to="/business"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
-                  </Link>
-                </div>
-
-                {/* ΓΡΑΦΕΙΟ ΤΥΠΟΥ Dropdown */}
-                <div className="mb-4">
-                  <div className={`px-3 py-1.5 text-sm font-medium ${
-                    isDark ? 'text-gray-300' : 'text-gray-600'
-                  }`}>
-                    ΓΡΑΦΕΙΟ ΤΥΠΟΥ
-                  </div>
-                  <div className="ml-3 space-y-1">
-                    {pressOfficeItems.map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.url}
-                        className={`block px-3 py-1.5 text-sm font-medium ${
-                          isDark
-                            ? 'text-gray-200 hover:text-blue-400'
-                            : 'text-gray-700 hover:text-blue-600'
-                        } transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ */}
-                <div className="mb-2">
-                  <Link
-                    to="/positions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ
-                  </Link>
-                </div>
-
-                {/* ΕΡΓΑ */}
-                <div className="mb-2">
-                  <Link
-                    to="/projects"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    ΕΡΓΑ
-                  </Link>
-                </div>
-
-                {/* ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ */}
-                <div className="mb-2">
-                  <Link
-                    to="/competitions"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ
-                  </Link>
-                </div>
-
-                {/* ΕΠΙΚΟΙΝΩΝΙΑ */}
-                <div className="mb-2">
-                  <Link
-                    to="/contact"
-                    className={`flex items-center px-3 py-1.5 text-sm font-medium ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400'
-                        : 'text-gray-800 hover:text-blue-600'
-                    } transition-colors`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    ΕΠΙΚΟΙΝΩΝΙΑ
-                  </Link>
-                </div>
-
-                    <div className="space-y-4 mt-4">
-                      {/* <div className="relative z-50">
-                        <AccessibilityMenu isDark={isDark} />
-                      </div> */}
-                  <Link to="/portal">
-                    <button className={`w-full px-4 py-1.5 text-sm ${
-                        isDark
-                            ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
-                            : 'bg-blue-600 hover:bg-blue-700 text-white'
-                    } rounded-lg transition-colors`}>
-                      HELPDESK
+              } z-40 lg:hidden transform transition-transform duration-300 ease-in-out ${
+                isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+              }`}>
+                <div className="h-full overflow-y-auto">
+                  {/* Close Button */}
+                  <div className="flex justify-end p-4">
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`p-2 rounded-lg transition-all duration-200 ${
+                        isDark 
+                          ? 'text-white hover:bg-blue-900/20' 
+                          : 'text-gray-900 hover:bg-gray-100'
+                      }`}
+                      aria-label="Κλείσιμο μενού"
+                    >
+                      <X size={24} />
                     </button>
-                  </Link>
+                  </div>
+                  
+                  <div className="px-6 pb-6 space-y-6 mobile-menu-content">
+                    {/* ΕΣΕΕ Dropdown */}
+                    <div className="space-y-3">
+                      <div className={`text-lg font-semibold ${
+                        isDark ? 'text-white' : 'text-gray-900'
+                      }`}>
+                        ΕΣΕΕ
+                      </div>
+                      <div className="space-y-2">
+                        {eseeItems.map((item, index) => (
+                          <Link
+                            key={index}
+                            to={item.url}
+                            className={`block p-4 rounded-lg border transition-all duration-200 ${
+                              isDark
+                                ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                                : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            <div className="font-medium text-base">{item.label}</div>
+                            <div className={`text-sm mt-1 ${
+                              isDark ? 'text-gray-400' : 'text-gray-500'
+                            }`}>
+                              {item.description}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ */}
+                    <div className="space-y-3">
+                      <Link
+                        to="/business"
+                        className={`block p-4 rounded-lg border transition-all duration-200 ${
+                          isDark
+                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium text-base">ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ</div>
+                      </Link>
+                    </div>
+
+                    {/* ΓΡΑΦΕΙΟ ΤΥΠΟΥ */}
+                    <div className="space-y-3">
+                      <div className={`text-lg font-semibold ${
+                        isDark ? 'text-white' : 'text-gray-900'
+                      }`}>
+                        ΓΡΑΦΕΙΟ ΤΥΠΟΥ
+                      </div>
+                      <div className="space-y-2">
+                        {pressOfficeItems.map((item, index) => (
+                          <Link
+                            key={index}
+                            to={item.url}
+                            className={`block p-4 rounded-lg border transition-all duration-200 ${
+                              isDark
+                                ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                                : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            <div className="font-medium text-base">{item.label}</div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Additional Navigation Links */}
+                    <div className="space-y-2">
+                      <Link
+                        to="/positions"
+                        className={`block p-4 rounded-lg border transition-all duration-200 ${
+                          isDark
+                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium text-base">ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ</div>
+                      </Link>
+                      
+                      <Link
+                        to="/projects"
+                        className={`block p-4 rounded-lg border transition-all duration-200 ${
+                          isDark
+                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium text-base">ΕΡΓΑ</div>
+                      </Link>
+                      
+                      <Link
+                        to="/competitions"
+                        className={`block p-4 rounded-lg border transition-all duration-200 ${
+                          isDark
+                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium text-base">ΔΙΑΓΩΝΙΣΜΟΙ & ΠΡΟΣΚΛΗΣΕΙΣ</div>
+                      </Link>
+                      
+                      <Link
+                        to="/contact"
+                        className={`block p-4 rounded-lg border transition-all duration-200 ${
+                          isDark
+                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="font-medium text-base">ΕΠΙΚΟΙΝΩΝΙΑ</div>
+                      </Link>
+                    </div>
+
+                    {/* HELPDESK Button */}
+                    <div className="pt-6 border-t border-gray-200 dark:border-blue-800">
+                      <Link to="/portal">
+                        <button className={`w-full px-6 py-4 text-base font-semibold rounded-lg transition-all duration-200 ${
+                            isDark
+                                ? 'bg-blue-400 hover:bg-blue-500 text-blue-950 shadow-lg hover:shadow-xl'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
+                        }`}>
+                          HELPDESK
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
         )}
       </>
   );
