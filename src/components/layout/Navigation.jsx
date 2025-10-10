@@ -104,10 +104,10 @@ const Navigation = ({ isDark }) => {
 
   const eseeItems = [
     { label: 'ΠΟΙΟΙ ΕΙΜΑΣΤΕ', url: '/about', description: 'Υπεύθυνη φωνή του ελληνικού εμπορίου και της μικρομεσαίας επιχειρηματικότητας' },
-    { label: 'ΤΟ ΟΡΑΜΑ & Η ΑΠΟΣΤΟΛΗ', url: '/vision-mission', description: 'Όταν οι άνθρωποι επιχειρούν, οι κοινωνίες ευημερούν' },
     { label: 'ΔΙΟΙΚΗΣΗ', url: '/administration', description: 'Τα όργανα διοίκησης της ΕΣΕΕ, σύμφωνα με το καταστατικό της' },
-    { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 340 Εμπορικούς Συλλόγους και 5 Συνδέσμους σε όλη την Ελλάδα' },
-    { label: 'ΙΝΕΜΥ – ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Τα επίσημα επιστημονικά όργανα της ΕΣΕΕ' },
+    { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 354 Εμπορικούς Συλλόγους και 11 Συνδέσμους σε όλη την Ελλάδα' },
+    { label: 'ΙΝΕΜΥ', url: '/inemy-kaele', description: 'Ινστιτούτο Εμπορίου & Επιχειρηματικότητας' },
+    { label: 'ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών' },
     { label: 'ΕΣΕΕ Helpdesk', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
   ];
 
@@ -179,7 +179,7 @@ const Navigation = ({ isDark }) => {
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                   >
-                    ΕΠΙΧΕΙΡΗΣΕΙΣ
+                    ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
                   </Link>
                   <DropdownNavItem 
                     isDark={isDark}
@@ -198,7 +198,7 @@ const Navigation = ({ isDark }) => {
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                   >
-                    ΘΕΣΕΙΣ
+                    ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ
                   </Link>
                   <Link
                     to="/projects"
@@ -244,7 +244,7 @@ const Navigation = ({ isDark }) => {
                             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                             : 'bg-blue-600 hover:bg-blue-700 text-white'
                     } rounded-lg transition-colors`}>
-                      PORTAL
+                      HELPDESK
                     </button>
                   </Link>
                 </div>
@@ -308,7 +308,7 @@ const Navigation = ({ isDark }) => {
                     } transition-colors`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    ΕΠΙΧΕΙΡΗΣΕΙΣ
+                    ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
                   </Link>
                 </div>
 
@@ -337,7 +337,7 @@ const Navigation = ({ isDark }) => {
                   </div>
                 </div>
 
-                {/* ΘΕΣΕΙΣ */}
+                {/* ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ */}
                 <div className="mb-2">
                   <Link
                     to="/positions"
@@ -348,7 +348,7 @@ const Navigation = ({ isDark }) => {
                     } transition-colors`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    ΘΕΣΕΙΣ
+                    ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ
                   </Link>
                 </div>
 
@@ -407,7 +407,7 @@ const Navigation = ({ isDark }) => {
                             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                             : 'bg-blue-600 hover:bg-blue-700 text-white'
                     } rounded-lg transition-colors`}>
-                      PORTAL
+                      HELPDESK
                     </button>
                   </Link>
                 </div>

@@ -249,11 +249,11 @@ const Legal = () => {
               </p>
               <div className="flex items-center space-x-4">
                 <a
-                  href="mailto:itsupport@esee.gr"
+                  href="mailto:dp@esee.gr"
                   className="flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
                   <Mail className="w-4 h-4 mr-2" />
-                  <span>itsupport@esee.gr</span>
+                  <span>dp@esee.gr</span>
                   <ExternalLink className="w-3 h-3 ml-1" />
                 </a>
               </div>
@@ -285,7 +285,7 @@ const Legal = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:itsupport@esee.gr"
+                  href="mailto:dp@esee.gr"
                   className="bg-white hover:bg-gray-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
                   style={{ color: '#00B5F1' }}
                 >

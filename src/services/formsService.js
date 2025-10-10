@@ -65,7 +65,7 @@ export const submitContact = async ({ name, email, subject, message }) => {
             await delay(300)
             return { id: 'mock-contact', name, email, subject, message }
           }
-          throw new Error('Η αποστολή δεν ολοκληρώθηκε. Παρακαλούμε δοκιμάστε ξανά ή επικοινωνήστε στο info@esee.gr.')
+          throw new Error('Η αποστολή δεν ολοκληρώθηκε. Παρακαλούμε δοκιμάστε ξανά ή επικοινωνήστε στο helpdesk@esee.gr.')
         }
       }
       if (shouldMock) {

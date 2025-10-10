@@ -29,7 +29,7 @@ const StatisticsSection = ({ isDark }) => {
         { year: 2021, value: 909474, change: 35968 },
         { year: 2022, value: 946926, change: 37452 }
       ],
-      unit: "επιχειρήσεις",
+      unit: "χιλ.",
       insight: "Το εμπόριο αντιπροσωπεύει το 24.2% όλων των επιχειρήσεων στην οικονομία"
     },
     turnover: {
@@ -51,7 +51,7 @@ const StatisticsSection = ({ isDark }) => {
         { year: 2023, value: 465241177, change: -7276722 },
         { year: 2024, value: 484461030, change: 19219853 }
       ],
-      unit: "χιλιάδες €",
+      unit: "δις €",
       insight: "Ο κύκλος εργασιών του εμπορίου αντιπροσωπεύει το 37.1% του συνολικού κύκλου εργασιών της οικονομίας"
     },
     employees: {
@@ -66,14 +66,14 @@ const StatisticsSection = ({ isDark }) => {
         { year: 2025, value: 759.9, change: 53.6 }
       ],
       total: [
-        { year: 2020, value: 3844.0, change: null },
-        { year: 2021, value: 3915.3, change: 71.3 },
-        { year: 2022, value: 4167.2, change: 251.9 },
-        { year: 2023, value: 4236.5, change: 69.3 },
-        { year: 2024, value: 4327.8, change: 91.3 },
-        { year: 2025, value: 4386.8, change: 59.0 }
+        { year: 2020, value: 3.8, change: null },
+        { year: 2021, value: 3.9, change: 0.1 },
+        { year: 2022, value: 4.2, change: 0.3 },
+        { year: 2023, value: 4.2, change: 0.0 },
+        { year: 2024, value: 4.3, change: 0.1 },
+        { year: 2025, value: 4.4, change: 0.1 }
       ],
-      unit: "χιλιάδες άτομα",
+      unit: "εκατ. άτομα",
       insight: "Το εμπόριο είναι ο μεγαλύτερος εργοδότης στη χώρα, αντιπροσωπεύοντας το 17.3% της συνολικής απασχόλησης"
     },
     employers: {
@@ -95,7 +95,7 @@ const StatisticsSection = ({ isDark }) => {
         { year: 2024, value: 325.0, change: 20.2 },
         { year: 2025, value: 318.8, change: -6.2 }
       ],
-      unit: "χιλιάδες άτομα",
+      unit: "χιλ. άτομα",
       insight: "Το 27.3% όλων των εργοδοτών στην οικονομία λειτουργεί στο εμπόριο"
     },
     gva: {
@@ -117,7 +117,7 @@ const StatisticsSection = ({ isDark }) => {
         { year: 2022, value: 183409, change: 22394 },
         { year: 2023, value: 196528, change: 13119 }
       ],
-      unit: "εκατομμύρια €",
+      unit: "δις €",
       insight: "Το εμπόριο συμβάλλει με το 11.6% στο ΑΕΠ"
     },
     womenEmployment: {
@@ -146,9 +146,9 @@ const StatisticsSection = ({ isDark }) => {
 
   const formatNumber = (num) => {
     if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M';
+      return (num / 1000000).toFixed(1) + ' δις';
     } else if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K';
+      return (num / 1000).toFixed(1) + ' χιλ.';
     }
     return num.toString();
   };
@@ -194,15 +194,15 @@ const StatisticsSection = ({ isDark }) => {
     },
     {
       icon: <Euro className="w-8 h-8" />,
-      number: "179.5B€",
+      number: "179.5 δις €",
       label: "Κύκλος Εργασιών",
       description: "Συνολικός κύκλος εργασιών (2024)"
     },
     {
       icon: <Users className="w-8 h-8" />,
-      number: "706.3K",
+      number: "759.9 χιλ.",
       label: "Απασχολούμενοι",
-      description: "Στο εμπόριο (2024)"
+      description: "στο Εμπόριο (2025)"
     },
     {
       icon: <Percent className="w-8 h-8" />,
@@ -219,8 +219,8 @@ const StatisticsSection = ({ isDark }) => {
     {
       icon: <TrendingUp className="w-8 h-8" />,
       number: "37.1%",
-      label: "Μερίδιο Οικονομίας",
-      description: "Στον συνολικό κύκλο εργασιών"
+      label: "Μερίδιο",
+      description: "στο συνολικό κύκλο εργασιών"
     }
   ];
 

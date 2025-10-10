@@ -98,8 +98,8 @@ const Contact = () => {
                 Email
               </h3>
               <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <a href="mailto:info@esee.gr" className="hover:text-blue-600 transition-colors">
-                  info@esee.gr
+                <a href="mailto:helpdesk@esee.gr" className="hover:text-blue-600 transition-colors">
+                  helpdesk@esee.gr
                 </a>
               </p>
             </div>

@@ -62,12 +62,12 @@ const Footer = ({ isDark }) => {
               <div className="flex items-center space-x-3">
                 <Mail className={`w-5 h-5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
                 <a 
-                  href="mailto:info@esee.gr" 
+                  href="mailto:helpdesk@esee.gr" 
                   className={`hover:underline transition-colors ${
                     isDark ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
                   }`}
                 >
-                  info@esee.gr
+                  helpdesk@esee.gr
                 </a>
               </div>
               <div className="mt-6">

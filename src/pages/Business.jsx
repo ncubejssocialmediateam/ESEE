@@ -25,9 +25,9 @@ const Business = () => {
         },
         {
           id: 2,
-          title: "Υ.Α. 80016/2022",
+          title: "Υ.Α. 35935/13-4-2023",
           subtitle: "ΦΕΚ Β' 4629/1-9-2022",
-          description: "Κώδικας Δεοντολογίας περί ανακοινώσεων μείωσης της τιμής (ιδίως σε προσφορές/εκπτώσεις)",
+          description: "Κώδικας Δεοντολογίας περί ανακοινώσεων μείωσης της τιμής – ΓΕΝΙΚΗ ΓΡΑΜΜΑΤΕΙΑ ΕΜΠΟΡΙΟΥ",
           link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/80016-2022.pdf",
           type: "legal"
         },
@@ -220,7 +220,7 @@ const Business = () => {
               <Building2 className="w-10 h-10" />
             </div>
             <h1 className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-transparent leading-tight">
-              ΕΠΙΧΕΙΡΗΣΕΙΣ
+              ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-5xl mx-auto leading-relaxed mb-8">
               Ενημερωμένη και στοχευμένη πληροφόρηση για την επιχειρηματικότητα

@@ -103,7 +103,9 @@ const ResearchHub = ({ isDark }) => {
                   { id: 'market', label: 'Ανάλυση Αγοράς' },
                   { id: 'trends', label: 'Τάσεις & Προβλέψεις' },
                   { id: 'sectoral', label: 'Κλαδικές Μελέτες' },
-                  { id: 'special', label: 'Ειδικές Εκθέσεις' }
+                  { id: 'special', label: 'Ειδικές Εκθέσεις' },
+                  { id: 'inflation', label: 'Ενημερωτικά Δελτία για τον Πληθωρισμό' },
+                  { id: 'tax', label: 'Φορολογικό Ημερολόγιο' }
                 ].map((category) => (
                   <button
                     key={category.id}
