@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AccessibilityMenu from '../shared/AccessibilityMenu';
 import {useSelector} from "react-redux";
-import ESEE_LOGO_WHITE from '../../assets/ESEE-LOGO_white.png';
+import ESEE_LOGO_FINAL from '../../assets/LOGO-site-final.png';
 
 const NavItem = ({ item, isDark }) => {
   const { link } = item;
@@ -197,7 +197,7 @@ const Navigation = ({ isDark }) => {
               <div className="flex items-center space-x-6">
                 <Link to="/" className="flex items-center">
                   <img 
-                    src={ESEE_LOGO_WHITE} 
+                    src={ESEE_LOGO_FINAL} 
                     alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
                     className="h-12 w-auto hover:opacity-80 transition-opacity duration-300"
                   />

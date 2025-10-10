@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { gsap } from '../../utils/gsap';
 import ParticleBackground from '../shared/ParticleBackground';
-import ESEE_LOGO from '../../assets/ESEE-LOGO_white.png';
+import ESEE_LOGO_FINAL from '../../assets/LOGO-site-final.png';
 import ESEE_LOGO_LOADING from '../../assets/ESEE-LOGO7.png';
 
 const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
@@ -167,7 +167,7 @@ const Hero = ({ isLoaded, setIsLoaded, isDark }) => {
               className="mb-8 flex justify-center"
             >
               <img 
-                src={ESEE_LOGO} 
+                src={ESEE_LOGO_FINAL} 
                 alt="Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
                 className="max-w-full h-auto max-h-32 md:max-h-40 lg:max-h-48 drop-shadow-lg"
               />

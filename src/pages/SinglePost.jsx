@@ -9,7 +9,7 @@ import ShareButton from '../components/common/ShareButton';
 import SharePopup from '../components/common/SharePopup';
 import ArticleCard from '../components/article/articleCard';
 import Navigation from '../components/layout/Navigation';
-import ESEELogo from '../assets/ESEE-LOGO_white.png';
+import ESEELogo from '../assets/LOGO-site-final.png';
 
 const SinglePost = ({ isLoaded, setIsLoaded }) => {
   const params = useParams();

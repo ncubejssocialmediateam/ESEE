@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Phone, Mail, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ESEE_LOGO_WHITE from '../../assets/ESEE-LOGO_white.png';
+import ESEE_LOGO_FINAL from '../../assets/LOGO-site-final.png';
 import formsService from '../../services/formsService';
 
 const Footer = ({ isDark }) => {
@@ -190,7 +190,7 @@ const Footer = ({ isDark }) => {
             <div className="flex flex-col items-center lg:items-end">
               <Link to="/">
                 <img 
-                  src={ESEE_LOGO_WHITE} 
+                  src={ESEE_LOGO_FINAL} 
                   alt="ΕΣΕΕ - Ελληνική Συνομοσπονδία Εμπορίου & Επιχειρηματικότητας"
                   className="h-16 w-auto mb-4 hover:opacity-80 transition-opacity duration-300"
                 />
