@@ -17,6 +17,7 @@ import Contact from "../pages/Contact.jsx";
 import VisionMission from "../pages/VisionMission.jsx";
 import Members from "../pages/Members.jsx";
 import InemyKaele from "../pages/InemyKaele.jsx";
+import Kaele from "../pages/Kaele.jsx";
 import Circulars from "../pages/Circulars.jsx";
 import Publications from "../pages/Publications.jsx";
 import Competitions from "../pages/Competitions.jsx";
@@ -93,6 +94,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 <Route path="/vision-mission" element={<VisionMission />} />
                 <Route path="/members" element={<Members />} />
                 <Route path="/inemy-kaele" element={<InemyKaele />} />
+                <Route path="/kaele" element={<Kaele />} />
                 <Route path="/circulars" element={<Circulars />} />
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/competitions" element={<Competitions />} />

@@ -107,7 +107,7 @@ const Navigation = ({ isDark }) => {
     { label: 'ΔΙΟΙΚΗΣΗ', url: '/administration', description: 'Τα όργανα διοίκησης της ΕΣΕΕ, σύμφωνα με το καταστατικό της' },
     { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 354 Εμπορικούς Συλλόγους και 11 Συνδέσμους σε όλη την Ελλάδα' },
     { label: 'ΙΝΕΜΥ', url: '/inemy-kaele', description: 'Ινστιτούτο Εμπορίου & Επιχειρηματικότητας' },
-    { label: 'ΚΑΕΛΕ', url: '/inemy-kaele', description: 'Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών' },
+    { label: 'ΚΑΕΛΕ', url: '/kaele', description: 'Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών' },
     { label: 'ΕΣΕΕ Helpdesk', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
   ];
 

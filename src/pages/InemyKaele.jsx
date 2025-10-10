@@ -191,24 +191,6 @@ const InemyKaele = () => {
     }
   ];
 
-  const kaeleServices = [
-    {
-      title: "Εκπαιδευτικά Προγράμματα",
-      description: "Προγράμματα εκπαίδευσης και κατάρτισης για το εμπορικό προσωπικό"
-    },
-    {
-      title: "Συμβουλευτική Υποστήριξη",
-      description: "Εξειδικευμένη συμβουλευτική για εμπορικές επιχειρήσεις"
-    },
-    {
-      title: "Έρευνες & Στατιστικά",
-      description: "Συλλογή και ανάλυση δεδομένων για την εμπορική δραστηριότητα"
-    },
-    {
-      title: "Εκδηλώσεις & Δικτύωση",
-      description: "Οργάνωση εκδηλώσεων και δραστηριοτήτων δικτύωσης"
-    }
-  ];
 
   const achievements = [
     {
@@ -313,23 +295,21 @@ const InemyKaele = () => {
             </div>
           </div>
 
-          {/* KAELE Section */}
+          {/* KAELE Link Section */}
           <div className={`${
             isDark 
               ? 'bg-gray-800 border-gray-700' 
               : 'bg-white border-gray-200'
-          } border rounded-xl p-12 mb-16`}>
-            <div className="text-center mb-12">
-              <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                ΚΑΕΛΕ
-              </h2>
-              <p className={`text-xl ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
-                Κέντρο Ανάπτυξης Εμπορικού Λειτουργικού Επιπέδου
-              </p>
-            </div>
+          } border rounded-xl p-12 mb-16 text-center`}>
+            <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              ΚΑΕΛΕ
+            </h2>
+            <p className={`text-xl mb-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+              Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών
+            </p>
             
-            <div className="max-w-4xl mx-auto mb-12">
-              <p className={`text-lg leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+            <div className="max-w-3xl mx-auto mb-8">
+              <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                 Το ΚΑΕΛΕ είναι το κέντρο που ασχολείται με την ανάπτυξη και την 
                 υποστήριξη του εμπορικού λειτουργικού επιπέδου. Προσφέρει υπηρεσίες 
                 εκπαίδευσης, συμβουλευτικής και έρευνας ειδικά για τις εμπορικές 
@@ -337,22 +317,16 @@ const InemyKaele = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {kaeleServices.map((service, index) => (
-                <div key={index} className={`${
-                  isDark 
-                    ? 'bg-gray-700' 
-                    : 'bg-gray-50'
-                } rounded-xl p-6`}>
-                  <h3 className={`text-lg font-semibold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {service.title}
-                  </h3>
-                  <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                    {service.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <button 
+              onClick={() => navigate('/kaele')}
+              className={`px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 ${
+                isDark 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+              }`}
+            >
+              Μάθετε περισσότερα για το ΚΑΕΛΕ
+            </button>
           </div>
 
           {/* Statistics Section */}
