@@ -28,7 +28,7 @@ const Business = () => {
           title: "Υ.Α. 35935/13-4-2023",
           subtitle: "ΦΕΚ Β' 4629/1-9-2022",
           description: "Κώδικας Δεοντολογίας περί ανακοινώσεων μείωσης της τιμής – ΓΕΝΙΚΗ ΓΡΑΜΜΑΤΕΙΑ ΕΜΠΟΡΙΟΥ",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/80016-2022.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/35935-13-4-2023.pdf",
           type: "legal"
         },
         {
@@ -98,7 +98,7 @@ const Business = () => {
           title: "Προστασία Δεδομένων",
           subtitle: "GDPR",
           description: "Ποια δεδομένα θεωρούνται «προσωπικά δεδομένα» και ποιες είναι οι ευθύνες",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Προστασία-Δεδομένων.pdf",
+          link: "https://commission.europa.eu/law/law-topic/data-protection/rules-business-and-organisations_el",
           type: "privacy"
         },
         {
@@ -106,7 +106,7 @@ const Business = () => {
           title: "ΦΕΚ 969/22-3-2017",
           subtitle: "e-commerce",
           description: "Κώδικας Καταναλωτικής Δεοντολογίας για το Ηλεκτρονικό Εμπόριο",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/ΦΕΚ-969-2017.pdf",
+          link: "https://www.et.gr/api/Content/DocumentMeta?documentId=47868&format=pdf",
           type: "ecommerce"
         },
         {
@@ -114,7 +114,7 @@ const Business = () => {
           title: "Νομοθεσία",
           subtitle: "Καταναλωτές",
           description: "Αρμοδιότητας Γενικής Διεύθυνσης Προστασίας Καταναλωτή",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Νομοθεσία-Καταναλωτών.pdf",
+          link: "https://www.consumer.gov.gr/",
           type: "legal"
         }
       ]
@@ -129,7 +129,7 @@ const Business = () => {
           title: "Σεξουαλική Παρενόχληση",
           subtitle: "Ποια είναι τα όρια στη σεξουαλική παρενόχληση στον χώρο εργασίας",
           description: "Νομικό και θεσμικό πλαίσιο. Διατάξεις για την προστασία του θύματος",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/Σεξουαλική-Παρενόχληση.pdf",
+          link: "https://www.elinyae.gr/sexoyaliki-parenohlisi",
           type: "workplace"
         },
         {
