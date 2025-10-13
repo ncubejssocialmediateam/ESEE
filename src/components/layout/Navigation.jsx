@@ -106,9 +106,9 @@ const Navigation = ({ isDark }) => {
     { label: 'ΠΟΙΟΙ ΕΙΜΑΣΤΕ', url: '/about', description: 'Υπεύθυνη φωνή του ελληνικού εμπορίου και της μικρομεσαίας επιχειρηματικότητας' },
     { label: 'ΔΙΟΙΚΗΣΗ', url: '/administration', description: 'Τα όργανα διοίκησης της ΕΣΕΕ, σύμφωνα με το καταστατικό της' },
     { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 354 Εμπορικούς Συλλόγους και 11 Συνδέσμους σε όλη την Ελλάδα' },
-    { label: 'ΙΝΕΜΥ', url: '/inemy-kaele', description: 'Ινστιτούτο Εμπορίου & Επιχειρηματικότητας' },
+    { label: 'ΙΝΕΜΥ', url: '/inemy', description: 'Ινστιτούτο Εμπορίου & Επιχειρηματικότητας' },
     { label: 'ΚΑΕΛΕ', url: '/kaele', description: 'Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών' },
-    { label: 'ΕΣΕΕ Helpdesk', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
+    { label: 'ΥΠΟΣΤΗΡΙΞΗ ΜΕΛΩΝ', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
   ];
 
   const pressOfficeItems = [

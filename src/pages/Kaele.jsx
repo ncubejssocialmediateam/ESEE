@@ -288,6 +288,45 @@ const Kaele = () => {
             </div>
           </div>
 
+          {/* Presentation Section */}
+          <div className={`${
+            isDark 
+              ? 'bg-gray-800 border-gray-700' 
+              : 'bg-white border-gray-200'
+          } border rounded-xl p-12 mb-16 text-center`}>
+            <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Παρουσίαση ΚΑΕΛΕ
+            </h2>
+            <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              Κατεβάστε την πλήρη παρουσίαση του ΚΑΕΛΕ για να μάθετε περισσότερα για τις υπηρεσίες και τα προγράμματά μας
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/src/assets/ΠΑΡΟΥΣΙΑΣΗ ΚΑΕΛΕ.docx" 
+                download="ΠΑΡΟΥΣΙΑΣΗ ΚΑΕΛΕ.docx"
+                className={`inline-flex items-center px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 ${
+                  isDark 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
+              >
+                <FileText className="w-5 h-5 mr-2" />
+                Κατεβάστε Παρουσίαση
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
+              <a 
+                href="/inemy" 
+                className={`inline-flex items-center px-8 py-4 rounded-lg font-semibold text-lg border-2 transition-all duration-200 ${
+                  isDark 
+                    ? 'border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white' 
+                    : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
+                }`}
+              >
+                Μάθετε για το ΙΝΕΜΥ
+              </a>
+            </div>
+          </div>
+
           {/* Contact Section */}
           <div className={`${
             isDark 
@@ -311,16 +350,6 @@ const Kaele = () => {
               >
                 Επικοινωνήστε μαζί μας
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </a>
-              <a 
-                href="/inemy-kaele" 
-                className={`inline-flex items-center px-8 py-4 rounded-lg font-semibold text-lg border-2 transition-all duration-200 ${
-                  isDark 
-                    ? 'border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white' 
-                    : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-                }`}
-              >
-                Μάθετε για το ΙΝΕΜΥ
               </a>
             </div>
           </div>

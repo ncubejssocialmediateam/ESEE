@@ -5,7 +5,7 @@ import { BookOpen, Users, TrendingUp, Award, Target, Lightbulb, BarChart3, Build
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const InemyKaele = () => {
+const Inemy = () => {
   const { isDark } = useTheme();
   const [activeStatCategory, setActiveStatCategory] = useState('businesses');
   const navigate = useNavigate();
@@ -191,7 +191,6 @@ const InemyKaele = () => {
     }
   ];
 
-
   const achievements = [
     {
       icon: <Building2 className="w-8 h-8" />,
@@ -294,7 +293,6 @@ const InemyKaele = () => {
               ))}
             </div>
           </div>
-
 
           {/* Statistics Section */}
           <div className={`${
@@ -704,4 +702,4 @@ const InemyKaele = () => {
   );
 };
 
-export default InemyKaele;
+export default Inemy;

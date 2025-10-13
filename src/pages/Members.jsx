@@ -8,8 +8,8 @@ const Members = () => {
 
   const memberStats = [
     { icon: <Building className="w-8 h-8" />, number: "17", label: "Ομοσπονδίες", description: "Σε όλη την Ελλάδα" },
-    { icon: <Users className="w-8 h-8" />, number: "340", label: "Εμπορικοί Σύλλογοι", description: "Τοπικοί και κλαδικοί" },
-    { icon: <Award className="w-8 h-8" />, number: "5", label: "Σύνδεσμοι", description: "Ειδικών ενδιαφερόντων" },
+    { icon: <Users className="w-8 h-8" />, number: "354", label: "Εμπορικοί Σύλλογοι", description: "Τοπικοί και κλαδικοί" },
+    { icon: <Award className="w-8 h-8" />, number: "11", label: "Σύνδεσμοι", description: "Ειδικών ενδιαφερόντων" },
     { icon: <MapPin className="w-8 h-8" />, number: "54", label: "Νομοί", description: "Κάλυψη σε όλη τη χώρα" }
   ];
 
@@ -73,7 +73,7 @@ const Members = () => {
             </h1>
             <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p className={`text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              17 Ομοσπονδίες & 340 Εμπορικούς Συλλόγους και 5 Συνδέσμους σε όλη την Ελλάδα
+              17 Ομοσπονδίες & 354 Εμπορικούς Συλλόγους και 11 Συνδέσμους σε όλη την Ελλάδα
             </p>
           </div>
 
@@ -234,31 +234,6 @@ const Members = () => {
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center">
-            <h2 className={`text-3xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Γίνετε μέλος της ΕΣΕΕ σήμερα
-            </h2>
-            <p className={`text-xl mb-8 max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              Συμμετέχετε στο μεγαλύτερο δίκτυο εμπορικών επιχειρήσεων της Ελλάδας
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className={`px-8 py-4 rounded-lg font-medium text-lg transition-colors ${
-                isDark 
-                  ? 'bg-blue-400 hover:bg-blue-500 text-blue-950' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
-              }`}>
-                Επικοινωνήστε μαζί μας
-              </button>
-              <button className={`px-8 py-4 rounded-lg font-medium text-lg border-2 transition-colors ${
-                isDark 
-                  ? 'border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-blue-950' 
-                  : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-              }`}>
-                Κατεβάστε αίτηση
-              </button>
-            </div>
-          </div>
         </div>
       </div>
       
