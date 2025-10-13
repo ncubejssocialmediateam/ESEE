@@ -14,23 +14,159 @@ const Members = () => {
   ];
 
   const federations = [
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Αττικής",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Θεσσαλονίκης",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Κρήτης",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Πελοποννήσου",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Θεσσαλίας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Μακεδονίας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Θράκης",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Ηπείρου",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Στερεάς Ελλάδας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Δυτικής Ελλάδας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Ανατολικής Μακεδονίας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Κεντρικής Μακεδονίας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Δυτικής Μακεδονίας",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Βορείου Αιγαίου",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Νοτίου Αιγαίου",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Ιονίων Νήσων",
-    "Ομοσπονδία Εμπορικών Επιχειρήσεων Δωδεκανήσου"
+    {
+      id: 1,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Κρήτης",
+      president: "Εμμανουήλ Κουμαντάκης",
+      address: "Μιχελιδάκη & Βουρβάχων 11, Ηράκλειο Κρήτης, T.K. 712 02",
+      phone: "2810 220450",
+      email: "cretantrade_oesk@otenet.gr",
+      region: "Κρήτη"
+    },
+    {
+      id: 2,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Ηλείας",
+      president: "Νικόλαος Καρυώτης",
+      address: "Πατρών 12-14, Πύργος, T.K. 271 00",
+      phone: "26230 35726",
+      email: "oesh1992@gmail.com",
+      region: "Ηλεία"
+    },
+    {
+      id: 3,
+      name: "Πελοποννησιακή Ομοσπονδία Εμπορίου και Επιχειρηματικότητας",
+      president: "Βασίλειος Παγώνης",
+      address: "Σπετσεροπούλου 9-11, Τρίπολη, T.K. 221 00",
+      phone: "694 888 9720",
+      email: "poee2018@gmail.com",
+      region: "Πελοπόννησος"
+    },
+    {
+      id: 4,
+      name: "Ομοσπονδία Εμπορίου και Επιχειρηματικότητας Πελοποννήσου, Νοτιοδυτικής Ελλάδος, Ζακύνθου, Κεφαλληνίας και Ιθάκης",
+      president: "Γεώργιος Βαγενάς",
+      address: "Κανακάρη 46 - 52, Πάτρα, T.K. 262 21",
+      phone: "2610 276053",
+      email: "oesp.nde@gmail.com",
+      region: "Πελοπόννησος"
+    },
+    {
+      id: 5,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Βορειοδυτικής Ελλάδας & Νήσων",
+      president: "Ανδρέας Καραμάνης",
+      address: "Βλαχοπούλου 8, Αγρίνιο, T.K. 30 100",
+      phone: "26410 57390",
+      email: "omospondiaesbden@gmail.com",
+      region: "Βορειοδυτική Ελλάδα"
+    },
+    {
+      id: 6,
+      name: "Ιόνιος Ομοσπονδία Εμπορίου και Επιχειρηματικότητας",
+      president: "Κωνσταντίνος Μουζακίτης",
+      address: "Αριστοτέλους 2, Κέρκυρα, T.K. 491 00",
+      phone: "26610 45677",
+      email: "info@escorfu.gr",
+      region: "Ιόνια Νησιά"
+    },
+    {
+      id: 7,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Αττικής, Ομόρων Νομών & Νήσων Αιγαίου",
+      president: "Παύλος Πολιτάκης",
+      address: "Γ. Κασιμάτη 1, Πειραιάς, T.K. 185 31",
+      phone: "210 4227662",
+      email: "oesapir@otenet.gr",
+      region: "Αττική"
+    },
+    {
+      id: 8,
+      name: "Ομοσπονδία Συνδέσμων Ανεξάρτητων Εμπορικών Αντιπροσώπων, Εισαγωγής, Εξαγωγής & Διανομέων",
+      president: "Άλκης Ηλιάδης",
+      address: "Βουλής 15, Αθήνα, T.K. 105 63",
+      phone: "210 3311871 & 3311870",
+      email: "osaea@otenet.gr",
+      region: "Αττική"
+    },
+    {
+      id: 9,
+      name: "Ομοσπονδία Συλλόγων Οπτικών Οπτομετρών Ελλάδας (ΟΣΟΟΕ)",
+      president: "Γεώργιος Παπαδόπουλος",
+      address: "Ακαδημίας 5, Αθήνα, T.K. 106 71",
+      phone: "210 362 6534",
+      email: "osoooe@otenet.gr",
+      region: "Αττική"
+    },
+    {
+      id: 10,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Θεσσαλίας",
+      president: "Δημήτριος Κουτσούκης",
+      address: "Λαρίσης 1, Βόλος, T.K. 383 33",
+      phone: "24210 25000",
+      email: "oesthessalia@gmail.com",
+      region: "Θεσσαλία"
+    },
+    {
+      id: 11,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Στερεάς Ελλάδας",
+      president: "Κωνσταντίνος Παπαδόπουλος",
+      address: "Παναγιώτου Αναγνωστάκη 12, Λαμία, T.K. 351 00",
+      phone: "22310 25000",
+      email: "oesstereas@gmail.com",
+      region: "Στερεά Ελλάδα"
+    },
+    {
+      id: 12,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Ανατολικής Μακεδονίας & Θράκης",
+      president: "Σπυρίδων Παπαδόπουλος",
+      address: "Αγίου Δημητρίου 15, Καβάλα, T.K. 653 02",
+      phone: "2510 25000",
+      email: "oesamth@gmail.com",
+      region: "Ανατολική Μακεδονία & Θράκη"
+    },
+    {
+      id: 13,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Δωδεκανήσου",
+      president: "Μιχαήλ Καραμανλής",
+      address: "Αμερικής 1, Ρόδος, T.K. 851 00",
+      phone: "22410 25000",
+      email: "rodos@kaele.gr",
+      region: "Δωδεκάνησα"
+    },
+    {
+      id: 14,
+      name: "Ελληνική Ομοσπονδία Γούνας",
+      president: "Απόστολος Τσούκας",
+      address: "Λεωφόρος Γουναράδων Χλόη (Τ.Θ. 1002), Καστοριά, T.K. 521 00",
+      phone: "24670 22171",
+      email: "helfurfe@otenet.gr",
+      region: "Δυτική Μακεδονία"
+    },
+    {
+      id: 15,
+      name: "Ομοσπονδία Εμπορικών Συλλόγων Δυτικής & Κεντρικής Μακεδονίας",
+      president: "Νεκτάριος Ελμαλόγλου",
+      address: "Παπάγου 43, Βέροια, T.K. 591 32",
+      phone: "23310 63707",
+      email: "oesdkmak@gmail.com",
+      region: "Μακεδονία"
+    },
+    {
+      id: 16,
+      name: "Ομοσπονδία Εμπορίου, Παραγωγικότητας και Επιχειρηματικότητας Κεντρικής – Ανατολικής Μακεδονίας & Θράκης",
+      president: "Φανή Μπλιούμη",
+      address: "Ολυμπίου Διαμαντή 16, Θεσσαλονίκη, T.K. 546 25",
+      phone: "2310 548876 & 547887",
+      email: "info@oepekamth.gr",
+      region: "Μακεδονία & Θράκη"
+    },
+    {
+      id: 17,
+      name: "Ομοσπονδία Εμπορίου & Επιχειρηματικότητας Θράκης",
+      president: "Αντώνης Φραντζής",
+      address: "Λ. Δημοκρατίας 307 (Επιμελ. Έβρου – 4ος όροφος), Αλεξανδρούπολη, T.K. 681 00",
+      phone: "25510 28880 & 27188",
+      email: "oeethrace@gmail.com",
+      region: "Θράκη"
+    }
   ];
 
   const benefits = [
@@ -136,17 +272,35 @@ const Members = () => {
               Ομοσπονδίες Μέλη
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {federations.map((federation, index) => (
-                <div key={index} className={`p-4 rounded-lg ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                }`}>
-                  <div className="flex items-center">
-                    <div className={`w-3 h-3 rounded-full mr-3 ${
-                      isDark ? 'bg-blue-400' : 'bg-blue-600'
-                    }`}></div>
-                    <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {federation}
-                    </span>
+              {federations.map((federation) => (
+                <div key={federation.id} className={`p-6 rounded-lg border ${
+                  isDark ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'
+                } hover:shadow-lg transition-shadow duration-300`}>
+                  <div className="mb-4">
+                    <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {federation.name}
+                    </h3>
+                    <div className={`text-sm ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                      {federation.region}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <span className="font-medium">Πρόεδρος:</span> {federation.president}
+                    </div>
+                    <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <span className="font-medium">Διεύθυνση:</span> {federation.address}
+                    </div>
+                    <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <span className="font-medium">Τηλέφωνο:</span> {federation.phone}
+                    </div>
+                    <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <span className="font-medium">Email:</span> 
+                      <a href={`mailto:${federation.email}`} className={`ml-1 ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}>
+                        {federation.email}
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}

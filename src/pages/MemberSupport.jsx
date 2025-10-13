@@ -20,7 +20,8 @@ import {
   Building,
   CheckCircle,
   AlertCircle,
-  HelpCircle
+  HelpCircle,
+  ExternalLink
 } from 'lucide-react';
 import formsService from '../services/formsService';
 
@@ -294,8 +295,7 @@ const MemberSupport = ({ embedded = false }) => {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-            ΕΣΕΕ Helpdesk<br />
-            ΟΜΑΔΑ ΥΠΟΣΤΗΡΙΞΗΣ ΜΕΛΩΝ
+            HELPDESK - ΣΥΜΒΟΥΛΕΥΤΙΚΗ ΕΠΙΧΕΙΡΗΣΕΩΝ
           </h1>
           
           <p className="text-xl md:text-2xl mb-12 leading-relaxed max-w-4xl mx-auto opacity-90">
@@ -433,6 +433,158 @@ const MemberSupport = ({ embedded = false }) => {
                 </div>
               ))
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Microsite Section */}
+      <section className="py-16 px-6 bg-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Microsite Εμπορικών Συλλόγων</h2>
+            <p className="text-white/70">Εξερευνήστε το microsite του Εμπορικού Συλλόγου Κηφισιάς</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                  <Building className="w-6 h-6 text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold">Εμπορικός Σύλλογος Κηφισιάς</h3>
+                  <p className="text-white/70">Πρώτο microsite Εμπορικού Συλλόγου</p>
+                </div>
+              </div>
+              
+              <p className="text-white/80 mb-6 leading-relaxed">
+                Το ΕΣ Κηφισιάς είναι ο πρώτος Εμπορικός Σύλλογος που έχει δημιουργήσει 
+                το δικό του microsite μέσω της πλατφόρμας ΕΣΕΕ. Εξερευνήστε τις υπηρεσίες, 
+                τα νέα και τις δραστηριότητες του συλλόγου.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href="/microsite/kifisia" 
+                  className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Επισκεφτείτε το Microsite
+                </a>
+                <a 
+                  href="/microsite/info" 
+                  className="inline-flex items-center justify-center px-6 py-3 border border-white/20 hover:bg-white/10 text-white rounded-lg font-medium transition-colors"
+                >
+                  Μάθετε περισσότερα
+                </a>
+              </div>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8">
+              <h3 className="text-xl font-semibold mb-4">Χαρακτηριστικά Microsite</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-white/80">Προσαρμοσμένο σχεδιασμό για κάθε σύλλογο</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-white/80">Διαχείριση νέων και ανακοινώσεων</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-white/80">Κατάλογο μελών και υπηρεσιών</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-white/80">Συμβατότητα με κινητές συσκευές</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-white/80">Ενσωμάτωση με την κεντρική πλατφόρμα ΕΣΕΕ</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Registration Form Section */}
+      <section className="py-16 px-6 bg-white/10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Φόρμα Εγγραφής Νέου Μέλους</h2>
+            <p className="text-white/70">Γίνετε μέλος της ΕΣΕΕ και αποκτήστε πρόσβαση σε όλες τις υπηρεσίες μας</p>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Οφέλη Συμμετοχής</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-white/80">Νομική υποστήριξη και συμβουλευτική</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-white/80">Εκπαιδευτικά προγράμματα και σεμινάρια</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-white/80">Δικτύωση και επιχειρηματικές συνεργασίες</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-white/80">Πρόσβαση σε ευρωπαϊκά προγράμματα</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-white/80">Εκπροσώπηση σε θεσμικά όργανα</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Απαιτήσεις Συμμετοχής</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                    <span className="text-white/80">Εμπορική επιχείρηση με έδρα στην Ελλάδα</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                    <span className="text-white/80">Κανονική λειτουργία και πληρωμή φόρων</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                    <span className="text-white/80">Συμμόρφωση με τις ηθικές αρχές του εμπορίου</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                    <span className="text-white/80">Αποδοχή του καταστατικού της ΕΣΕΕ</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                  href="/member-registration" 
+                  className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                >
+                  <User className="w-5 h-5 mr-2" />
+                  Συμπληρώστε Αίτηση Εγγραφής
+                </a>
+                <a 
+                  href="/members" 
+                  className="inline-flex items-center justify-center px-8 py-4 border border-white/20 hover:bg-white/10 text-white rounded-lg font-semibold transition-colors"
+                >
+                  Μάθετε περισσότερα για τα μέλη
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

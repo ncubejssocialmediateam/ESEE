@@ -46,14 +46,6 @@ const Portal = () => {
 
   const portalServices = [
     {
-      id: 'tax-calendar',
-      title: 'Φορολογικό Ημερολόγιο',
-      description: 'Ενημερωθείτε για όλες τις φορολογικές υποχρεώσεις και προθεσμίες',
-      icon: Calendar,
-      color: 'bg-blue-500',
-      href: '#tax-calendar'
-    },
-    {
       id: 'documents',
       title: 'Έγγραφα & Φόρμες',
       description: 'Πρόσβαση σε όλα τα απαραίτητα έγγραφα και φόρμες',
@@ -76,14 +68,6 @@ const Portal = () => {
       icon: Bell,
       color: 'bg-orange-500',
       href: '#notifications'
-    },
-    {
-      id: 'federations',
-      title: 'Ομοσπονδίες',
-      description: '17 Ομοσπονδίες σε όλη την Ελλάδα',
-      icon: Shield,
-      color: 'bg-indigo-500',
-      href: '#federations'
     },
     {
       id: 'polls',
@@ -293,8 +277,6 @@ const Portal = () => {
         return <MemberSupport embedded={true} />;
       case 'newspaper':
         return <ESEENewspaper />;
-      case 'tax-calendar':
-        return <TaxCalendar embedded={true} />;
       case 'documents':
         return (
           <div className="space-y-6">
@@ -567,8 +549,6 @@ const Portal = () => {
             </div>
           </div>
         );
-      case 'federations':
-        return <FederationsAccordion />;
       case 'polls':
         return <PollSection />;
       case 'statistics':
@@ -712,16 +692,6 @@ const Portal = () => {
                 Εφημερίδα ΕΣΕΕ
               </button>
               <button
-                onClick={() => setActiveTab('tax-calendar')}
-                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'tax-calendar'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Φορολογικό Ημερολόγιο
-              </button>
-              <button
                 onClick={() => setActiveTab('documents')}
                 className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'documents'
@@ -750,16 +720,6 @@ const Portal = () => {
                 }`}
               >
                 Ειδοποιήσεις
-              </button>
-              <button
-                onClick={() => setActiveTab('federations')}
-                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'federations'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Ομοσπονδίες
               </button>
               <button
                 onClick={() => setActiveTab('polls')}
