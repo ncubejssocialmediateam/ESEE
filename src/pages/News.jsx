@@ -2,40 +2,68 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
+import { fetchLegacyNews } from '../services/legacyNewsService';
 
 const News = () => {
   const [filteredArticles, setFilteredArticles] = useState([]);
+  const [legacyArticles, setLegacyArticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const articles = useSelector(state => state.articles);
   const categories = useSelector(state => state.categories);
   const { isDark } = useTheme();
 
+  // Fetch legacy news on mount
   useEffect(() => {
-    // Filter out redundant categories and press releases
-    const filteredCategories = categories.filter(category => 
-      !category.title.toLowerCase().includes('ανακοινώσεις') &&
-      !category.title.toLowerCase().includes('δελτία') &&
-      !category.title.toLowerCase().includes('τύπου') &&
-      !category.title.toLowerCase().includes('press')
-    );
+    let isMounted = true;
+    fetchLegacyNews(20)
+      .then((docs) => {
+        if (!isMounted) return;
+        setLegacyArticles(docs || []);
+      })
+      .catch(() => {
+        // silent fail; keep modern articles only
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
+  useEffect(() => {
+    // Merge articles (modern + legacy), dedupe by slug or id
+    const merged = [...(articles || []), ...(legacyArticles || [])];
+    const seen = new Set();
+    const deduped = merged.filter((a) => {
+      const key = a.slug || a.id;
+      if (!key) return false;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    // Apply category filter and exclude press/announcements
+    const isNonPress = (article) => {
+      const title = article?.category?.title?.toLowerCase?.() || '';
+      return (
+        !title.includes('ανακοινώσεις') &&
+        !title.includes('δελτία') &&
+        !title.includes('τύπου') &&
+        !title.includes('press')
+      );
+    };
+
+    let result = [];
     if (selectedCategory === 'all') {
-      // Show all articles except press releases
-      const newsArticles = articles.filter(article => 
-        !article.category || 
-        (!article.category.title.toLowerCase().includes('ανακοινώσεις') &&
-         !article.category.title.toLowerCase().includes('δελτία') &&
-         !article.category.title.toLowerCase().includes('τύπου') &&
-         !article.category.title.toLowerCase().includes('press'))
-      );
-      setFilteredArticles(newsArticles);
+      result = deduped.filter(isNonPress);
     } else {
-      const filtered = articles.filter(article => 
-        article.category && article.category.slug === selectedCategory
+      result = deduped.filter(
+        (a) => a.category && a.category.slug === selectedCategory && isNonPress(a)
       );
-      setFilteredArticles(filtered);
     }
-  }, [articles, selectedCategory, categories]);
+
+    // Sort by createdAt desc
+    result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    setFilteredArticles(result);
+  }, [articles, legacyArticles, selectedCategory, categories]);
 
   return (
     <main className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
@@ -125,12 +153,20 @@ const News = () => {
                     <time className="text-sm text-gray-500">
                       {new Date(article.createdAt).toLocaleDateString('el-GR')}
                     </time>
-                    <a
-                      href={`/post/${article.slug}`}
-                      className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-                    >
-                      Διαβάστε περισσότερα →
-                    </a>
+                    {(() => {
+                      const isLegacy = article?.source === 'old2025' || String(article?.id || '').startsWith('legacy-');
+                      const href = isLegacy && article?.url ? article.url : `/post/${article.slug}`;
+                      const external = isLegacy && article?.url;
+                      return (
+                        <a
+                          href={href}
+                          className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        >
+                          Διαβάστε περισσότερα →
+                        </a>
+                      );
+                    })()}
                   </div>
                 </div>
               </article>

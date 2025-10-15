@@ -17,14 +17,26 @@ const getCategoryTranslation = (categoryId) =>
     categoryTranslations[categoryId] || categoryId;
 
 const ArticleCard = ({ article, isDark }) => {
-    // Destructure article fields based on the new JSON schema
-    const { title, slug, content, categories, heroImage, publishedAt } = article;
+    // Support both modern articles and legacy (old2025) items
+    const isLegacy = article?.source === 'old2025' || String(article?.id || '').startsWith('legacy-');
+    const { title, slug, content, categories, heroImage, featuredImage, publishedAt } = article;
 
     // Extract a basic excerpt from the content.
     // Adjust the extraction logic depending on your content structure.
-    const excerpt =
-        content?.root?.children?.[1]?.children?.[0]?.text ||
-        "No excerpt available";
+    const stripHtml = (html) => (html || '')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    let excerpt = '';
+    if (article?.excerpt) {
+        excerpt = article.excerpt;
+    } else if (typeof content === 'string') {
+        const text = stripHtml(content);
+        excerpt = text.substring(0, 180) + (text.length > 180 ? '…' : '');
+    } else {
+        excerpt = content?.root?.children?.[1]?.children?.[0]?.text || "No excerpt available";
+    }
 
     // Format the date using publishedAt or createdAt as fallback
     const formatDate = (dateString) => {
@@ -42,12 +54,19 @@ const ArticleCard = ({ article, isDark }) => {
     
     const formattedDate = formatDate(publishedAt || article.createdAt);
 
-    // Use the first category in the array (if available)
-    const primaryCategory =
-        categories && categories.length > 0 ? categories[0] : null;
-    const categoryName = primaryCategory
-        ? getCategoryTranslation(primaryCategory.id)
-        : '';
+    // Category handling for modern vs legacy
+    const primaryCategory = Array.isArray(categories) && categories.length > 0 ? categories[0] : null;
+    const legacyCategoryTitle = article?.category?.title || '';
+    // Normalize legacy taxonomy to our labels
+    let displayCategory = legacyCategoryTitle;
+    if (primaryCategory) {
+        displayCategory = getCategoryTranslation(primaryCategory.id);
+    } else if (legacyCategoryTitle) {
+        const lc = legacyCategoryTitle.toLowerCase();
+        if (lc.includes('δελτ') || lc.includes('τύπου') || lc.includes('press')) displayCategory = 'Δελτία Τύπου';
+        else if (lc.includes('ανακοιν')) displayCategory = 'Ανακοινώσεις';
+        else if (lc.includes('νέα')) displayCategory = 'Νέα';
+    }
 
     return (
         <article
@@ -62,15 +81,15 @@ const ArticleCard = ({ article, isDark }) => {
                             ? `https://back.socialmediateam.gr${heroImage.url}`
                             : (heroImage?.filename
                                 ? `https://back.socialmediateam.gr/api/media/file/${encodeURIComponent(heroImage.filename)}`
-                                : 'https://via.placeholder.com/400x300?text=No+Image')
+                                : (featuredImage?.url || 'https://via.placeholder.com/400x300?text=No+Image'))
                     }
-                    alt={heroImage?.alt || 'Default Image'}
+                    alt={heroImage?.alt || title || 'Default Image'}
                     className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
                 />
 
                 <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">
-            {categoryName}
+            {displayCategory}
           </span>
                 </div>
             </div>
@@ -92,12 +111,23 @@ const ArticleCard = ({ article, isDark }) => {
                 >
                     {excerpt}
                 </p>
-                <Link
-                    to={`/post/${slug}`}
-                    className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block"
-                >
-                    Περισσότερα →
-                </Link>
+                {isLegacy && article?.url ? (
+                    <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block"
+                    >
+                        Περισσότερα →
+                    </a>
+                ) : (
+                    <Link
+                        to={`/post/${slug}`}
+                        className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-block"
+                    >
+                        Περισσότερα →
+                    </Link>
+                )}
             </div>
         </article>
     );
@@ -105,21 +135,33 @@ const ArticleCard = ({ article, isDark }) => {
 
 ArticleCard.propTypes = {
     article: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
         title: PropTypes.string.isRequired,
-        slug: PropTypes.string.isRequired,
-        content: PropTypes.object.isRequired,
+        slug: PropTypes.string,
+        content: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+        excerpt: PropTypes.string,
         categories: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.number.isRequired,
-                title: PropTypes.string.isRequired,
+                title: PropTypes.string,
             })
-        ).isRequired,
+        ),
+        category: PropTypes.shape({
+            title: PropTypes.string,
+            slug: PropTypes.string,
+        }),
         heroImage: PropTypes.shape({
             url: PropTypes.string,
             alt: PropTypes.string,
+            filename: PropTypes.string,
         }),
-        publishedAt: PropTypes.string.isRequired,
+        featuredImage: PropTypes.shape({
+            url: PropTypes.string,
+        }),
+        publishedAt: PropTypes.string,
+        createdAt: PropTypes.string,
+        source: PropTypes.string,
+        url: PropTypes.string,
     }).isRequired,
     isDark: PropTypes.bool.isRequired,
 };
