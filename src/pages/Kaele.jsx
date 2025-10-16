@@ -141,7 +141,7 @@ const Kaele = () => {
             </h1>
             <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p className={`text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              Κέντρο Ανάλυσης Εμπορικών & Επιχειρηματικών Λειτουργιών
+              ΚΕΝΤΡΟ ΑΝΑΠΤΥΞΗΣ ΕΛΛΗΝΙΚΟΥ ΕΜΠΟΡΙΟΥ & ΕΠΙΧΕΙΡΗΜΑΤΙΚΟΤΗΤΑΣ
             </p>
             <p className={`text-lg mt-4 max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               Το ΚΑΕΛΕ είναι το κέντρο που ασχολείται με την ανάπτυξη και την υποστήριξη 
