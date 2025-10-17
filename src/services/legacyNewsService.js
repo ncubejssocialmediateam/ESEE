@@ -19,23 +19,39 @@ function decodeEntities(text) {
 }
 
 function normalizeWpPosts(posts) {
-  return (posts || []).map((p) => {
-    const featured = p?._embedded?.['wp:featuredmedia']?.[0];
-    const term = p?._embedded?.['wp:term']?.[0]?.[0]; // first category if present
+  return (posts || [])
+    .filter((p) => {
+      // Filter out the specific post about "Ημέρα Ελληνικού Εμπορίου"
+      const title = p?.title?.rendered || '';
+      const content = p?.content?.rendered || '';
+      const excerpt = p?.excerpt?.rendered || '';
+      
+      // Check if this is the post we want to remove
+      const isTargetPost = 
+        title.includes('Ημέρα Ελληνικού Εμπορίου') ||
+        title.includes('Δήλωση επίτιμου Προέδρου ΕΣΕΕ Βασίλη Κορκίδη') ||
+        content.includes('Ημέρα Ελληνικού Εμπορίου') ||
+        excerpt.includes('Ημέρα Ελληνικού Εμπορίου');
+      
+      return !isTargetPost;
+    })
+    .map((p) => {
+      const featured = p?._embedded?.['wp:featuredmedia']?.[0];
+      const term = p?._embedded?.['wp:term']?.[0]?.[0]; // first category if present
 
-    return {
-      id: `legacy-${p.id}`,
-      title: decodeEntities(stripHtml(p?.title?.rendered || '')),
-      slug: p?.slug || `legacy-${p.id}`,
-      excerpt: decodeEntities(stripHtml(p?.excerpt?.rendered || '')),
-      content: p?.content?.rendered || '',
-      createdAt: p?.date_gmt || p?.date || new Date().toISOString(),
-      featuredImage: featured?.source_url ? { url: featured.source_url } : null,
-      category: term ? { title: term.name, slug: term.slug } : null,
-      source: 'old2025',
-      url: p?.link || null
-    };
-  });
+      return {
+        id: `legacy-${p.id}`,
+        title: decodeEntities(stripHtml(p?.title?.rendered || '')),
+        slug: p?.slug || `legacy-${p.id}`,
+        excerpt: decodeEntities(stripHtml(p?.excerpt?.rendered || '')),
+        content: p?.content?.rendered || '',
+        createdAt: p?.date_gmt || p?.date || new Date().toISOString(),
+        featuredImage: featured?.source_url ? { url: featured.source_url } : null,
+        category: term ? { title: term.name, slug: term.slug } : null,
+        source: 'old2025',
+        url: p?.link || null
+      };
+    });
 }
 
 async function tryFetchJson(url) {
