@@ -59,9 +59,21 @@ const MicrositeKifisia = () => {
     // Recent Events
     recentEvents: [
       {
-        title: "Εκδήλωση ΠΕΤ ΜΟΥ Άλσος Κηφισιάς",
-        date: "11 Απριλίου 2025",
-        description: "Εκδήλωση για την προώθηση του περιβαλλοντικού τουρισμού στην περιοχή του Άλσους Κηφισιάς",
+        title: "Παγκόσμια Ημέρα Ζώων - Άλσος Κηφισιάς",
+        date: "4 Οκτωβρίου 2025",
+        type: "Δελτίο Τύπου",
+        description: "Το Σάββατο 04-10-2025 στο άλσος Κηφισιάς διεξήχθη εκδήλωση για την παγκόσμια ημέρα ζώων. Εκ μέρους του Εμπορικού Συλλόγου Κηφισιάς 1992 παρευρέθηκαν ο Πρόεδρος Αντώνης Βάρσος, η Β' Αντιπρόεδρος Ελένη Χρονοπούλου και το Μέλος Γιάννης Δαρατσιανός.",
+        fullContent: "Βρεθήκαμε εκεί για να μεταδώσουμε το μήνυμα ότι η αγάπη και φροντίδα προς τα ζώα πρέπει να είναι όχι απλά μία σκέψη αλλά μία καθημερινή πράξη.\n\nΚατά τη διάρκεια της εκδήλωσης έγινε μία σύντομη ενημέρωση για τα εμπορικά τεκταινόμενα στην Κηφισιά προς τον Κυβερνητικό Εκπρόσωπο κ. Παύλο Μαρινάκη.\n\nΕπίσης με τον Περιφέρειαρχή κ. Νίκο Χαραδαλιά συζητήθηκαν θέματα που έχουν να κάνουν με τον σχεδιασμό των νέων έργων υποδομής στην περιοχή.\n\nΜε τον Δήμαρχο Κηφισιάς κ. Βασίλη Ξυπολυτά έγινε αναφορά στα πάγια αιτήματα του εμπορικού συλλόγου και και επιβεβαιώθηκε η κοινή γραμμή που έχει ο Δήμος και ο Σύλλογος μας για πράσινη ανάπτυξη, σεβασμό στο περιβάλλον και στα ζώα και ότι θα καταβληθεί κάθε δυνατή προσπάθεια ώστε ο Δήμος Κηφισιάς να παραμείνει κηπούπολη.",
+        attendees: [
+          "Πρόεδρος Αντώνης Βάρσος",
+          "Β' Αντιπρόεδρος Ελένη Χρονοπούλου", 
+          "Μέλος Γιάννης Δαρατσιανός"
+        ],
+        officials: [
+          "Κυβερνητικός Εκπρόσωπος κ. Παύλος Μαρινάκης",
+          "Περιφέρειαρχής κ. Νίκος Χαραδαλιάς",
+          "Δήμαρχος Κηφισιάς κ. Βασίλης Ξυπολυτάς"
+        ],
         images: [
           "/assets/microsites/kifisia/Αλσος 1.jpg",
           "/assets/microsites/kifisia/Αλσος 2.jpg"
@@ -336,9 +348,16 @@ const MicrositeKifisia = () => {
                         <h3 className="text-2xl font-bold text-gray-900 mb-1">
                           {event.title}
                         </h3>
-                        <div className="flex items-center gap-2 text-green-600 font-medium">
-                          <Calendar className="w-4 h-4" />
-                          <span>{event.date}</span>
+                        <div className="flex items-center gap-4 text-green-600 font-medium">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            <span>{event.date}</span>
+                          </div>
+                          {event.type && (
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              {event.type}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -347,6 +366,63 @@ const MicrositeKifisia = () => {
                       {event.description}
                     </p>
                     
+                    {/* Full Press Release Content */}
+                    {event.fullContent && (
+                      <div className="bg-blue-50 rounded-xl p-6 mb-6 border border-blue-100">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                          <FileText className="w-5 h-5 text-blue-600" />
+                          Πλήρες Δελτίο Τύπου
+                        </h4>
+                        <div className="prose prose-sm max-w-none">
+                          {event.fullContent.split('\n\n').map((paragraph, pIndex) => (
+                            <p key={pIndex} className="text-gray-700 leading-relaxed mb-3 last:mb-0">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Attendees Section */}
+                    {event.attendees && (
+                      <div className="mb-6">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                          <Users className="w-5 h-5 text-blue-600" />
+                          Παρευρέθηκαν από τον Σύλλογο
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {event.attendees.map((attendee, aIndex) => (
+                            <div key={aIndex} className="flex items-center gap-3 bg-white rounded-lg p-3 border border-gray-200">
+                              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                <Users className="w-4 h-4 text-blue-600" />
+                              </div>
+                              <span className="text-gray-700 font-medium">{attendee}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Officials Section */}
+                    {event.officials && (
+                      <div className="mb-6">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                          <Building2 className="w-5 h-5 text-purple-600" />
+                          Συνάντηση με Αξιωματούχους
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {event.officials.map((official, oIndex) => (
+                            <div key={oIndex} className="flex items-center gap-3 bg-white rounded-lg p-3 border border-gray-200">
+                              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                <Building2 className="w-4 h-4 text-purple-600" />
+                              </div>
+                              <span className="text-gray-700 font-medium">{official}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
                     <div className="flex flex-wrap gap-3">
                       <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800">
                         <Calendar className="w-4 h-4 mr-2" />
@@ -354,7 +430,11 @@ const MicrositeKifisia = () => {
                       </span>
                       <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                         <MapPin className="w-4 h-4 mr-2" />
-                        Κηφισιά
+                        Άλσος Κηφισιάς
+                      </span>
+                      <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                        <Users className="w-4 h-4 mr-2" />
+                        Παγκόσμια Ημέρα Ζώων
                       </span>
                     </div>
                   </div>
