@@ -22,7 +22,7 @@ const Publications = () => {
     size: '2.5 MB',
     format: 'PDF',
     downloadUrl: '/assets/publications/EU Brief 3.pdf',
-    previewImage: null
+    previewImage: '/assets/publications/publications.png'
   };
 
   const publications = [
@@ -35,7 +35,7 @@ const Publications = () => {
       size: '2.5 MB',
       format: 'PDF',
       downloadUrl: '/assets/publications/EU Brief 3.pdf',
-      previewImage: null
+      previewImage: '/assets/publications/publications.png'
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ const Publications = () => {
       size: '3.2 MB',
       format: 'PDF',
       downloadUrl: '/assets/publications/EU Brief_6_7_20250729_155408_0000.pdf',
-      previewImage: null
+      previewImage: '/assets/publications/publications.png'
     },
     {
       id: 3,
@@ -57,7 +57,7 @@ const Publications = () => {
       size: '2.1 MB',
       format: 'PDF',
       downloadUrl: '/assets/publications/EU Brief_MAIOS.pdf',
-      previewImage: null
+      previewImage: '/assets/publications/publications.png'
     }
   ];
 

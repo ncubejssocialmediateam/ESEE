@@ -224,14 +224,15 @@ const Navigation = ({ isDark }) => {
                     setIsOpen={setActiveDropdown}
                   />
                   <Link
-                    to="/positions"
+                    to="/publications"
                     className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
                       isDark
                         ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
                         : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                   >
-                    ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ
+                                        ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ
+
                   </Link>
                   <Link
                     to="/projects"
@@ -402,7 +403,7 @@ const Navigation = ({ isDark }) => {
                     {/* Additional Navigation Links */}
                     <div className="space-y-2">
                       <Link
-                        to="/positions"
+                        to="/publications"
                         className={`block p-4 rounded-lg border transition-all duration-200 ${
                           isDark
                             ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
@@ -410,7 +411,7 @@ const Navigation = ({ isDark }) => {
                         }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <div className="font-medium text-base">ΕΥΡΩΠΑΪΚΑ ΘΕΜΑΤΑ</div>
+                        <div className="font-medium text-base">ΔΗΜΟΣΙΕΥΣΕΙΣ</div>
                       </Link>
                       
                       <Link
