@@ -108,6 +108,7 @@ const Navigation = ({ isDark }) => {
     { label: 'ΜΕΛΗ ΤΗΣ ΕΣΕΕ', url: '/members', description: '17 Ομοσπονδίες & 354 Εμπορικούς Συλλόγους και 11 Συνδέσμους σε όλη την Ελλάδα' },
     { label: 'ΙΝΕΜΥ', url: '/inemy', description: 'Ινστιτούτο Εμπορίου & Επιχειρηματικότητας' },
     { label: 'ΚΑΕΛΕ', url: '/kaele', description: 'ΚΕΝΤΡΟ ΑΝΑΠΤΥΞΗΣ ΕΛΛΗΝΙΚΟΥ ΕΜΠΟΡΙΟΥ & ΕΠΙΧΕΙΡΗΜΑΤΙΚΟΤΗΤΑΣ' },
+    { label: 'ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ', url: '/business', description: 'Ενημερωμένη και στοχευμένη πληροφόρηση για την επιχειρηματικότητα' },
     { label: 'ΥΠΟΣΤΗΡΙΞΗ ΜΕΛΩΝ', url: '/member-support', description: 'Ερωτοαπαντήσεις και υποστήριξη για τα μέλη της ΕΣΕΕ' }
   ];
 
@@ -213,16 +214,6 @@ const Navigation = ({ isDark }) => {
                     isOpen={activeDropdown === 'esee'}
                     setIsOpen={setActiveDropdown}
                   />
-                  <Link
-                    to="/business"
-                    className={`flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap ${
-                      isDark
-                        ? 'text-gray-200 hover:text-blue-400 hover:bg-blue-900/20'
-                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
-                    }`}
-                  >
-                    ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
-                  </Link>
                   <DropdownNavItem 
                     isDark={isDark}
                     title="ΓΡΑΦΕΙΟ ΤΥΠΟΥ"
@@ -286,7 +277,7 @@ const Navigation = ({ isDark }) => {
                             ? 'bg-blue-400 hover:bg-blue-500 text-blue-950'
                             : 'bg-blue-600 hover:bg-blue-700 text-white'
                     } rounded-lg transition-colors`}>
-                      HELPDESK
+                      ΥΠΟΣΤΗΡΙΞΗ ΜΕΛΩΝ
                     </button>
                   </Link>
                 </div>
@@ -382,20 +373,6 @@ const Navigation = ({ isDark }) => {
                       </div>
                     </div>
 
-                    {/* ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ */}
-                    <div className="space-y-3">
-                      <Link
-                        to="/business"
-                        className={`block p-4 rounded-lg border transition-all duration-200 ${
-                          isDark
-                            ? 'border-blue-800 bg-blue-900/20 text-gray-200 hover:bg-blue-800/30 hover:text-blue-400'
-                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'
-                        }`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="font-medium text-base">ΧΡΗΣΙΜΕΣ ΠΛΗΡΟΦΟΡΙΕΣ</div>
-                      </Link>
-                    </div>
 
                     {/* ΓΡΑΦΕΙΟ ΤΥΠΟΥ */}
                     <div className="space-y-3">
@@ -481,7 +458,7 @@ const Navigation = ({ isDark }) => {
                                 ? 'bg-blue-400 hover:bg-blue-500 text-blue-950 shadow-lg hover:shadow-xl'
                                 : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
                         }`}>
-                          HELPDESK
+                          ΥΠΟΣΤΗΡΙΞΗ ΜΕΛΩΝ
                         </button>
                       </Link>
                     </div>

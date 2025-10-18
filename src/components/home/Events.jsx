@@ -7,9 +7,29 @@ const Events = ({ isDark }) => {
   const stateArticles = useSelector(state => state.articles);
 
   // Filter articles for the 'Εκδηλώσεις' category (ID: 6)
-  const events = stateArticles.filter(article =>
+  const stateEvents = stateArticles.filter(article =>
     article.categories.some(category => category.id === 6)
-  ).slice(0, 3); // Show only the 3 most recent events
+  );
+
+  // Add the Visa research event
+  const visaEvent = {
+    id: 'visa-research-2025',
+    title: 'Έρευνα Visa Ινστιτούτου ΕΣΕΕ: Το 80% της Gen Z στη λιανική',
+    excerpt: 'Νέα έρευνα του Ινστιτούτου Εμπορίου & Επιχειρηματικότητας της ΕΣΕΕ σε συνεργασία με τη Visa αποκαλύπτει σημαντικές τάσεις στην κατανάλωση της Gen Z.',
+    date: '2025-01-15',
+    slug: 'visa-research-gen-z-retail',
+    featuredImage: {
+      node: {
+        sourceUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=500'
+      }
+    },
+    location: 'Αθήνα',
+    url: 'https://old2025.esee.gr/web/%ce%ad%cf%81%ce%b5%cf%85%ce%bd%ce%b1-visa-%ce%b9%ce%bd%cf%83%cf%84%ce%b9%cf%84%ce%bf%cf%8d%cf%84%ce%bf%cf%85-%ce%b5%cf%83%ce%b5%ce%b5-%cf%84%ce%bf-80-%cf%84%ce%b7%cf%82-gen-z-%cf%83%cf%84%ce%b7/',
+    isExternal: true
+  };
+
+  // Combine state events with the Visa event and limit to 4 total
+  const events = [visaEvent, ...stateEvents].slice(0, 4);
 
   if (!events.length) return null;
 
@@ -107,14 +127,27 @@ const Events = ({ isDark }) => {
                         </div>
                       )}
 
-                      <Link
-                        to={`/post/${event.slug}`}
-                        className={`${
-                          isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
-                        } font-medium transition-colors`}
-                      >
-                        Περισσότερα →
-                      </Link>
+                      {event.isExternal ? (
+                        <a
+                          href={event.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${
+                            isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
+                          } font-medium transition-colors`}
+                        >
+                          Περισσότερα →
+                        </a>
+                      ) : (
+                        <Link
+                          to={`/post/${event.slug}`}
+                          className={`${
+                            isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
+                          } font-medium transition-colors`}
+                        >
+                          Περισσότερα →
+                        </Link>
+                      )}
                     </div>
                   </div>
 

@@ -28,7 +28,7 @@ const Business = () => {
           title: "Υ.Α. 35935/13-4-2023",
           subtitle: "ΦΕΚ Β' 4629/1-9-2022",
           description: "Κώδικας Δεοντολογίας περί ανακοινώσεων μείωσης της τιμής – ΓΕΝΙΚΗ ΓΡΑΜΜΑΤΕΙΑ ΕΜΠΟΡΙΟΥ",
-          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/35935-13-4-2023.pdf",
+          link: "https://ofntwlyyaeqthsokjndr.supabase.co/storage/v1/object/public/PDF/ΦΕΚ-2640-Β-2023-1.pdf",
           type: "legal"
         },
         {
@@ -106,7 +106,7 @@ const Business = () => {
           title: "ΦΕΚ 969/22-3-2017",
           subtitle: "e-commerce",
           description: "Κώδικας Καταναλωτικής Δεοντολογίας για το Ηλεκτρονικό Εμπόριο",
-          link: "https://www.et.gr/api/Content/DocumentMeta?documentId=47868&format=pdf",
+          link: "https://gge.mindev.gov.gr/tomeas-emporiou/kodikas-katanalotikis-deontologias-ilektroniko-emporio/",
           type: "ecommerce"
         },
         {
@@ -114,7 +114,7 @@ const Business = () => {
           title: "Νομοθεσία",
           subtitle: "Καταναλωτές",
           description: "Αρμοδιότητας Γενικής Διεύθυνσης Προστασίας Καταναλωτή",
-          link: "https://www.consumer.gov.gr/",
+          link: "https://www.synigoroskatanaloti.gr/el/nomothesia",
           type: "legal"
         }
       ]
@@ -129,7 +129,7 @@ const Business = () => {
           title: "Σεξουαλική Παρενόχληση",
           subtitle: "Ποια είναι τα όρια στη σεξουαλική παρενόχληση στον χώρο εργασίας",
           description: "Νομικό και θεσμικό πλαίσιο. Διατάξεις για την προστασία του θύματος",
-          link: "https://www.elinyae.gr/sexoyaliki-parenohlisi",
+          link: "https://www.elinyae.gr/etiketes/sexoyaliki-parenohlisi",
           type: "workplace"
         },
         {
