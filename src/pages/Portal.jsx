@@ -14,7 +14,8 @@ import {
   AlertCircle,
   CheckCircle,
   XCircle,
-  RefreshCw
+  RefreshCw,
+  Building2
 } from 'lucide-react';
 import TaxCalendar from './TaxCalendar';
 import usePortalData from '../hooks/usePortalData';
@@ -24,6 +25,7 @@ import PollSection from '../components/portal/PollSection';
 import Navigation from '../components/layout/Navigation';
 import { useTheme } from '../context/ThemeContext';
 import MemberSupport from './MemberSupport';
+import { Link } from 'react-router-dom';
 
 const Portal = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -196,6 +198,8 @@ const Portal = () => {
       {/* Portal Services */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Υπηρεσίες Portal</h2>
+        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portalServices.map((service) => (
             <div
@@ -588,6 +592,103 @@ const Portal = () => {
             </div>
           </div>
         );
+      case 'microsites':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Microsites Συλλόγων</h2>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Building2 className="w-4 h-4" />
+                <span>Εξερευνήστε τα microsites των εμπορικών συλλόγων</span>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Kifisia Trade Association */}
+              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                <div className="flex items-start space-x-6">
+                  <div className="flex-shrink-0">
+                    <img 
+                      src="/assets/microsites/kifisia/IMG-20250926-WA0003.jpg" 
+                      alt="Εμπορικός Σύλλογος Κηφισιάς"
+                      className="w-20 h-20 object-contain rounded-lg shadow-md"
+                      onError={(e) => {
+                        e.target.src = '/assets/ESEE-LOGO.png';
+                        e.target.alt = 'ESEE Logo';
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      Εμπορικός Σύλλογος Κηφισιάς
+                    </h3>
+                    <p className="text-gray-600 mb-4 leading-relaxed">
+                      Ο Εμπορικός Σύλλογος Κηφισιάς είναι ένας από τους πιο δραστήριους εμπορικούς συλλόγους της περιοχής, με σκοπό την προώθηση του εμπορίου και της επιχειρηματικότητας στην Κηφισιά και τις γύρω περιοχές.
+                    </p>
+                    
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Users className="w-4 h-4" />
+                        <span>Διοικητικό Συμβούλιο</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Calendar className="w-4 h-4" />
+                        <span>Πρόσφατες εκδηλώσεις</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <FileText className="w-4 h-4" />
+                        <span>Έγγραφα & πληροφορίες</span>
+                      </div>
+                    </div>
+                    
+                    <Link 
+                      to="/microsites/kifisia"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    >
+                      <span>Επισκεφτείτε το Microsite</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Placeholder for future microsites */}
+              <div className="bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-8 text-center">
+                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Building2 className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  Περισσότερα Microsites
+                </h3>
+                <p className="text-gray-500 text-sm mb-4">
+                  Περισσότεροι εμπορικοί σύλλογοι θα προστεθούν σύντομα
+                </p>
+                <div className="text-xs text-gray-400">
+                  Σύντομα διαθέσιμα
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Information */}
+            <div className="bg-blue-50 rounded-lg p-6">
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Building2 className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    Σχετικά με τα Microsites
+                  </h4>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Τα microsites των εμπορικών συλλόγων παρέχουν ειδικές πληροφορίες για κάθε σύλλογο, 
+                    συμπεριλαμβανομένων των διοικητικών συμβουλίων, πρόσφατων εκδηλώσεων, εγγράφων και 
+                    πληροφοριών επικοινωνίας. Κάθε microsite είναι προσαρμοσμένο στις ανάγκες του αντίστοιχου συλλόγου.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
       default:
         return renderOverview();
     }
@@ -728,6 +829,16 @@ const Portal = () => {
                 }`}
               >
                 Στατιστικά Dashboard
+              </button>
+              <button
+                onClick={() => setActiveTab('microsites')}
+                className={`py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'microsites'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Microsites
               </button>
             </nav>
           </div>

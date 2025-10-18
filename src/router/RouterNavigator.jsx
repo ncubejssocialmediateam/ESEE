@@ -26,6 +26,7 @@ import MemberSupport from "../pages/MemberSupport.jsx";
 import Newspaper from "../pages/Newspaper.jsx";
 import PortalDebug from "../components/debug/PortalDebug.jsx";
 import ErrorBoundary from "../components/debug/ErrorBoundary.jsx";
+import MicrositeKifisia from "../pages/MicrositeKifisia.jsx";
 import {useEffect} from "react";
 import {getData} from "../api/apiClient.jsx";
 import {setArticles, setCategories, setNavItems} from "../redux/Reducer.jsx";
@@ -103,6 +104,7 @@ const RouterNavigator = ({isLoaded, setIsLoaded}) => {
                 <Route path="/member-support" element={<MemberSupport />} />
                 <Route path="/newspaper" element={<Newspaper />} />
                 <Route path="/portal-debug" element={<PortalDebug />} />
+                <Route path="/microsites/kifisia" element={<MicrositeKifisia />} />
         </Routes>
     );
 };
